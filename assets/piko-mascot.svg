@@ -49,4 +49,13 @@
 <!-- little PIXORIA pixel sparkles -->
 <path d="M354 370h16v16h-16zM370 354h16v16h-16zM136 350h16v16h-16zM152 334h16v16h-16z" fill="#d5ef9d"/>
 <path d="M72 448h16v8H72zM424 420h16v8h-16zM90 392h8v8h-8zM410 378h8v8h-8z" fill="#e9b957"/>
+<!-- signature details: headset controls and a tiny explorer badge -->
+<g shape-rendering="crispEdges">
+ <path d="M92 238h12v12H92zM408 238h12v12h-12z" fill="#f0bd58"/>
+ <path d="M96 242h4v4h-4zM412 242h4v4h-4z" fill="#fff4cf"/>
+ <path d="M166 374h18v8h8v16h-8v8h-18v-8h-8v-16h8z" fill="#eab34f"/>
+ <path d="M174 382h4v12h-4zM170 386h12v4h-12z" fill="#fff4cf"/>
+ <path d="M68 300h8v8h-8zM436 310h8v8h-8zM82 326h6v6h-6zM422 342h6v6h-6z" fill="#d5ef9d"/>
+ <path d="M74 300h4v4h-4zM442 310h4v4h-4z" fill="#fffaf0"/>
+</g>
 </svg>
