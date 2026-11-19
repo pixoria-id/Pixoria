@@ -151,6 +151,8 @@
     let filtered=games.filter(g=>{const text=searchText(g);return matchesSearch(g,query)&&(genre==="all"||(g.genres||[]).some(x=>normalize(x)===normalize(genre)))&&(platform==="all"||(g.platforms||[]).some(x=>normalize(x)===normalize(platform)))&&(price==="all"||g.price_type===price)&&(activeMood==="all"||(g.mood_tags||[]).some(x=>normalize(x).includes(activeMood))||(g.genres||[]).some(x=>normalize(x).includes(activeMood)));});
     if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title));
     if(sort==="za") filtered.sort((a,b)=>b.title.localeCompare(a.title));
+    if(sort==="newest") filtered.sort((a,b)=>(Date.parse(b.release_date||"")||0)-(Date.parse(a.release_date||"")||0)||a.title.localeCompare(b.title));
+    if(sort==="oldest") filtered.sort((a,b)=>(Date.parse(a.release_date||"")||Infinity)-(Date.parse(b.release_date||"")||Infinity)||a.title.localeCompare(b.title));
     if(sort==="featured") filtered.sort((a,b)=>(query?searchRelevance(b,query)-searchRelevance(a,query):0)||Number(b.is_featured)-Number(a.is_featured)||a.title.localeCompare(b.title));
     renderCollectionStats();
     renderRecentlyViewed();
