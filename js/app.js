@@ -18,6 +18,15 @@
   let activeMood = "all";
   let toastTimer;
   const $ = id => document.getElementById(id);
+  function updatePageMeta(title,description) {
+    document.title=title;
+    const meta=document.querySelector('meta[name="description"]');
+    const ogTitle=document.querySelector('meta[property="og:title"]');
+    const ogDescription=document.querySelector('meta[property="og:description"]');
+    if(meta)meta.content=description;
+    if(ogTitle)ogTitle.content=title;
+    if(ogDescription)ogDescription.content=description;
+  }
   const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const wishlistKey = "pixoria-wishlist-v1";
   const getWishlist = () => { try { return JSON.parse(localStorage.getItem(wishlistKey) || "[]"); } catch { return []; } };
@@ -100,13 +109,13 @@
     const genres=[...new Set(games.flatMap(game=>game.genres||[]))].sort((a,b)=>a.localeCompare(b));
     $("category-page").innerHTML='<div class="category-topline"><button class="back-link" id="category-back" type="button">← BACK TO DISCOVER</button><span>PIXORIA / THE LITTLE INDEX</span></div><div class="category-hero"><div class="eyebrow">EXPLORE A LITTLE FURTHER</div><h1>'+escapeHtml(genre)+' <em>worlds.</em></h1><p>'+selected.length+' curated '+(selected.length===1?"game":"games")+' in this corner of the collection. Find a new favorite, one little world at a time.</p></div><div class="category-switcher">'+genres.map(item=>'<button class="category-switch '+(normalize(item)===normalize(genre)?"active":"")+'" data-open-category="'+escapeHtml(item)+'" type="button">'+escapeHtml(item)+'</button>').join("")+'</div><div class="category-results-line"><span>THE '+escapeHtml(genre.toUpperCase())+' COLLECTION</span><span>'+selected.length+' WORLDS</span></div><div class="category-game-grid">'+selected.map(game=>card(game,games.indexOf(game))).join("")+'</div>';
     $("category-back").addEventListener("click",()=>{history.pushState({home:true},"","#discover");showHome();$("discover").scrollIntoView({behavior:"smooth"});});
-    document.title=genre+" Games — PIXORIA.ID";navLinks.forEach(link=>link.classList.toggle("active",link.getAttribute("href")==="#discover"));window.scrollTo({top:0,behavior:"auto"});
+    updatePageMeta(genre+" Games — PIXORIA.ID","Explore "+selected.length+" "+genre.toLowerCase()+" pixel-art games in the PIXORIA collection.");navLinks.forEach(link=>link.classList.toggle("active",link.getAttribute("href")==="#discover"));window.scrollTo({top:0,behavior:"auto"});
   }
   function showHome(){
     $("game-detail").hidden=true;
     $("category-page").hidden=true;
     homeSections.forEach(id=>$(id).hidden=false);
-    document.title="PIXORIA.ID — Discover Your Little World";
+    updatePageMeta("PIXORIA.ID — Discover Your Little World","Temukan game pixel-art cozy untuk petualangan kecil, hari yang tenang, dan cerita yang tinggal lebih lama.");
   }
   function openGame(id,updateUrl=true) {
     $("category-page").hidden=true;
@@ -127,10 +136,16 @@
     const moodTags=(game.mood_tags||[]).slice(0,5);
     $("game-detail").innerHTML='<div class="detail-topline"><button class="back-link" type="button" id="detail-back">← BACK TO DISCOVER</button><span>PIXORIA / GAME JOURNAL</span></div><div class="detail-layout"><div class="detail-main">'+coverArt(game,Math.max(0,games.indexOf(game)),true)+'<div class="detail-eyebrow"><span class="eyebrow-line"></span> '+escapeHtml((game.genres||["PIXEL GAME"]).join(" · ").toUpperCase())+'</div><div class="detail-genre-links" aria-label="Explore game genres">'+(game.genres||[]).map(genre=>'<button type="button" data-open-category="'+escapeHtml(genre)+'">'+escapeHtml(genre)+' ↗</button>').join("")+'</div><h1 class="detail-heading">'+escapeHtml(game.title)+'</h1><p class="detail-lead">'+escapeHtml(game.short_description||"A little world waiting to be discovered.")+'</p>'+(moodTags.length?'<div class="detail-mood-tags" aria-label="Game moods">'+moodTags.map(tag=>'<span>'+escapeHtml(tag)+'</span>').join("")+'</div>':"")+'<div class="detail-actions"><button class="button button-primary" type="button" id="detail-save">'+(saved?"♥ SAVED TO WISHLIST":"♡ ADD TO WISHLIST")+'</button><button class="button button-secondary" type="button" id="detail-share">SHARE GAME ↗</button>'+(game.official_url?'<a class="button button-secondary" target="_blank" rel="noopener" href="'+escapeHtml(game.official_url)+'">OFFICIAL WEBSITE ↗</a>':"")+'</div><div class="detail-description">'+escapeHtml(game.description||game.short_description||"Discover a new little world.")+'</div></div><aside class="detail-sidebar"><div class="sidebar-kicker">THE GAME NOTES</div><div class="detail-facts"><div><span>DEVELOPER</span><strong>'+escapeHtml(developer)+'</strong></div><div><span>PUBLISHER</span><strong>'+escapeHtml(game.publisher||"Independent")+'</strong></div><div><span>PLATFORMS</span><strong>'+escapeHtml((game.platforms||[]).join(" · ")||"Not listed")+'</strong></div><div><span>GENRE</span><strong>'+escapeHtml((game.genres||[]).join(" · ")||"Pixel game")+'</strong></div><div><span>PRICE</span><strong>'+escapeHtml(game.price_type==="free"?"Free to play":game.price_type==="paid"?"Paid":"Not listed")+'</strong></div><div><span>RELEASE</span><strong>'+escapeHtml(String(release))+'</strong></div></div><p class="sidebar-note">A small discovery, selected for your next little escape.</p></aside></div>'+(related.length?'<section class="related-section"><div class="eyebrow"><span class="eyebrow-line"></span> KEEP WANDERING</div><h2>More little <em>worlds.</em></h2><div class="related-grid">'+related.map(item=>card(item,games.indexOf(item))).join("")+'</div></section>':"");
     $("game-detail").hidden=false;
-    document.title=game.title+" — PIXORIA.ID";
+    updatePageMeta(game.title+" — PIXORIA.ID",game.short_description||"Discover "+game.title+" in the PIXORIA collection of little pixel-art worlds.");
     $("detail-back").addEventListener("click",()=>{history.pushState({home:true},"","#discover");showHome();$("discover").scrollIntoView({behavior:"smooth"});});
     $("detail-save").addEventListener("click",()=>{toggleWishlist(gameId(game));openGame(gameId(game),false);});
-    $("detail-share").addEventListener("click",async()=>{const url=location.href;try{await navigator.clipboard.writeText(url);showToast("Game link copied");}catch{showToast(url);}});
+    $("detail-share").addEventListener("click",async()=>{
+      const url=location.href;
+      const shareData={title:game.title+" — PIXORIA.ID",text:game.short_description||"Discover this little world on PIXORIA.ID",url};
+      if(navigator.share){try{await navigator.share(shareData);return;}catch(error){if(error.name==="AbortError")return;}}
+      try{await navigator.clipboard.writeText(url);showToast("Game link copied");}
+      catch{showToast("Copy this link: "+url);}
+    });
     window.scrollTo({top:0,behavior:"auto"});
   }
   function routeFromHash(){
