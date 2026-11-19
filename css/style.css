@@ -988,3 +988,11 @@ html,body{background:#fff8e9;color:#1e382f;font-family:'Nunito Sans',sans-serif}
 .scene-undertale .cover-tree{display:none}
 .scene-chicory-a-colorful-tale .cover-water{background:repeating-linear-gradient(0deg,#d99bc2 0 5px,#f1c3db 5px 9px)}
 @media(prefers-reduced-motion:reduce){.cover-cloud{animation:none}}
+
+
+/* PIXORIA world illustration v3 — bespoke layered SVG scene */
+.reference-world{background:#9bd9ed!important;overflow:hidden;isolation:isolate}
+.reference-world .hero-world-illustration{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
+.reference-world:before,.reference-world:after{display:none!important}
+.reference-world{border:5px solid #fff8df!important;border-radius:28px!important;box-shadow:0 12px 0 #d9c89f,0 26px 55px #547d4b25!important}
+@media(max-width:760px){.reference-world{height:315px!important;border-width:4px!important;border-radius:20px!important}}
