@@ -56,7 +56,7 @@
         <button class="atelier-card atelier-creative" type="button" data-mood="creative"><span class="atelier-icon">✳</span><span class="atelier-title">Make &amp; imagine</span><span class="atelier-caption">Create your own little world</span><span class="atelier-arrow">↗</span></button>
       </div>
       <div class="toolbar">
-        <label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Search a little world..." autocomplete="off"></label>
+        <div class="search-wrap"><label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Search games, moods, genres..." autocomplete="off" aria-label="Search games" aria-controls="search-suggestions" aria-expanded="false"></label><div class="search-suggestions" id="search-suggestions" role="listbox" hidden></div></div>
         <select id="genre-filter" aria-label="Filter by genre"><option value="all">All genres</option></select>
         <select id="platform-filter" aria-label="Filter by platform"><option value="all">All platforms</option></select>
         <select id="price-filter" aria-label="Filter by price"><option value="all">Any price</option><option value="free">Free</option><option value="paid">Paid</option></select>
@@ -72,7 +72,7 @@
       </div>
       <div class="genre-explorer"><span class="mood-label">WANDER BY GENRE</span><div class="genre-chips" id="genre-chips"><button type="button" class="genre-chip active" data-genre="all">All worlds</button></div></div>
       <div class="collection-stats" id="collection-stats" aria-label="Collection overview"></div>
-      <div class="results-line"><span id="results-count">A FEW WORLDS TO BEGIN WITH</span><span>HANDPICKED WITH CARE ✳</span></div>
+      <div class="results-line"><span id="results-count">A FEW WORLDS TO BEGIN WITH</span><span>HANDPICKED WITH CARE ✳</span></div><div class="active-filters" id="active-filters" aria-live="polite"></div>
       <div class="game-grid" id="game-grid"><article class="loading-card">Gathering little worlds<span>✦</span></article></div>
       <div class="empty-state" id="empty-state" hidden><span>✧</span><h3>No worlds found</h3><p>Try another title or clear your filters.</p><button class="text-link" id="clear-filters">Clear filters →</button></div>
     </section>
