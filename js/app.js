@@ -81,7 +81,7 @@
     kreatif:["creative"],mewarnai:["creative","coloring"],aksi:["action"],gratis:["free"],berbayar:["paid"],
     hp:["android","ios"],ponsel:["android","ios"],mobile:["android","ios"],komputer:["pc"],switch:["nintendo switch"]
   };
-  const searchTerms = query => normalize(query).split(/\\s+/).filter(term=>term&&!["game","games","pixel","pixel-art","yang","untuk","dan","di","the","a"].includes(term));
+  const searchTerms = query => normalize(query).split(/\s+/).filter(term=>term&&!["game","games","pixel","pixel-art","yang","untuk","dan","di","the","a"].includes(term));
   function matchesSearch(game,query) {
     const text=searchText(game);
     return searchTerms(query).every(term=>[term,...(searchAliases[term]||[])].some(alias=>text.includes(normalize(alias))));
