@@ -87,8 +87,9 @@
     const article=event.target.closest("[data-game]"); if(article && !event.target.closest("button"))openGame(article.dataset.game);
   });
   ["search-input","genre-filter","platform-filter","price-filter","sort-filter"].forEach(id=>$(id).addEventListener(id==="search-input"?"input":"change",renderGames));
+  $("genre-filter").addEventListener("change",renderGenreChips);
   $("genre-chips").addEventListener("click",event=>{const chip=event.target.closest("[data-genre]");if(!chip)return;$("genre-filter").value=chip.dataset.genre;renderGenreChips();renderGames();$("game-grid").scrollIntoView({behavior:"smooth",block:"start"});});
-  $("surprise-me").addEventListener("click",()=>{if(!games.length)return;const pool=games.filter(game=>gameId(game)!==new URLSearchParams(location.hash.split("?")[1]||"").get("last")) ;const pick=pool[Math.floor(Math.random()*pool.length)]||games[0];openGame(gameId(pick));});
+  $("surprise-me").addEventListener("click",()=>{if(!games.length)return;const pick=games[Math.floor(Math.random()*games.length)];openGame(gameId(pick));});
   $("game-grid").addEventListener("keydown",event=>{const article=event.target.closest("[data-game]");if(article&&(event.key==="Enter"||event.key===" ")){event.preventDefault();openGame(article.dataset.game);}});
   $("wishlist-grid").addEventListener("keydown",event=>{const article=event.target.closest("[data-game]");if(article&&(event.key==="Enter"||event.key===" ")){event.preventDefault();openGame(article.dataset.game);}});
   document.querySelectorAll("[data-mood]").forEach(button=>button.addEventListener("click",()=>{
