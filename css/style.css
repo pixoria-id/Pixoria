@@ -202,3 +202,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
  .detail-facts span{margin:0}
  .dialog-cover{height:190px}
 }
+
+
+.scene-a-short-hike{--scene-sky:#b8a58c;--scene-mid:#8b9b78;--scene-ground:#344b3b;--scene-ridge:#667b5b;--scene-light:#f4dba3;--scene-pixel:#f1d59b}
+.scene-eastward{--scene-sky:#6f6470;--scene-mid:#8b705f;--scene-ground:#352d37;--scene-ridge:#5b4850;--scene-light:#e8c28a;--scene-pixel:#e6c28f}
+.scene-celeste{--scene-sky:#8d879e;--scene-mid:#bd8290;--scene-ground:#4d405d;--scene-ridge:#78617d;--scene-light:#f0c7bb;--scene-pixel:#f4d7c8}
+.scene-moonlighter{--scene-sky:#4b5d68;--scene-mid:#6c7666;--scene-ground:#293a3b;--scene-ridge:#425b57;--scene-light:#e6bc79;--scene-pixel:#e8c68d}
+.scene-undertale{--scene-sky:#45485d;--scene-mid:#68617b;--scene-ground:#292b40;--scene-ridge:#4a465f;--scene-light:#e2d6ae;--scene-pixel:#d7c9a0}
