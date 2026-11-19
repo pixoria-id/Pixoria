@@ -47,12 +47,34 @@
     const saved=getWishlist(), selected=saved.map(id=>games.find(g=>gameId(g)===id)).filter(Boolean);
     $("wishlist-grid").innerHTML=selected.length?selected.map(card).join(""):'<p class="wishlist-empty">Your wishlist is waiting for its first little world. ♡</p>';
   }
-  function openGame(id) {
-    const game=games.find(g=>gameId(g)===id); if(!game)return;
-    const saved=getWishlist().includes(id);
-    $("dialog-content").innerHTML=coverArt(game,Math.max(0,games.indexOf(game)),true)+'<div class="eyebrow"><span class="eyebrow-line"></span> '+escapeHtml((game.genres||["PIXEL GAME"]).join(" · ").toUpperCase())+'</div><h2 class="dialog-title">'+escapeHtml(game.title)+'</h2><p class="dialog-description">'+escapeHtml(game.description||game.short_description||"A little world waiting to be discovered.")+'</p><div class="detail-facts"><div><span>PLATFORMS</span><strong>'+escapeHtml((game.platforms||[]).join(" · ")||"Not listed")+'</strong></div><div><span>PRICE</span><strong>'+escapeHtml(game.price_type==="free"?"Free to play":game.price_type==="paid"?"Paid":"Not listed")+'</strong></div><div><span>GENRE</span><strong>'+escapeHtml((game.genres||[]).join(" · ")||"Pixel game")+'</strong></div></div><div class="dialog-actions"><button class="button button-primary" id="dialog-save">'+(saved?"Remove from wishlist":"Save to wishlist")+'</button>'+(game.official_url?'<a class="button button-secondary" target="_blank" rel="noopener" href="'+escapeHtml(game.official_url)+'">Official site ↗</a>':"")+'</div>';
-    $("game-dialog").showModal();
-    $("dialog-save").addEventListener("click",()=>{toggleWishlist(id);openGame(id);});
+  const homeSections=["home","discover","about","wishlist"];
+  function showHome(){
+    $("game-detail").hidden=true;
+    homeSections.forEach(id=>$(id).hidden=false);
+    document.title="PIXORIA.ID — Discover Your Little World";
+  }
+  function openGame(id,updateUrl=true) {
+    const game=games.find(g=>gameId(g)===id || String(g.slug)===id);
+    if(!game)return;
+    const slug=String(game.slug||game.id||game.title).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+    if(updateUrl && location.hash!=="#game/"+slug) history.pushState({game:slug},"","#game/"+slug);
+    homeSections.forEach(section=>$(section).hidden=true);
+    const saved=getWishlist().includes(gameId(game));
+    const related=games.filter(item=>gameId(item)!==gameId(game)&&(item.genres||[]).some(genre=>(game.genres||[]).includes(genre))).slice(0,3);
+    const developer=game.developer||"Independent creator";
+    const release=game.release_date?new Date(game.release_date).getFullYear():"Not listed";
+    $("game-detail").innerHTML='<div class="detail-topline"><button class="back-link" type="button" id="detail-back">← BACK TO DISCOVER</button><span>PIXORIA / GAME JOURNAL</span></div><div class="detail-layout"><div class="detail-main">'+coverArt(game,Math.max(0,games.indexOf(game)),true)+'<div class="detail-eyebrow"><span class="eyebrow-line"></span> '+escapeHtml((game.genres||["PIXEL GAME"]).join(" · ").toUpperCase())+'</div><h1 class="detail-heading">'+escapeHtml(game.title)+'</h1><p class="detail-lead">'+escapeHtml(game.short_description||"A little world waiting to be discovered.")+'</p><div class="detail-actions"><button class="button button-primary" type="button" id="detail-save">'+(saved?"♥ SAVED TO WISHLIST":"♡ ADD TO WISHLIST")+'</button><button class="button button-secondary" type="button" id="detail-share">SHARE GAME ↗</button>'+(game.official_url?'<a class="button button-secondary" target="_blank" rel="noopener" href="'+escapeHtml(game.official_url)+'">OFFICIAL WEBSITE ↗</a>':"")+'</div><div class="detail-description">'+escapeHtml(game.description||game.short_description||"Discover a new little world.")+'</div></div><aside class="detail-sidebar"><div class="sidebar-kicker">THE GAME NOTES</div><div class="detail-facts"><div><span>DEVELOPER</span><strong>'+escapeHtml(developer)+'</strong></div><div><span>PLATFORMS</span><strong>'+escapeHtml((game.platforms||[]).join(" · ")||"Not listed")+'</strong></div><div><span>GENRE</span><strong>'+escapeHtml((game.genres||[]).join(" · ")||"Pixel game")+'</strong></div><div><span>PRICE</span><strong>'+escapeHtml(game.price_type==="free"?"Free to play":game.price_type==="paid"?"Paid":"Not listed")+'</strong></div><div><span>RELEASE</span><strong>'+escapeHtml(String(release))+'</strong></div></div><p class="sidebar-note">A small discovery, selected for your next little escape.</p></aside></div>'+(related.length?'<section class="related-section"><div class="eyebrow"><span class="eyebrow-line"></span> KEEP WANDERING</div><h2>More little <em>worlds.</em></h2><div class="related-grid">'+related.map(item=>card(item,games.indexOf(item))).join("")+'</div></section>':"");
+    $("game-detail").hidden=false;
+    document.title=game.title+" — PIXORIA.ID";
+    $("detail-back").addEventListener("click",()=>{history.pushState({home:true},"","#discover");showHome();$("discover").scrollIntoView({behavior:"smooth"});});
+    $("detail-save").addEventListener("click",()=>{toggleWishlist(gameId(game));openGame(gameId(game),false);});
+    $("detail-share").addEventListener("click",async()=>{const url=location.href;try{await navigator.clipboard.writeText(url);showToast("Game link copied");}catch{showToast(url);}});
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+  function routeFromHash(){
+    const match=location.hash.match(/^#game\/(.+)$/);
+    if(match){const slug=decodeURIComponent(match[1]);const game=games.find(item=>String(item.slug||item.id||item.title).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")===slug);if(game){openGame(gameId(game),false);return;}}
+    showHome();
   }
   function toggleWishlist(id) {
     const list=getWishlist(), exists=list.includes(id);
@@ -101,5 +123,8 @@
     },{rootMargin:"-35% 0px -55% 0px"});
     ["home","discover","about"].forEach(id=>{const section=$(id);if(section)sectionObserver.observe(section);});
   }
-  updateWishlistCount(); loadGames();
+  window.addEventListener("hashchange",routeFromHash);
+  window.addEventListener("popstate",routeFromHash);
+  updateWishlistCount();
+  loadGames().then(routeFromHash);
 })();
