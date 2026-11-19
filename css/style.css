@@ -259,3 +259,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .related-grid .game-card-body{padding:17px}
 @media(max-width:800px){.detail-layout{grid-template-columns:1fr;gap:30px}.detail-sidebar{position:static}.detail-sidebar .detail-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}.related-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.game-detail-page{padding:32px 5% 75px}.detail-topline{font-size:7px}.detail-layout{padding-top:25px}.detail-main .dialog-cover{height:230px}.detail-heading{font-size:57px}.detail-lead{font-size:14px}.detail-actions{gap:8px}.detail-actions .button{flex:1;justify-content:center;padding:13px 9px;font-size:8px}.detail-sidebar .detail-facts{grid-template-columns:1fr}.related-section{padding-top:60px;margin-top:55px}.related-grid{grid-template-columns:1fr}.related-grid .game-cover{height:210px}}
+
+
+/* Sixth pass — genre discovery and serendipity */
+.surprise-button{border:0;background:transparent;color:#d9c18f;cursor:pointer;padding:10px 0;font:500 12px var(--sans);letter-spacing:.04em}
+.surprise-button:hover{color:#fff0d2}
+.genre-explorer{display:flex;align-items:flex-start;gap:17px;padding:18px 0 20px;border-bottom:1px solid var(--line)}
+.genre-explorer>.mood-label{padding-top:9px;white-space:nowrap}
+.genre-chips{display:flex;flex-wrap:wrap;gap:8px}
+.genre-chip{border:1px solid rgba(226,225,204,.14);border-radius:30px;padding:7px 12px;background:rgba(255,255,255,.015);color:#aeb8a9;font:500 10px var(--sans);cursor:pointer;transition:all .2s}
+.genre-chip:hover{border-color:rgba(213,169,104,.55);color:#f0eadb}
+.genre-chip.active{background:rgba(213,169,104,.13);border-color:rgba(213,169,104,.55);color:#e8c88f}
+@media(max-width:620px){.genre-explorer{display:block}.genre-explorer>.mood-label{display:block;margin-bottom:12px}.genre-chips{gap:7px}.genre-chip{padding:7px 10px}}
