@@ -605,3 +605,37 @@ button,a,input,select{ -webkit-tap-highlight-color:transparent}
 /* Detail-page platform shortcuts */
 .detail-genre-links .platform-detail-link{border-color:rgba(213,169,104,.28);color:var(--gold);background:rgba(213,169,104,.055)}
 .detail-genre-links .platform-detail-link:hover{background:rgba(213,169,104,.13);border-color:var(--gold);color:var(--cream)}
+
+
+/* PIXORIA brighter editorial palette */
+:root{--bg:#f4f1e7;--panel:#fffdf6;--panel2:#e9eee3;--cream:#26372d;--muted:#68766a;--sage:#718b70;--gold:#b8843f;--line:rgba(54,73,57,.16)}
+body{background:var(--bg);color:var(--cream)}
+.site-header{background:rgba(248,246,238,.96);border-bottom-color:var(--line);box-shadow:0 5px 24px rgba(43,59,43,.05)}
+.main-nav{color:#718071}.main-nav a:hover,.main-nav a.active{color:#26372d}
+.wishlist-link{color:#314536}.wishlist-link b{background:#e3eadf;color:#60775f}
+.hero{background:linear-gradient(115deg,#f8f5eb 0%,#f1f0e5 58%,#e7eee3 100%)}
+.hero-description{color:#68776a}.hero-note,.hero-bottom{color:#718071}
+.button-primary{background:#c18e4d;color:#fffdf6}.text-link{color:#344b39}
+.hero-art{border-color:rgba(111,128,92,.3);box-shadow:0 24px 65px rgba(47,65,48,.17)}
+.discover-section{background:#e9eee5;border-top-color:var(--line);border-bottom-color:var(--line)}
+.section-heading>p,.wishlist-heading>p{color:#718071}
+.search-box{background:#fffdf7;border-color:rgba(54,73,57,.2)}
+.search-box input{color:#26372d}.search-box input::placeholder{color:#899487}
+.toolbar select{background:#fffdf7;color:#405444;border-color:rgba(54,73,57,.2)}
+.results-line{color:#718071;border-bottom-color:var(--line)}
+.game-card{background:#fffdf7;border-color:rgba(54,73,57,.13);box-shadow:0 8px 24px rgba(49,65,49,.055)}
+.game-card:hover{border-color:#b88b50;box-shadow:0 14px 32px rgba(49,65,49,.11)}
+.game-meta{color:#718071}.game-title{color:#2d4032}.game-desc{color:#6d796e}
+.game-card-foot{border-top-color:var(--line)}.tag{background:#e7eee2;color:#536d53}
+.save-button{color:#a97736}
+.quote-section{background:radial-gradient(ellipse at center,#e4ebdc 0%,#dce6d9 58%,#d3dfd2 100%);border-bottom-color:var(--line)}
+.quote-section>span,.wishlist-empty{color:#718071}
+.site-footer{background:#e9eee5;border-top-color:var(--line)}.site-footer>span{color:#758174}
+.game-dialog{background:#fffdf7;color:#26372d;border-color:#c5d0bf;box-shadow:0 25px 90px rgba(31,46,34,.22)}
+.dialog-close{color:#344b39}.dialog-description{color:#68776a}
+.toast{background:#d5e3cf;color:#26372d;box-shadow:0 8px 24px rgba(31,46,34,.15)}
+.eyebrow{color:#9a6b2e}.eyebrow-line{background:#b8843f}
+.brand-mark,.brand-dot,.wishlist-link>span:first-child{color:#a97736}
+.game-card:focus-within{outline:2px solid #a97736;outline-offset:3px}
+.search-box:focus-within,.toolbar select:focus-visible{outline:2px solid #9caf91;outline-offset:2px}
+@media(max-width:600px){.site-header{background:rgba(248,246,238,.98)}.hero{background:linear-gradient(160deg,#f8f5eb,#e8eee3)}.discover-section{background:#e9eee5}}
