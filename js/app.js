@@ -49,7 +49,7 @@
     const freeCount=games.filter(game=>game.price_type==="free").length;
     $("collection-stats").innerHTML='<div><strong>'+games.length+'</strong><span>WORLDS TO DISCOVER</span></div><div><strong>'+genreCount+'</strong><span>GENRES</span></div><div><strong>'+platformCount+'</strong><span>PLATFORMS</span></div><div><strong>'+freeCount+'</strong><span>FREE TO PLAY</span></div>';
   }
-  const normalize = value => String(value ?? "").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().trim();
+  const normalize = value => String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
   function searchText(game) {
     return normalize([game.title,game.short_description,game.description,game.developer,game.publisher,...(game.genres||[]),...(game.platforms||[]),...(game.mood_tags||[])].join(" "));
   }
@@ -72,7 +72,7 @@
     $("active-filters").hidden=!chips.length;
   }
   function renderGames() {
-    const query=normalize($("search-input").value).split(/\\s+/).filter(Boolean), genre=$("genre-filter").value, platform=$("platform-filter").value, price=$("price-filter").value, sort=$("sort-filter").value;
+    const query=normalize($("search-input").value).split(/\s+/).filter(Boolean), genre=$("genre-filter").value, platform=$("platform-filter").value, price=$("price-filter").value, sort=$("sort-filter").value;
     let filtered=games.filter(g=>{const text=searchText(g);return query.every(term=>text.includes(term))&&(genre==="all"||(g.genres||[]).some(x=>normalize(x)===normalize(genre)))&&(platform==="all"||(g.platforms||[]).some(x=>normalize(x)===normalize(platform)))&&(price==="all"||g.price_type===price)&&(activeMood==="all"||(g.mood_tags||[]).some(x=>normalize(x).includes(activeMood))||(g.genres||[]).some(x=>normalize(x).includes(activeMood)));});
     if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title)); if(sort==="za") filtered.sort((a,b)=>b.title.localeCompare(a.title)); if(sort==="featured") filtered.sort((a,b)=>Number(b.is_featured)-Number(a.is_featured)||a.title.localeCompare(b.title));
     renderCollectionStats();
