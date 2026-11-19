@@ -300,3 +300,142 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .collection-stats strong{font:600 27px/1 var(--serif);color:#e6c58d;font-variant-numeric:tabular-nums}
 .collection-stats span{font:9px/1.4 var(--sans);letter-spacing:.13em;color:#9eaa9b}
 @media(max-width:700px){.collection-stats{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:22px}.collection-stats>div{padding:12px 10px;border-bottom:1px solid var(--line)}.collection-stats>div:nth-child(2){border-right:0}.collection-stats>div:nth-child(3){padding-left:0;border-bottom:0}.collection-stats>div:nth-child(4){border-bottom:0}.collection-stats strong{font-size:25px}.collection-stats span{font-size:8px}}
+
+
+/* Ninth pass — typography scale, spacing rhythm & alignment */
+:root{
+  --type-display:clamp(3.6rem,7.1vw,6.25rem);
+  --type-section:clamp(2.65rem,4.5vw,3.85rem);
+  --space-section:clamp(4.75rem,8vw,7rem);
+  --content-width:1320px;
+}
+body{font-size:15px;line-height:1.65;letter-spacing:0}
+.site-header{max-width:none;padding-inline:max(calc((100vw - var(--content-width))/2),5.5vw);gap:24px}
+.brand{flex-shrink:0;letter-spacing:.16em}
+.main-nav{align-items:center;gap:clamp(22px,3.2vw,44px)}
+.wishlist-link{white-space:nowrap}
+.hero{max-width:var(--content-width);min-height:660px;padding-top:clamp(70px,8vw,104px);padding-bottom:92px;column-gap:clamp(42px,6vw,84px)}
+.hero-copy{max-width:540px}
+.hero h1{font-size:var(--type-display);line-height:.91;letter-spacing:-.055em;margin:27px 0 24px}
+.hero-description{max-width:430px;font-size:15px;line-height:1.85}
+.hero-actions{gap:26px;margin-top:34px}
+.hero-note{margin-top:48px}
+.hero-art{height:clamp(360px,37vw,480px)}
+.section-wrap{max-width:var(--content-width);padding:var(--space-section) max(5.5vw,24px)}
+.section-heading,.wishlist-heading{align-items:flex-end;gap:clamp(24px,5vw,72px)}
+.section-heading h2,.wishlist-heading h2{font-size:var(--type-section);line-height:1.04;letter-spacing:-.045em;margin-top:16px}
+.section-heading>p,.wishlist-heading>p{max-width:345px;font-size:13px;line-height:1.8;margin-bottom:2px}
+.mood-atelier{grid-template-columns:1.12fr repeat(4,minmax(0,1fr));gap:12px;margin:36px 0 28px}
+.atelier-intro{padding-right:12px}
+.atelier-intro p{font-size:clamp(24px,2.25vw,31px);line-height:1.08}
+.atelier-card{min-height:150px;padding:17px}
+.atelier-title{font-size:20px;line-height:1.08}
+.atelier-caption{font-size:10px;line-height:1.4}
+.toolbar{margin:38px 0 18px;gap:10px}
+.search-box{min-height:50px}
+.search-box input{font-size:13px}
+.toolbar select{height:50px;font-size:11px}
+.mood-row{display:flex;align-items:center;flex-wrap:wrap;gap:9px 12px;padding:15px 0 17px}
+.mood-row .mood-label{margin-right:5px}
+.mood-chip{font:500 10px/1.2 var(--sans);padding:8px 13px}
+.genre-explorer{padding:16px 0 18px;gap:16px}
+.genre-chip{font-size:10px;padding:8px 13px}
+.collection-stats{margin-top:24px}
+.collection-stats>div{padding:14px 18px}
+.collection-stats strong{font-size:26px}
+.results-line{padding:13px 0 16px;font-size:8px}
+.game-grid,.wishlist-grid{gap:22px;margin-top:22px}
+.game-card{display:flex;flex-direction:column;min-height:100%}
+.game-cover{height:clamp(180px,18vw,225px);flex:0 0 auto}
+.game-card-body{padding:19px 20px 17px;gap:0}
+.game-meta{font-size:8px;line-height:1.4;letter-spacing:.13em}
+.game-title{font-size:clamp(25px,2.2vw,30px);line-height:1.02;letter-spacing:-.025em;margin:12px 0 9px}
+.game-desc{font-size:11px;line-height:1.75;min-height:3.5em;margin-bottom:16px}
+.game-card-foot{gap:10px;padding-top:13px}
+.tag-list{gap:6px}
+.tag{font-size:8px;padding:5px 8px}
+.card-discover{margin-top:13px;padding-top:10px;font-size:8px}
+.quote-section{padding:clamp(82px,9vw,118px) 20px}
+.quote-section p{font-size:clamp(36px,4.8vw,58px);line-height:1.12;letter-spacing:-.035em}
+.wishlist-section{padding-top:var(--space-section);padding-bottom:var(--space-section)}
+.site-footer{max-width:none;padding-inline:max(calc((100vw - var(--content-width))/2),5.5vw);gap:24px}
+.game-detail-page{max-width:var(--content-width);padding:48px max(5.5vw,24px) 100px}
+.detail-layout{gap:clamp(38px,6vw,84px);padding-top:34px}
+.detail-heading{font-size:clamp(3.5rem,6.5vw,5.5rem);line-height:.94;letter-spacing:-.05em}
+.detail-lead{font-size:15px;line-height:1.8}
+.detail-description{font-size:13px;line-height:1.9;max-width:760px}
+.detail-sidebar{padding:21px}
+.related-section{padding-top:76px;margin-top:68px}
+.related-section h2{font-size:clamp(36px,4.5vw,54px)}
+.related-grid{gap:20px}
+.toast{letter-spacing:.01em;line-height:1.4}
+button,a,input,select{ -webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid #dfbd7e;outline-offset:3px}
+@media(max-width:900px){
+  .hero{padding-inline:5%;gap:4%;min-height:unset}
+  .hero h1{font-size:clamp(3.6rem,8vw,5rem)}
+  .section-wrap{padding-inline:5%}
+  .mood-atelier{grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+  .atelier-intro{grid-column:1/-1}
+  .atelier-card{min-height:136px}
+  .game-grid,.wishlist-grid{gap:16px}
+  .game-cover{height:190px}
+  .game-card-body{padding:17px}
+}
+@media(max-width:620px){
+  .site-header{padding-inline:5%;gap:10px}
+  .main-nav{gap:clamp(10px,3vw,17px);font-size:10px}
+  .wishlist-link{font-size:11px}
+  .hero{padding:54px 5% 68px;gap:26px}
+  .hero h1{font-size:clamp(3.55rem,14.5vw,4.65rem);line-height:.92;margin:22px 0 18px}
+  .hero-description{font-size:13px;line-height:1.8}
+  .hero-actions{gap:16px;margin-top:26px}
+  .hero-note{margin-top:30px}
+  .hero-art{height:clamp(245px,70vw,310px)}
+  .section-wrap{padding:68px 5%}
+  .section-heading h2,.wishlist-heading h2{font-size:clamp(2.55rem,10.5vw,3.15rem);line-height:1.02}
+  .section-heading>p,.wishlist-heading>p{font-size:12px;line-height:1.75;margin-top:14px}
+  .mood-atelier{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:25px 0 22px}
+  .atelier-intro{padding:0 0 5px}
+  .atelier-intro p{font-size:25px;line-height:1.08}
+  .atelier-card{min-height:122px;padding:13px}
+  .atelier-title{font-size:18px}
+  .atelier-caption{font-size:9px}
+  .toolbar{gap:8px;margin:24px 0 14px}
+  .search-box{min-height:47px}
+  .search-box input{font-size:12px}
+  .toolbar select{height:43px;font-size:10px}
+  .mood-row{gap:8px;padding:13px 0}
+  .mood-row .mood-label{width:100%;margin:0 0 2px}
+  .mood-chip{font-size:9px;padding:7px 10px}
+  .genre-explorer{padding:13px 0 15px}
+  .collection-stats{margin-top:17px}
+  .collection-stats>div{gap:8px;padding:11px 9px}
+  .collection-stats strong{font-size:23px}
+  .collection-stats span{font-size:7px;letter-spacing:.1em}
+  .results-line{font-size:7px;letter-spacing:.08em;padding:11px 0 13px}
+  .game-grid,.wishlist-grid{gap:14px;margin-top:16px}
+  .game-cover{height:clamp(185px,57vw,235px)}
+  .game-card-body{padding:17px}
+  .game-title{font-size:27px;margin:10px 0 8px}
+  .game-desc{font-size:11px;line-height:1.7}
+  .quote-section{padding:70px 16px}
+  .quote-section p{font-size:clamp(34px,9.5vw,43px)}
+  .game-detail-page{padding:28px 5% 68px}
+  .detail-layout{padding-top:22px;gap:25px}
+  .detail-heading{font-size:clamp(3.25rem,14vw,4rem)}
+  .detail-lead{font-size:13px}
+  .detail-description{font-size:12px;line-height:1.85}
+  .detail-sidebar{padding:17px}
+  .related-section{padding-top:52px;margin-top:48px}
+  .related-section h2{font-size:37px}
+  .site-footer{padding:24px 5%;gap:12px}
+}
+@media(max-width:380px){
+  .brand{font-size:10px;letter-spacing:.1em}
+  .main-nav{gap:9px;font-size:9px}
+  .wishlist-link{font-size:10px}
+  .wishlist-link>span:first-child{font-size:17px}
+  .hero h1{font-size:3.35rem}
+  .hero-actions{align-items:flex-start;flex-direction:column}
+}
