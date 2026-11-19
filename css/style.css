@@ -955,3 +955,36 @@ html,body{background:#fff8e9;color:#1e382f;font-family:'Nunito Sans',sans-serif}
  .reference-village{left:7%;transform:scale(.76);transform-origin:bottom left}
  .reference-tree{transform:scale(.72);transform-origin:top right}
 }
+
+
+/* Art direction v2: layered pixel dioramas */
+.game-cover:not(:has(img)){background:linear-gradient(180deg,var(--scene-sky) 0 55%,var(--scene-mid) 55% 100%);overflow:hidden}
+.cover-cloud{position:absolute;z-index:1;width:34px;height:9px;top:23%;left:14%;background:#fff9e9;box-shadow:8px -7px 0 #fff9e9,18px -7px 0 #fff9e9,27px 0 0 #fff9e9;opacity:.88;animation:cloud-drift 14s ease-in-out infinite alternate}
+.cover-cloud.cloud-b{left:63%;top:15%;transform:scale(.65);animation-delay:-5s}
+@keyframes cloud-drift{to{translate:18px 0}}
+.cover-mountain{position:absolute;z-index:1;bottom:24%;height:52%;width:78%;clip-path:polygon(0 100%,0 75%,14% 75%,14% 58%,28% 58%,28% 35%,42% 35%,42% 15%,55% 15%,55% 0,69% 0,69% 24%,82% 24%,82% 52%,100% 52%,100% 100%);background:var(--scene-ridge);filter:drop-shadow(0 5px 0 #344f3c55)}
+.mountain-back{left:-17%;opacity:.78;transform:scale(.88);transform-origin:bottom}
+.mountain-front{right:-23%;height:44%;background:var(--scene-ground);opacity:.9;transform:scaleX(-1)}
+.cover-water{position:absolute;z-index:2;left:0;right:0;bottom:20%;height:13%;background:repeating-linear-gradient(0deg,#75c9d2 0 5px,#9de0d9 5px 9px);clip-path:polygon(0 18%,18% 0,42% 22%,68% 5%,100% 24%,100% 100%,0 100%);opacity:.88}
+.cover-tree{position:absolute;z-index:3;bottom:25%;width:13px;height:32px;background:#76553c;box-shadow:0 10px #76553c}
+.cover-tree:before{content:"";position:absolute;left:-11px;top:-17px;width:34px;height:27px;background:#4c9c58;box-shadow:8px -8px 0 #69b95f,-8px 5px 0 #69b95f}
+.tree-a{left:15%}.tree-b{right:13%;transform:scale(.72);transform-origin:bottom}
+.cover-house{position:absolute;z-index:4;left:39%;bottom:25%;width:36px;height:28px;background:#f3ca8b;box-shadow:inset 0 -9px #b87554,3px 4px 0 #574a43}
+.cover-house:before{content:"";position:absolute;left:-5px;top:-13px;width:46px;height:18px;background:#b96558;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.cover-house:after{content:"";position:absolute;left:14px;bottom:0;width:8px;height:17px;background:#79533f;box-shadow:10px -10px 0 -2px #fff0ba}
+.cover-character{position:absolute;z-index:5;left:52%;bottom:24%;width:14px;height:18px;background:#f6e7c7;box-shadow:0 5px #343d36,4px 18px 0 -3px #343d36;image-rendering:pixelated}
+.cover-character:before{content:"";position:absolute;left:2px;top:-6px;width:10px;height:8px;background:#343d36;box-shadow:3px 4px 0 -2px #fff}
+.cover-character i{position:absolute;left:4px;top:5px;width:2px;height:2px;background:#252b29;box-shadow:5px 0 #252b29}
+.cover-sun{z-index:2!important}
+.cover-index,.cover-type{z-index:8!important}
+.game-cover:not(:has(img)) .cover-ridge,.game-cover:not(:has(img)) .cover-pixels{display:none}
+.scene-a-short-hike .cover-water{height:20%;background:repeating-linear-gradient(0deg,#69c3ce 0 5px,#a3e0d7 5px 9px)}
+.scene-celeste .cover-mountain{background:#9e9ed0}
+.scene-celeste .cover-water{display:none}
+.scene-eastward .cover-house{background:#e0a96e}
+.scene-moonlighter .cover-water{background:#687c9a}
+.scene-stardew-valley .cover-house{left:34%;transform:scale(1.28)}
+.scene-minami-lane .cover-house{left:45%;background:#f5b8a0;transform:scale(1.18)}
+.scene-undertale .cover-tree{display:none}
+.scene-chicory-a-colorful-tale .cover-water{background:repeating-linear-gradient(0deg,#d99bc2 0 5px,#f1c3db 5px 9px)}
+@media(prefers-reduced-motion:reduce){.cover-cloud{animation:none}}
