@@ -859,3 +859,99 @@ html,body{background:#fff8e9;color:#1e382f;font-family:'Nunito Sans',sans-serif}
 .featured-layout .game-grid{margin-top:0}
 .featured-layout .game-meta>span:first-child{padding:4px 9px;border-radius:20px;background:#4d8955;color:#fff;font-size:10px;letter-spacing:0;text-transform:none}
 @media(max-width:760px){.reference-world .mascot-panda{right:25%;bottom:10%}}
+
+
+/* PIXORIA visual upgrade — richer pixel-world artwork */
+.reference-world{
+  isolation:isolate;
+  image-rendering:pixelated;
+  background:
+    radial-gradient(ellipse at 76% 19%,#fff7b8 0 5%,transparent 5.5%),
+    linear-gradient(180deg,#70c8f5 0%,#bceafa 48%,#cceba2 49%,#86c55c 75%,#5d9e48 100%);
+}
+.reference-world:before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(90deg,transparent 0 7%,#ffffff20 7% 7.5%,transparent 7.5% 100%),
+    repeating-linear-gradient(0deg,transparent 0 31px,#ffffff12 31px 32px);
+  opacity:.45;
+}
+.reference-cloud{height:22px;width:78px;top:13%;left:8%;border-radius:0;background:#fff;
+  box-shadow:18px -12px 0 #fff,38px -12px 0 #fff,56px 0 0 #fff,72px 0 0 #fff;
+}
+.reference-cloud.cloud-two{left:48%;top:25%;transform:scale(.72)}
+.reference-castle{font-size:0;left:21%;top:9%;width:104px;height:116px;z-index:1;
+  background:
+    linear-gradient(#8875a8,#8875a8) 0 35px/104px 81px no-repeat,
+    linear-gradient(#a998c5,#a998c5) 12px 0/25px 52px no-repeat,
+    linear-gradient(#a998c5,#a998c5) 67px 0/25px 52px no-repeat,
+    linear-gradient(#f5d68e,#f5d68e) 43px 65px/18px 51px no-repeat;
+  filter:drop-shadow(6px 6px 0 #67547d);
+}
+.reference-hill{height:38%;border-radius:0;clip-path:polygon(0 45%,10% 45%,10% 30%,22% 30%,22% 17%,39% 17%,39% 8%,57% 8%,57% 22%,72% 22%,72% 38%,86% 38%,86% 54%,100% 54%,100% 100%,0 100%)}
+.hill-one{left:-4%;bottom:25%;width:78%;background:#83c86c}
+.hill-two{right:-10%;bottom:22%;width:78%;height:43%;background:#69b65d;clip-path:polygon(0 50%,12% 50%,12% 30%,28% 30%,28% 14%,48% 14%,48% 0,66% 0,66% 20%,82% 20%,82% 42%,100% 42%,100% 100%,0 100%)}
+.reference-village{left:12%;bottom:29%;gap:13px}
+.reference-village span{position:relative;width:58px;height:54px;border:0;clip-path:polygon(0 30%,50% 0,100% 30%,100% 100%,0 100%);
+  background:linear-gradient(90deg,#f6d29b 0 48%,#eab77c 48% 100%);
+  filter:drop-shadow(4px 5px 0 #885b3b);
+}
+.reference-village span:after{content:"";position:absolute;left:40%;bottom:0;width:15px;height:25px;background:#8b6044;box-shadow:0 -19px 0 -3px #9fd7e9}
+.reference-village span:nth-child(2){width:76px;height:77px}
+.reference-tree{right:-1%;top:-7%;width:115px;height:125px;border-radius:0;background:#4c9c4c;
+  box-shadow:-24px 27px 0 #65b653,-48px 53px 0 #438d45,20px 45px 0 #72bd55,42px 72px 0 #3f8742;
+}
+.reference-ground{height:15%;border-top:9px solid #70b94d;
+  background:repeating-linear-gradient(90deg,#98623f 0 18px,#b77b4c 18px 36px);
+}
+.reference-ground:before{content:"";position:absolute;left:0;right:0;top:-17px;height:8px;background:repeating-linear-gradient(90deg,#a2d46a 0 24px,#6eb84e 24px 48px)}
+.reference-flowers{font-size:20px;text-shadow:2px 2px #b87943,4px 4px #fff1b8}
+.mascot-panda{filter:drop-shadow(0 9px 0 #345d3d55);image-rendering:pixelated}
+.panda-head svg{filter:drop-shadow(4px 5px 0 #263c32)}
+.panda-headphones{border-radius:7px;border-width:8px;box-shadow:inset 0 0 0 4px #d8f2a4,4px 4px 0 #285b3b}
+.panda-scarf{border-radius:5px;transform:rotate(-4deg);box-shadow:0 6px 0 #477b43}
+.panda-tablet{border-radius:3px;box-shadow:0 5px 0 #263a37,4px 8px 0 #263a3722}
+.hero-art-sign{border-radius:3px;box-shadow:0 5px 0 #805333,4px 8px 0 #4d754322}
+.game-cover:not(:has(img)){
+  position:relative;overflow:hidden;isolation:isolate;image-rendering:pixelated;
+  background:
+    linear-gradient(180deg,var(--scene-sky,#a7d7e8) 0 48%,var(--scene-mid,#83b76c) 48% 70%,var(--scene-ground,#456b48) 70% 100%);
+}
+.game-cover:not(:has(img)):before{
+  content:"";position:absolute;z-index:1;left:-3%;right:-3%;bottom:22%;height:48%;
+  background:var(--scene-ridge,#67915c);
+  clip-path:polygon(0 72%,9% 72%,9% 54%,19% 54%,19% 31%,31% 31%,31% 14%,43% 14%,43% 35%,53% 35%,53% 8%,66% 8%,66% 29%,78% 29%,78% 49%,90% 49%,90% 66%,100% 66%,100% 100%,0 100%);
+  filter:drop-shadow(0 5px 0 #345c42);
+}
+.game-cover:not(:has(img)):after{
+  content:"";position:absolute;z-index:2;inset:0;pointer-events:none;
+  background:
+    linear-gradient(90deg,transparent 0 12%,#ffffff18 12% 13%,transparent 13% 100%),
+    repeating-linear-gradient(0deg,transparent 0 17px,#ffffff0b 17px 18px);
+  mix-blend-mode:screen;
+}
+.game-cover .cover-sun{z-index:2;width:18%;right:18%;top:15%;border-radius:0;background:var(--scene-light,#ffe7a0);
+  box-shadow:0 0 0 5px #fff5c522,0 0 32px #fff2b655;
+}
+.game-cover .cover-world{z-index:3;height:24%;background:repeating-linear-gradient(90deg,var(--scene-ground,#456b48) 0 14px,color-mix(in srgb,var(--scene-ground,#456b48),#fff 12%) 14px 28px)}
+.game-cover .cover-pixels{z-index:4;width:7px;height:7px;left:23%;bottom:29%;background:#fff0b8;
+  box-shadow:14px -12px #fff0b8,28px 2px #fff0b8,56px -18px #fff0b8,84px -3px #fff0b8,112px -22px #fff0b8,132px 8px #fff0b8;
+}
+.game-cover .cover-index,.game-cover .cover-type{z-index:5;text-shadow:0 1px 3px #20352c88}
+.scene-a-short-hike{--scene-sky:#9fdcf1;--scene-mid:#b4d987;--scene-ground:#4f9854;--scene-ridge:#73b66b;--scene-light:#fff0a6}
+.scene-celeste{--scene-sky:#a6b4e6;--scene-mid:#e6a8bc;--scene-ground:#514d83;--scene-ridge:#817bb4;--scene-light:#fff0cf}
+.scene-eastward{--scene-sky:#e7a77d;--scene-mid:#b87c63;--scene-ground:#45545a;--scene-ridge:#7d6872;--scene-light:#ffe0a2}
+.scene-moonlighter{--scene-sky:#647c91;--scene-mid:#6c927f;--scene-ground:#304e50;--scene-ridge:#526f6b;--scene-light:#ffd18a}
+.scene-stardew-valley{--scene-sky:#8ed1ed;--scene-mid:#b8d77c;--scene-ground:#4d9850;--scene-ridge:#72b75e;--scene-light:#fff0a4}
+.scene-undertale{--scene-sky:#666b91;--scene-mid:#837b9e;--scene-ground:#393b59;--scene-ridge:#5a587b;--scene-light:#f5dca9}
+.scene-minami-lane{--scene-sky:#f3b9ad;--scene-mid:#e8c88d;--scene-ground:#6b9d72;--scene-ridge:#a9c98a;--scene-light:#fff0bc}
+.scene-a-space-for-the-unbound{--scene-sky:#8dc9e5;--scene-mid:#e3bb8d;--scene-ground:#568b58;--scene-ridge:#77aa69;--scene-light:#fff0ad}
+.scene-chicory-a-colorful-tale{--scene-sky:#e9b8d8;--scene-mid:#d6c8a0;--scene-ground:#6d9b83;--scene-ridge:#a0b78b;--scene-light:#fff2b8}
+.game-card{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.game-card:hover{transform:translateY(-5px);box-shadow:0 12px 25px #405b3a20}
+@media(max-width:760px){
+ .reference-world{height:315px}
+ .reference-castle{transform:scale(.72);transform-origin:top left}
+ .reference-village{left:7%;transform:scale(.76);transform-origin:bottom left}
+ .reference-tree{transform:scale(.72);transform-origin:top right}
+}
