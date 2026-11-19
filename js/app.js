@@ -94,8 +94,9 @@
   $("wishlist-grid").addEventListener("keydown",event=>{const article=event.target.closest("[data-game]");if(article&&(event.key==="Enter"||event.key===" ")){event.preventDefault();openGame(article.dataset.game);}});
   document.querySelectorAll("[data-mood]").forEach(button=>button.addEventListener("click",()=>{
     activeMood=button.dataset.mood;
-    document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item===button));
+    document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood===activeMood));
     renderGames();
+    if(button.classList.contains("atelier-card")) $("game-grid").scrollIntoView({behavior:"smooth",block:"start"});
   }));
   $("clear-filters").addEventListener("click",()=>{$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("price-filter").value="all";$("sort-filter").value="featured";renderGenreChips();activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));renderGames();});
   $("dialog-close").addEventListener("click",()=>$("game-dialog").close());
