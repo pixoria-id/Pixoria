@@ -33,11 +33,11 @@
   }
   function card(game,index) {
     const saved=getWishlist().includes(gameId(game));
-    return '<article class="game-card" data-game="'+escapeHtml(gameId(game))+'" tabindex="0" role="button" aria-label="View '+escapeHtml(game.title)+' details">'+coverArt(game,index)+'<div class="game-card-body"><div class="game-meta"><span>'+escapeHtml((game.genres||["Pixel game"])[0])+'</span><span>✦ CURATED</span></div><h3 class="game-title">'+escapeHtml(game.title)+'</h3><p class="game-desc">'+escapeHtml(game.short_description || game.description || "A little world waiting to be discovered.")+'</p><div class="game-card-foot"><div class="tag-list">'+tags(game).map(t=>'<span class="tag">'+escapeHtml(t)+'</span>').join("")+'</div><button class="save-button '+(saved?"saved":"")+'" data-save="'+escapeHtml(gameId(game))+'" aria-label="'+(saved?"Remove from":"Add to")+' wishlist">'+(saved?"♥":"♡")+'</button></div><span class="card-discover">DISCOVER WORLD <span>↗</span></span></div></article>';
+    return '<article class="game-card" data-game="'+escapeHtml(gameId(game))+'" tabindex="0" aria-label="View '+escapeHtml(game.title)+' details">'+coverArt(game,index)+'<div class="game-card-body"><div class="game-meta"><span>'+escapeHtml((game.genres||["Pixel game"])[0])+'</span><span class="price-label '+escapeHtml(game.price_type||"unknown")+'">'+escapeHtml(game.price_type==="free"?"FREE":game.price_type==="paid"?"PAID":"PRICE N/A")+'</span></div><h3 class="game-title">'+escapeHtml(game.title)+'</h3><p class="game-desc">'+escapeHtml(game.short_description || game.description || "A little world waiting to be discovered.")+'</p><div class="game-card-foot"><div class="tag-list">'+tags(game).map(t=>'<span class="tag">'+escapeHtml(t)+'</span>').join("")+'</div><button class="save-button '+(saved?"saved":"")+'" data-save="'+escapeHtml(gameId(game))+'" aria-label="'+(saved?"Remove from":"Add to")+' wishlist">'+(saved?"♥":"♡")+'</button></div><span class="card-discover">DISCOVER WORLD <span>↗</span></span></div></article>';
   }
   function renderGames() {
-    const query=$("search-input").value.trim().toLowerCase(), genre=$("genre-filter").value, platform=$("platform-filter").value, sort=$("sort-filter").value;
-    let filtered=games.filter(g=>(!query || [g.title,g.short_description,g.description,...(g.genres||[]),...(g.mood_tags||[])].join(" ").toLowerCase().includes(query))&&(genre==="all"||(g.genres||[]).some(x=>x.toLowerCase()===genre.toLowerCase()))&&(platform==="all"||(g.platforms||[]).some(x=>x.toLowerCase()===platform.toLowerCase()))&&(activeMood==="all"||(g.mood_tags||[]).some(x=>x.toLowerCase().includes(activeMood))||(g.genres||[]).some(x=>x.toLowerCase().includes(activeMood))));
+    const query=$("search-input").value.trim().toLowerCase(), genre=$("genre-filter").value, platform=$("platform-filter").value, price=$("price-filter").value, sort=$("sort-filter").value;
+    let filtered=games.filter(g=>(!query || [g.title,g.short_description,g.description,g.developer,g.publisher,...(g.genres||[]),...(g.platforms||[]),...(g.mood_tags||[])].join(" ").toLowerCase().includes(query))&&(genre==="all"||(g.genres||[]).some(x=>x.toLowerCase()===genre.toLowerCase()))&&(platform==="all"||(g.platforms||[]).some(x=>x.toLowerCase()===platform.toLowerCase()))&&(price==="all"||g.price_type===price)&&(activeMood==="all"||(g.mood_tags||[]).some(x=>x.toLowerCase().includes(activeMood))||(g.genres||[]).some(x=>x.toLowerCase().includes(activeMood))));
     if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title)); if(sort==="za") filtered.sort((a,b)=>b.title.localeCompare(a.title)); if(sort==="featured") filtered.sort((a,b)=>Number(b.is_featured)-Number(a.is_featured));
     $("results-count").textContent=filtered.length+" LITTLE WORLD"+(filtered.length===1?"":"S")+" TO EXPLORE";
     $("game-grid").innerHTML=filtered.map(card).join(""); $("empty-state").hidden=filtered.length>0;
@@ -64,7 +64,7 @@
     const save=event.target.closest("[data-save]"); if(save){event.stopPropagation();toggleWishlist(save.dataset.save);return;}
     const article=event.target.closest("[data-game]"); if(article && !event.target.closest("button"))openGame(article.dataset.game);
   });
-  ["search-input","genre-filter","platform-filter","sort-filter"].forEach(id=>$(id).addEventListener(id==="search-input"?"input":"change",renderGames));
+  ["search-input","genre-filter","platform-filter","price-filter","sort-filter"].forEach(id=>$(id).addEventListener(id==="search-input"?"input":"change",renderGames));
   $("game-grid").addEventListener("keydown",event=>{const article=event.target.closest("[data-game]");if(article&&(event.key==="Enter"||event.key===" ")){event.preventDefault();openGame(article.dataset.game);}});
   $("wishlist-grid").addEventListener("keydown",event=>{const article=event.target.closest("[data-game]");if(article&&(event.key==="Enter"||event.key===" ")){event.preventDefault();openGame(article.dataset.game);}});
   document.querySelectorAll("[data-mood]").forEach(button=>button.addEventListener("click",()=>{
@@ -72,7 +72,7 @@
     document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item===button));
     renderGames();
   }));
-  $("clear-filters").addEventListener("click",()=>{$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("sort-filter").value="featured";activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));renderGames();});
+  $("clear-filters").addEventListener("click",()=>{$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("price-filter").value="all";$("sort-filter").value="featured";activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));renderGames();});
   $("dialog-close").addEventListener("click",()=>$("game-dialog").close());
   $("game-dialog").addEventListener("click",e=>{if(e.target===$("game-dialog"))$("game-dialog").close();});
   function populateFilters() {
@@ -92,6 +92,14 @@
       catch(error){console.warn("Pixoria database unavailable; showing starter collection.",error);}
     }
     games=fallbackGames; populateFilters(); renderGames();
+  }
+
+  const navLinks=[...document.querySelectorAll(".main-nav a")];
+  if("IntersectionObserver" in window){
+    const sectionObserver=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(link=>link.classList.toggle("active",link.getAttribute("href")==="#"+entry.target.id));}});
+    },{rootMargin:"-35% 0px -55% 0px"});
+    ["home","discover","about"].forEach(id=>{const section=$(id);if(section)sectionObserver.observe(section);});
   }
   updateWishlistCount(); loadGames();
 })();
