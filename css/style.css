@@ -463,3 +463,30 @@ button,a,input,select{ -webkit-tap-highlight-color:transparent}
   .detail-mood-tags span{font-size:8px;padding:6px 9px}
   .detail-sidebar .detail-facts{grid-template-columns:1fr}
 }
+
+
+/* Eleventh pass — searchable catalogue experience */
+.search-wrap{position:relative;flex:1 1 280px;min-width:220px;z-index:6}
+.search-wrap .search-box{width:100%;min-width:0}
+.search-box:focus-within{border-color:rgba(213,169,104,.7);box-shadow:0 0 0 3px rgba(213,169,104,.08)}
+.search-suggestions{position:absolute;top:calc(100% + 9px);left:0;right:0;z-index:20;padding:7px;background:#1b2820;border:1px solid rgba(213,169,104,.28);box-shadow:0 18px 38px rgba(0,0,0,.32)}
+.suggestion-item{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 13px;border:0;background:transparent;color:var(--cream);text-align:left;cursor:pointer}
+.suggestion-item:hover,.suggestion-item:focus-visible{background:rgba(213,169,104,.1);outline:none}
+.suggestion-item span{font:600 14px var(--serif)}
+.suggestion-item small{font:9px var(--sans);color:#aab5a5;text-align:right}
+.suggestion-empty{margin:0;padding:13px;color:#aab5a5;font-size:11px}
+.active-filters{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:5px 0 12px}
+.active-filter-label{font-size:8px;letter-spacing:.16em;color:#9eaa9b;margin-right:3px}
+.active-filter{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid rgba(213,169,104,.25);border-radius:30px;background:rgba(213,169,104,.07);color:#e2c99b;font:500 9px var(--sans);cursor:pointer}
+.active-filter span{font-size:13px;line-height:.8;color:#d6b478}
+.active-filter:hover{background:rgba(213,169,104,.15);border-color:rgba(213,169,104,.5)}
+.clear-all-filters{border:0;background:transparent;color:#aeb9aa;font:500 9px var(--sans);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px}
+.clear-all-filters:hover{color:#f0eadb}
+@media(max-width:620px){
+ .search-wrap{flex:1 1 100%;min-width:0}
+ .search-suggestions{top:calc(100% + 6px)}
+ .suggestion-item{padding:11px 10px}
+ .suggestion-item span{font-size:13px}
+ .active-filters{gap:6px;margin:3px 0 10px}
+ .active-filter{font-size:8px;padding:6px 8px}
+}
