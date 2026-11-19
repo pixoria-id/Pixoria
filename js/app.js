@@ -147,7 +147,7 @@
     $("active-filters").hidden=!chips.length;
   }
   function renderGames() {
-    const query=normalize($("search-input").value).split(/\s+/).filter(Boolean), genre=$("genre-filter").value, platform=$("platform-filter").value, price=$("price-filter").value, sort=$("sort-filter").value;
+    const query=$("search-input").value, genre=$("genre-filter").value, platform=$("platform-filter").value, price=$("price-filter").value, sort=$("sort-filter").value;
     let filtered=games.filter(g=>{const text=searchText(g);return matchesSearch(g,query)&&(genre==="all"||(g.genres||[]).some(x=>normalize(x)===normalize(genre)))&&(platform==="all"||(g.platforms||[]).some(x=>normalize(x)===normalize(platform)))&&(price==="all"||g.price_type===price)&&(activeMood==="all"||(g.mood_tags||[]).some(x=>normalize(x).includes(activeMood))||(g.genres||[]).some(x=>normalize(x).includes(activeMood)));});
     if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title));
     if(sort==="za") filtered.sort((a,b)=>b.title.localeCompare(a.title));
