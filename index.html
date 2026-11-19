@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101714">
+  <meta name="theme-color" content="#0d1411">
   <meta name="description" content="PIXORIA.ID — Discover Your Little World. Temukan game pixel-art cozy untuk menemani waktumu.">
   <title>PIXORIA.ID — Discover Your Little World</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="js/app.js"></script>
@@ -22,7 +22,6 @@
     </nav>
     <a class="wishlist-link" href="#wishlist"><span>♡</span> <span class="wishlist-label">Wishlist</span><b id="wishlist-count">0</b></a>
   </header>
-
   <main>
     <section class="hero" id="home">
       <div class="hero-copy">
@@ -35,15 +34,14 @@
       <div class="hero-art" role="img" aria-label="Pixel art malam dengan pondok kecil di tepi danau">
         <div class="moon"></div><div class="stars">✦　 ·　 ✧　　 ·　 ✦<br>　 ·　　 ✦　　·</div>
         <div class="mountain mountain-back"></div><div class="mountain mountain-front"></div>
-        <div class="lake"></div><div class="reflection"></div>
-        <div class="island"></div><div class="cabin"><div class="roof"></div><div class="cabin-body"><i></i><b></b></div><div class="door"></div></div>
+        <div class="lake"></div><div class="reflection"></div><div class="island"></div>
+        <div class="cabin"><div class="roof"></div><div class="cabin-body"><i></i><b></b></div><div class="door"></div></div>
         <div class="tree tree-a"></div><div class="tree tree-b"></div><div class="tree tree-c"></div>
         <div class="fireflies">·　✦　 ·　　 ✧　 ·</div>
         <div class="art-caption"><span>01 / 04</span><span>THE QUIET HOURS</span></div>
       </div>
       <div class="hero-bottom"><span>SCROLL TO WANDER</span><span class="scroll-line"></span><span>EST. FOR THE LOVE OF PIXELS</span></div>
     </section>
-
     <section class="discover-section section-wrap" id="discover">
       <div class="section-heading">
         <div><div class="eyebrow"><span class="eyebrow-line"></span> THE COLLECTION</div><h2>Worlds worth <em>getting lost in.</em></h2></div>
@@ -51,27 +49,21 @@
       </div>
       <div class="toolbar">
         <label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Search a little world..." autocomplete="off"></label>
-        <select id="genre-filter" aria-label="Filter by genre"><option value="all">All genres</option><option>Adventure</option><option>Simulation</option><option>RPG</option><option>Puzzle</option><option>Farming</option><option>Life Sim</option></select>
-        <select id="platform-filter" aria-label="Filter by platform"><option value="all">All platforms</option><option>Android</option><option>PC</option><option>iOS</option><option>Web</option></select>
+        <select id="genre-filter" aria-label="Filter by genre"><option value="all">All genres</option></select>
+        <select id="platform-filter" aria-label="Filter by platform"><option value="all">All platforms</option></select>
         <select id="sort-filter" aria-label="Sort games"><option value="featured">Featured</option><option value="az">A — Z</option><option value="za">Z — A</option></select>
       </div>
       <div class="results-line"><span id="results-count">A FEW WORLDS TO BEGIN WITH</span><span>HANDPICKED WITH CARE ✳</span></div>
-      <div class="game-grid" id="game-grid">
-        <article class="loading-card">Gathering little worlds<span>✦</span></article>
-      </div>
+      <div class="game-grid" id="game-grid"><article class="loading-card">Gathering little worlds<span>✦</span></article></div>
       <div class="empty-state" id="empty-state" hidden><span>✧</span><h3>No worlds found</h3><p>Try another title or clear your filters.</p><button class="text-link" id="clear-filters">Clear filters →</button></div>
     </section>
-
     <section class="quote-section" id="about"><div class="quote-star">✳</div><p>“Sometimes, all you need<br>is <em>another little world.</em>”</p><span>WELCOME TO PIXORIA</span></section>
-
     <section class="wishlist-section section-wrap" id="wishlist">
       <div class="wishlist-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> SAVED FOR LATER</div><h2>Your little <em>collection.</em></h2></div><p>Keep the worlds you want to visit close.</p></div>
       <div class="wishlist-grid" id="wishlist-grid"><p class="wishlist-empty">Your wishlist is waiting for its first little world. ♡</p></div>
     </section>
   </main>
-
   <footer class="site-footer"><a class="brand" href="#"><span class="brand-mark">✳</span><span>PIXORIA<span class="brand-dot">.</span>ID</span></a><p>Discover Your Little World.</p><span>MADE FOR THE LOVE OF PIXELS · © 2026 PIXORIA</span></footer>
-
   <dialog class="game-dialog" id="game-dialog"><button class="dialog-close" id="dialog-close" aria-label="Close">×</button><div id="dialog-content"></div></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
