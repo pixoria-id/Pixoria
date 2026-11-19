@@ -44,14 +44,36 @@
     const freeCount=games.filter(game=>game.price_type==="free").length;
     $("collection-stats").innerHTML='<div><strong>'+games.length+'</strong><span>WORLDS TO DISCOVER</span></div><div><strong>'+genreCount+'</strong><span>GENRES</span></div><div><strong>'+platformCount+'</strong><span>PLATFORMS</span></div><div><strong>'+freeCount+'</strong><span>FREE TO PLAY</span></div>';
   }
+  const normalize = value => String(value ?? "").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLowerCase().trim();
+  function searchText(game) {
+    return normalize([game.title,game.short_description,game.description,game.developer,game.publisher,...(game.genres||[]),...(game.platforms||[]),...(game.mood_tags||[])].join(" "));
+  }
+  function renderSearchSuggestions() {
+    const input=$("search-input"), panel=$("search-suggestions"), query=normalize(input.value);
+    if(!query){panel.hidden=true;input.setAttribute("aria-expanded","false");return;}
+    const matches=games.filter(game=>searchText(game).includes(query)).slice(0,5);
+    panel.innerHTML=matches.length?matches.map(game=>'<button type="button" class="suggestion-item" role="option" data-suggest="'+escapeHtml(gameId(game))+'"><span>'+escapeHtml(game.title)+'</span><small>'+escapeHtml((game.genres||[]).slice(0,2).join(" · ")||"Pixel game")+'</small></button>').join(""):'<p class="suggestion-empty">No matching worlds yet</p>';
+    panel.hidden=false;input.setAttribute("aria-expanded","true");
+  }
+  function renderActiveFilters() {
+    const chips=[];
+    const add=(key,label)=>chips.push('<button type="button" class="active-filter" data-clear-filter="'+key+'">'+escapeHtml(label)+' <span aria-hidden="true">×</span></button>');
+    if($("search-input").value.trim()) add("search",'Search: '+$("search-input").value.trim());
+    if($("genre-filter").value!=="all") add("genre",$("genre-filter").value);
+    if($("platform-filter").value!=="all") add("platform",$("platform-filter").value);
+    if($("price-filter").value!=="all") add("price",$("price-filter").value==="free"?"Free":"Paid");
+    if(activeMood!=="all") add("mood",activeMood.charAt(0).toUpperCase()+activeMood.slice(1));
+    $("active-filters").innerHTML=chips.length?'<span class="active-filter-label">FILTERING BY</span>'+chips.join("")+'<button type="button" class="clear-all-filters" data-clear-filter="all">Clear all</button>':"";
+    $("active-filters").hidden=!chips.length;
+  }
   function renderGames() {
-    const query=$("search-input").value.trim().toLowerCase(), genre=$("genre-filter").value, platform=$("platform-filter").value, price=$("price-filter").value, sort=$("sort-filter").value;
-    let filtered=games.filter(g=>(!query || [g.title,g.short_description,g.description,g.developer,g.publisher,...(g.genres||[]),...(g.platforms||[]),...(g.mood_tags||[])].join(" ").toLowerCase().includes(query))&&(genre==="all"||(g.genres||[]).some(x=>x.toLowerCase()===genre.toLowerCase()))&&(platform==="all"||(g.platforms||[]).some(x=>x.toLowerCase()===platform.toLowerCase()))&&(price==="all"||g.price_type===price)&&(activeMood==="all"||(g.mood_tags||[]).some(x=>x.toLowerCase().includes(activeMood))||(g.genres||[]).some(x=>x.toLowerCase().includes(activeMood))));
-    if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title)); if(sort==="za") filtered.sort((a,b)=>b.title.localeCompare(a.title)); if(sort==="featured") filtered.sort((a,b)=>Number(b.is_featured)-Number(a.is_featured));
+    const query=normalize($("search-input").value).split(/\\s+/).filter(Boolean), genre=$("genre-filter").value, platform=$("platform-filter").value, price=$("price-filter").value, sort=$("sort-filter").value;
+    let filtered=games.filter(g=>{const text=searchText(g);return query.every(term=>text.includes(term))&&(genre==="all"||(g.genres||[]).some(x=>normalize(x)===normalize(genre)))&&(platform==="all"||(g.platforms||[]).some(x=>normalize(x)===normalize(platform)))&&(price==="all"||g.price_type===price)&&(activeMood==="all"||(g.mood_tags||[]).some(x=>normalize(x).includes(activeMood))||(g.genres||[]).some(x=>normalize(x).includes(activeMood)));});
+    if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title)); if(sort==="za") filtered.sort((a,b)=>b.title.localeCompare(a.title)); if(sort==="featured") filtered.sort((a,b)=>Number(b.is_featured)-Number(a.is_featured)||a.title.localeCompare(b.title));
     renderCollectionStats();
-    $("results-count").textContent=filtered.length+" LITTLE WORLD"+(filtered.length===1?"":"S")+" TO EXPLORE";
+    $("results-count").textContent="SHOWING "+filtered.length+" OF "+games.length+" LITTLE WORLDS";
     $("game-grid").innerHTML=filtered.map(card).join(""); $("empty-state").hidden=filtered.length>0;
-    renderWishlist();
+    renderActiveFilters();renderWishlist();
   }
   function renderWishlist() {
     const saved=getWishlist(), selected=saved.map(id=>games.find(g=>gameId(g)===id)).filter(Boolean);
@@ -102,7 +124,12 @@
     const save=event.target.closest("[data-save]"); if(save){event.stopPropagation();toggleWishlist(save.dataset.save);return;}
     const article=event.target.closest("[data-game]"); if(article && !event.target.closest("button"))openGame(article.dataset.game);
   });
-  ["search-input","genre-filter","platform-filter","price-filter","sort-filter"].forEach(id=>$(id).addEventListener(id==="search-input"?"input":"change",renderGames));
+  $("search-input").addEventListener("input",()=>{renderSearchSuggestions();renderGames();});
+  ["genre-filter","platform-filter","price-filter","sort-filter"].forEach(id=>$(id).addEventListener("change",renderGames));
+  $("search-suggestions").addEventListener("click",event=>{const item=event.target.closest("[data-suggest]");if(!item)return;const game=games.find(entry=>gameId(entry)===item.dataset.suggest);if(!game)return;$("search-input").value=game.title;$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");renderGames();openGame(gameId(game));});
+  $("active-filters").addEventListener("click",event=>{const button=event.target.closest("[data-clear-filter]");if(!button)return;const key=button.dataset.clearFilter;if(key==="all"){resetDiscovery();return;}if(key==="search")$("search-input").value="";if(key==="genre")$("genre-filter").value="all";if(key==="platform")$("platform-filter").value="all";if(key==="price")$("price-filter").value="all";if(key==="mood"){activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));}renderGenreChips();renderSearchSuggestions();renderGames();});
+  document.addEventListener("click",event=>{if(!event.target.closest(".search-wrap")){$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");}});
+  document.addEventListener("keydown",event=>{if(event.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){event.preventDefault();$("search-input").focus();}if(event.key==="Escape"){$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");}});
   $("genre-filter").addEventListener("change",renderGenreChips);
   $("genre-chips").addEventListener("click",event=>{const chip=event.target.closest("[data-genre]");if(!chip)return;$("genre-filter").value=chip.dataset.genre;renderGenreChips();renderGames();$("game-grid").scrollIntoView({behavior:"smooth",block:"start"});});
   $("surprise-me").addEventListener("click",()=>{const visible=[...$("game-grid").querySelectorAll("[data-game]")].map(card=>games.find(game=>gameId(game)===card.dataset.game)).filter(Boolean);if(!visible.length){showToast("No little worlds match these filters yet");return;}const pick=visible[Math.floor(Math.random()*visible.length)];openGame(gameId(pick));});
@@ -115,7 +142,8 @@
     renderGames();
     if(button.classList.contains("atelier-card")) $("game-grid").scrollIntoView({behavior:"smooth",block:"start"});
   }));
-  $("clear-filters").addEventListener("click",()=>{$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("price-filter").value="all";$("sort-filter").value="featured";renderGenreChips();activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));renderGames();});
+  function resetDiscovery(){$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("price-filter").value="all";$("sort-filter").value="featured";renderGenreChips();activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));$("search-suggestions").hidden=true;renderGames();}
+  $("clear-filters").addEventListener("click",resetDiscovery);
   $("dialog-close").addEventListener("click",()=>$("game-dialog").close());
   $("game-dialog").addEventListener("click",e=>{if(e.target===$("game-dialog"))$("game-dialog").close();});
   function populateFilters() {
