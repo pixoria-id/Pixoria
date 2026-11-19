@@ -1130,3 +1130,43 @@ body{
 @media(prefers-reduced-motion:reduce){
  *,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+/* Piko character showcase — layered pixel scene and gentle idle motion */
+.community-card{
+  position:relative;isolation:isolate;overflow:hidden;
+  min-height:340px;padding:18px 14px 16px;
+  background:
+    radial-gradient(ellipse at 50% 35%,#e6f2d4 0 31%,transparent 31.5%),
+    linear-gradient(180deg,#fffdf5 0 72%,#f4efd9 72% 100%);
+}
+.community-card:before{
+  content:"";position:absolute;z-index:-1;left:12%;right:12%;bottom:106px;height:22px;
+  background:repeating-linear-gradient(90deg,#c7d9a8 0 12px,transparent 12px 20px);
+  opacity:.7;
+}
+.community-card:after{
+  content:"";position:absolute;z-index:-1;inset:14px 14px auto;height:10px;
+  background:repeating-linear-gradient(90deg,#e8bd65 0 8px,transparent 8px 17px);
+  opacity:.75;
+}
+.community-panda{
+  position:relative;width:176px;height:176px;margin:10px auto 13px;
+  border-radius:50%;background:radial-gradient(circle,#f8f4df 0 58%,#dcebc9 59% 69%,transparent 70%);
+  filter:drop-shadow(0 8px 0 rgba(66,104,64,.09));
+}
+.community-panda:before,.community-panda:after{
+  content:"";position:absolute;width:13px;height:13px;background:#eeb85a;
+  box-shadow:13px 0 #eeb85a,0 13px #eeb85a;transform:rotate(45deg);
+}
+.community-panda:before{left:5px;top:42px}
+.community-panda:after{right:13px;top:20px;transform:scale(.7) rotate(45deg)}
+.community-panda img{
+  position:relative;z-index:1;image-rendering:pixelated;
+  filter:drop-shadow(0 5px 0 rgba(44,76,48,.14));
+  animation:piko-idle 3.8s ease-in-out infinite;
+}
+.community-card:hover .community-panda img{transform:translateY(-7px) rotate(-2deg)}
+.community-card h3{position:relative;margin:4px 0 5px;text-shadow:0 2px #fff}
+.community-card>span{font-size:17px;filter:drop-shadow(0 2px #f3c7b5)}
+@keyframes piko-idle{0%,100%{translate:0 0}50%{translate:0 -5px}}
+@media(prefers-reduced-motion:reduce){.community-panda img{animation:none}}
