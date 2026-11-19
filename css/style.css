@@ -529,3 +529,10 @@ button,a,input,select{ -webkit-tap-highlight-color:transparent}
 .editor-pick-link{margin-top:auto;font-size:7px;letter-spacing:.13em;color:var(--sage)}
 @media(max-width:900px){.editors-picks{grid-template-columns:1fr}.editor-pick{grid-template-columns:120px minmax(0,1fr);min-height:118px}.editor-pick-art .game-cover{min-height:118px}.editors-heading{align-items:flex-start;flex-direction:column;gap:10px}}
 @media(max-width:600px){.editors-shelf{margin-top:26px;padding:22px 0}.editors-heading h3{font-size:29px}.editors-heading>p{max-width:320px}.editors-picks{gap:9px}.editor-pick{grid-template-columns:108px minmax(0,1fr);min-height:112px}.editor-pick-art .game-cover{min-height:112px}.editor-pick-copy{padding:12px 10px}.editor-pick-copy h4{font-size:16px}}
+
+
+/* Fourteenth pass — useful credits on catalogue cards */
+.game-credit{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:25px;margin:-5px 0 10px;padding-top:8px;border-top:1px solid rgba(226,225,204,.09);color:#9eaa9b;font:500 8px/1.4 var(--sans);letter-spacing:.045em}
+.game-credit span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.game-credit span:last-child{flex:0 0 auto;color:#c7b18b;font-variant-numeric:tabular-nums}
+@media(max-width:620px){.game-credit{font-size:7px;margin-bottom:8px}}
