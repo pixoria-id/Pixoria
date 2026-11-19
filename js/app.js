@@ -60,12 +60,23 @@
   $("clear-filters").addEventListener("click",()=>{$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("sort-filter").value="featured";renderGames();});
   $("dialog-close").addEventListener("click",()=>$("game-dialog").close());
   $("game-dialog").addEventListener("click",e=>{if(e.target===$("game-dialog"))$("game-dialog").close();});
+  function populateFilters() {
+    const fill = (id, values, label) => {
+      const select = $(id), current = select.value;
+      select.innerHTML = '<option value="all">' + label + '</option>' +
+        [...new Set(values.filter(Boolean))].sort((a,b)=>a.localeCompare(b))
+          .map(value => '<option value="' + escapeHtml(value) + '">' + escapeHtml(value) + '</option>').join("");
+      if ([...select.options].some(option => option.value === current)) select.value = current;
+    };
+    fill("genre-filter", games.flatMap(game => game.genres || []), "All genres");
+    fill("platform-filter", games.flatMap(game => game.platforms || []), "All platforms");
+  }
   async function loadGames() {
     if(client) {
-      try { const {data,error}=await client.from("games").select("*").eq("is_published",true).order("is_featured",{ascending:false}).order("title"); if(error)throw error; if(data?.length){games=data;renderGames();return;} }
+      try { const {data,error}=await client.from("games").select("*").eq("is_published",true).order("is_featured",{ascending:false}).order("title"); if(error)throw error; if(data?.length){games=data;populateFilters();renderGames();return;} }
       catch(error){console.warn("Pixoria database unavailable; showing starter collection.",error);}
     }
-    games=fallbackGames; renderGames();
+    games=fallbackGames; populateFilters(); renderGames();
   }
   updateWishlistCount(); loadGames();
 })();
