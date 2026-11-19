@@ -12,6 +12,7 @@
   ];
   const symbols = ["🌾","🌿","⛏️","🍱","🐈","🌙","🍄","🏡"];
   let games = [];
+  let activeMood = "all";
   let toastTimer;
   const $ = id => document.getElementById(id);
   const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -29,7 +30,7 @@
   }
   function renderGames() {
     const query=$("search-input").value.trim().toLowerCase(), genre=$("genre-filter").value, platform=$("platform-filter").value, sort=$("sort-filter").value;
-    let filtered=games.filter(g=>(!query || [g.title,g.short_description,g.description,...(g.genres||[]),...(g.mood_tags||[])].join(" ").toLowerCase().includes(query))&&(genre==="all"||(g.genres||[]).some(x=>x.toLowerCase()===genre.toLowerCase()))&&(platform==="all"||(g.platforms||[]).some(x=>x.toLowerCase()===platform.toLowerCase())));
+    let filtered=games.filter(g=>(!query || [g.title,g.short_description,g.description,...(g.genres||[]),...(g.mood_tags||[])].join(" ").toLowerCase().includes(query))&&(genre==="all"||(g.genres||[]).some(x=>x.toLowerCase()===genre.toLowerCase()))&&(platform==="all"||(g.platforms||[]).some(x=>x.toLowerCase()===platform.toLowerCase()))&&(activeMood==="all"||(g.mood_tags||[]).some(x=>x.toLowerCase().includes(activeMood))||(g.genres||[]).some(x=>x.toLowerCase().includes(activeMood))));
     if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title)); if(sort==="za") filtered.sort((a,b)=>b.title.localeCompare(a.title)); if(sort==="featured") filtered.sort((a,b)=>Number(b.is_featured)-Number(a.is_featured));
     $("results-count").textContent=filtered.length+" LITTLE WORLD"+(filtered.length===1?"":"S")+" TO EXPLORE";
     $("game-grid").innerHTML=filtered.map(card).join(""); $("empty-state").hidden=filtered.length>0;
@@ -57,7 +58,12 @@
     const article=event.target.closest("[data-game]"); if(article)openGame(article.dataset.game);
   });
   ["search-input","genre-filter","platform-filter","sort-filter"].forEach(id=>$(id).addEventListener(id==="search-input"?"input":"change",renderGames));
-  $("clear-filters").addEventListener("click",()=>{$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("sort-filter").value="featured";renderGames();});
+  document.querySelectorAll("[data-mood]").forEach(button=>button.addEventListener("click",()=>{
+    activeMood=button.dataset.mood;
+    document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item===button));
+    renderGames();
+  }));
+  $("clear-filters").addEventListener("click",()=>{$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("sort-filter").value="featured";activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));renderGames();});
   $("dialog-close").addEventListener("click",()=>$("game-dialog").close());
   $("game-dialog").addEventListener("click",e=>{if(e.target===$("game-dialog"))$("game-dialog").close();});
   function populateFilters() {
