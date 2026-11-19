@@ -209,3 +209,21 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .scene-celeste{--scene-sky:#8d879e;--scene-mid:#bd8290;--scene-ground:#4d405d;--scene-ridge:#78617d;--scene-light:#f0c7bb;--scene-pixel:#f4d7c8}
 .scene-moonlighter{--scene-sky:#4b5d68;--scene-mid:#6c7666;--scene-ground:#293a3b;--scene-ridge:#425b57;--scene-light:#e6bc79;--scene-pixel:#e8c68d}
 .scene-undertale{--scene-sky:#45485d;--scene-mid:#68617b;--scene-ground:#292b40;--scene-ridge:#4a465f;--scene-light:#e2d6ae;--scene-pixel:#d7c9a0}
+
+
+/* Fourth pass — discovery controls and editorial polish */
+.toolbar select{min-width:118px}
+.price-label{font-size:8px;letter-spacing:.16em;padding:5px 8px;border:1px solid rgba(216,180,119,.25);color:#d8c49c}
+.price-label.free{color:#b9d6ad;border-color:rgba(160,195,139,.3)}
+.price-label.paid{color:#e2c28b}
+.price-label.unknown{color:#aeb8a9}
+.main-nav a{position:relative;transition:color .2s}
+.main-nav a:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.main-nav a.active:after{transform:scaleX(1)}
+.main-nav a.active{color:#f1d6a5}
+.game-card{transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+.game-card:focus-visible{outline-offset:5px}
+.search-box input::placeholder{color:#8f9b8c}
+.toolbar select:hover{border-color:rgba(216,180,119,.4)}
+@media(max-width:850px){.toolbar select{flex:1}}
+@media(max-width:620px){.toolbar select{min-width:0;flex-basis:calc(50% - 6px)}.price-label{font-size:7px}}
