@@ -38,6 +38,11 @@
     const saved=getWishlist().includes(gameId(game));
     return '<article class="game-card" data-game="'+escapeHtml(gameId(game))+'" tabindex="0" aria-label="View '+escapeHtml(game.title)+' details">'+coverArt(game,index)+'<div class="game-card-body"><div class="game-meta"><span>'+escapeHtml((game.genres||["Pixel game"])[0])+'</span><span class="price-label '+escapeHtml(game.price_type||"unknown")+'">'+escapeHtml(game.price_type==="free"?"FREE":game.price_type==="paid"?"PAID":"PRICE N/A")+'</span></div><h3 class="game-title">'+escapeHtml(game.title)+'</h3><p class="game-desc">'+escapeHtml(game.short_description || game.description || "A little world waiting to be discovered.")+'</p><div class="game-card-foot"><div class="tag-list">'+tags(game).map(t=>'<span class="tag">'+escapeHtml(t)+'</span>').join("")+'</div><button class="save-button '+(saved?"saved":"")+'" data-save="'+escapeHtml(gameId(game))+'" aria-label="'+(saved?"Remove from":"Add to")+' wishlist">'+(saved?"♥":"♡")+'</button></div><span class="card-discover">DISCOVER WORLD <span>↗</span></span></div></article>';
   }
+  function renderEditorsPicks() {
+    const featured=games.filter(game=>game.is_featured);
+    const picks=[...featured,...games.filter(game=>!game.is_featured)].slice(0,3);
+    $("editors-picks").innerHTML=picks.map((game,index)=>'<article class="editor-pick" data-game="'+escapeHtml(gameId(game))+'" tabindex="0" aria-label="Discover '+escapeHtml(game.title)+'"><div class="editor-pick-art">'+coverArt(game,index)+'</div><div class="editor-pick-copy"><span class="editor-pick-number">0'+(index+1)+' / CURATOR\'S PICK</span><h4>'+escapeHtml(game.title)+'</h4><p>'+escapeHtml(game.short_description||"A little world waiting to be discovered.")+'</p><span class="editor-pick-link">STEP INSIDE ↗</span></div></article>').join("");
+  }
   function renderCollectionStats() {
     const genreCount=new Set(games.flatMap(game=>game.genres||[])).size;
     const platformCount=new Set(games.flatMap(game=>game.platforms||[])).size;
