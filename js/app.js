@@ -139,6 +139,8 @@
     const match=location.hash.match(/^#game\/(.+)$/);
     if(match){const slug=decodeURIComponent(match[1]);const game=games.find(item=>String(item.slug||item.id||item.title).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")===slug);if(game){openGame(gameId(game),false);return;}}
     showHome();
+    const target=location.hash.replace(/^#/,"");
+    if(homeSections.includes(target)){const section=$(target);if(section)section.scrollIntoView({behavior:"auto",block:"start"});}
   }
   function toggleWishlist(id) {
     const list=getWishlist(), exists=list.includes(id);
@@ -216,6 +218,16 @@
     },{rootMargin:"-35% 0px -55% 0px"});
     ["home","discover","about"].forEach(id=>{const section=$(id);if(section)sectionObserver.observe(section);});
   }
+  document.querySelectorAll(".main-nav a, .wishlist-link, .site-header .brand").forEach(link=>link.addEventListener("click",event=>{
+    event.preventDefault();
+    const href=link.getAttribute("href")||"#home";
+    const target=href==="#"?"home":href.slice(1);
+    if(!homeSections.includes(target))return;
+    history.pushState({section:target},"","#"+target);
+    showHome();
+    navLinks.forEach(item=>item.classList.toggle("active",item.getAttribute("href")==="#"+target));
+    $(target).scrollIntoView({behavior:"smooth",block:"start"});
+  }));
   window.addEventListener("hashchange",routeFromHash);
   window.addEventListener("popstate",routeFromHash);
   updateWishlistCount();
