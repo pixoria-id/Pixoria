@@ -23,10 +23,17 @@
   const showToast = message => { const el=$("toast"); el.textContent=message; el.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove("show"),2100); };
   const gameId = game => String(game.id || game.slug || game.title);
   const tags = game => [...(game.genres || []).slice(0,2), ...(game.platforms || []).slice(0,1)];
+  function sceneClass(game) {
+    const key = String(game.slug || game.title || "world").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+    return "scene-" + key;
+  }
+  function coverArt(game,index,large=false) {
+    if(game.cover_url) return '<div class="game-cover '+(large?"dialog-cover":"")+'"><img src="'+escapeHtml(game.cover_url)+'" alt="" loading="lazy"><span class="cover-index">PIXORIA / '+String(index+1).padStart(2,"0")+'</span><span class="cover-type">'+escapeHtml(game.price_type==="free"?"FREE TO PLAY":game.price_type==="paid"?"PAID":"DISCOVER")+'</span></div>';
+    return '<div class="game-cover '+(large?"dialog-cover":"")+' '+sceneClass(game)+'"><span class="cover-sun"></span><span class="cover-ridge"></span><span class="cover-world"></span><span class="cover-pixels"></span><span class="cover-index">PIXORIA / '+String(index+1).padStart(2,"0")+'</span><span class="cover-type">'+escapeHtml(game.price_type==="free"?"FREE TO PLAY":game.price_type==="paid"?"PAID":"DISCOVER")+'</span></div>';
+  }
   function card(game,index) {
     const saved=getWishlist().includes(gameId(game));
-    const cover=game.cover_url ? '<img src="'+escapeHtml(game.cover_url)+'" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">' : '<span class="cover-symbol">'+symbols[index%symbols.length]+'</span>';
-    return '<article class="game-card" data-game="'+escapeHtml(gameId(game))+'"><div class="game-cover">'+cover+'<span class="cover-index">PIXORIA / '+String(index+1).padStart(2,"0")+'</span><span class="cover-type">'+escapeHtml(game.price_type==="free"?"FREE TO PLAY":game.price_type==="paid"?"PAID":"DISCOVER")+'</span></div><div class="game-card-body"><div class="game-meta"><span>'+escapeHtml((game.genres||["Pixel game"])[0])+'</span><span>✦ CURATED</span></div><h3 class="game-title">'+escapeHtml(game.title)+'</h3><p class="game-desc">'+escapeHtml(game.short_description || game.description || "A little world waiting to be discovered.")+'</p><div class="game-card-foot"><div class="tag-list">'+tags(game).map(t=>'<span class="tag">'+escapeHtml(t)+'</span>').join("")+'</div><button class="save-button '+(saved?"saved":"")+'" data-save="'+escapeHtml(gameId(game))+'" aria-label="'+(saved?"Remove from":"Add to")+' wishlist">'+(saved?"♥":"♡")+'</button></div></div></article>';
+    return '<article class="game-card" data-game="'+escapeHtml(gameId(game))+'" tabindex="0" role="button" aria-label="View '+escapeHtml(game.title)+' details">'+coverArt(game,index)+'<div class="game-card-body"><div class="game-meta"><span>'+escapeHtml((game.genres||["Pixel game"])[0])+'</span><span>✦ CURATED</span></div><h3 class="game-title">'+escapeHtml(game.title)+'</h3><p class="game-desc">'+escapeHtml(game.short_description || game.description || "A little world waiting to be discovered.")+'</p><div class="game-card-foot"><div class="tag-list">'+tags(game).map(t=>'<span class="tag">'+escapeHtml(t)+'</span>').join("")+'</div><button class="save-button '+(saved?"saved":"")+'" data-save="'+escapeHtml(gameId(game))+'" aria-label="'+(saved?"Remove from":"Add to")+' wishlist">'+(saved?"♥":"♡")+'</button></div><span class="card-discover">DISCOVER WORLD <span>↗</span></span></div></article>';
   }
   function renderGames() {
     const query=$("search-input").value.trim().toLowerCase(), genre=$("genre-filter").value, platform=$("platform-filter").value, sort=$("sort-filter").value;
@@ -43,7 +50,7 @@
   function openGame(id) {
     const game=games.find(g=>gameId(g)===id); if(!game)return;
     const saved=getWishlist().includes(id);
-    $("dialog-content").innerHTML='<div class="dialog-cover">'+symbols[Math.max(0,games.indexOf(game))%symbols.length]+'</div><div class="eyebrow"><span class="eyebrow-line"></span> '+escapeHtml((game.genres||["PIXEL GAME"]).join(" · ").toUpperCase())+'</div><h2 class="dialog-title">'+escapeHtml(game.title)+'</h2><p class="dialog-description">'+escapeHtml(game.description||game.short_description||"A little world waiting to be discovered.")+'</p><p class="dialog-description"><strong>Platforms:</strong> '+escapeHtml((game.platforms||[]).join(", ")||"Not listed")+'<br><strong>Type:</strong> '+escapeHtml(game.price_type||"Unknown")+'</p><div class="dialog-actions"><button class="button button-primary" id="dialog-save">'+(saved?"Remove from wishlist":"Save to wishlist")+'</button>'+(game.official_url?'<a class="button button-primary" target="_blank" rel="noopener" href="'+escapeHtml(game.official_url)+'">Official site ↗</a>':"")+'</div>';
+    $("dialog-content").innerHTML=coverArt(game,Math.max(0,games.indexOf(game)),true)+'<div class="eyebrow"><span class="eyebrow-line"></span> '+escapeHtml((game.genres||["PIXEL GAME"]).join(" · ").toUpperCase())+'</div><h2 class="dialog-title">'+escapeHtml(game.title)+'</h2><p class="dialog-description">'+escapeHtml(game.description||game.short_description||"A little world waiting to be discovered.")+'</p><div class="detail-facts"><div><span>PLATFORMS</span><strong>'+escapeHtml((game.platforms||[]).join(" · ")||"Not listed")+'</strong></div><div><span>PRICE</span><strong>'+escapeHtml(game.price_type==="free"?"Free to play":game.price_type==="paid"?"Paid":"Not listed")+'</strong></div><div><span>GENRE</span><strong>'+escapeHtml((game.genres||[]).join(" · ")||"Pixel game")+'</strong></div></div><div class="dialog-actions"><button class="button button-primary" id="dialog-save">'+(saved?"Remove from wishlist":"Save to wishlist")+'</button>'+(game.official_url?'<a class="button button-secondary" target="_blank" rel="noopener" href="'+escapeHtml(game.official_url)+'">Official site ↗</a>':"")+'</div>';
     $("game-dialog").showModal();
     $("dialog-save").addEventListener("click",()=>{toggleWishlist(id);openGame(id);});
   }
@@ -55,9 +62,11 @@
   }
   document.addEventListener("click",event=>{
     const save=event.target.closest("[data-save]"); if(save){event.stopPropagation();toggleWishlist(save.dataset.save);return;}
-    const article=event.target.closest("[data-game]"); if(article)openGame(article.dataset.game);
+    const article=event.target.closest("[data-game]"); if(article && !event.target.closest("button"))openGame(article.dataset.game);
   });
   ["search-input","genre-filter","platform-filter","sort-filter"].forEach(id=>$(id).addEventListener(id==="search-input"?"input":"change",renderGames));
+  $("game-grid").addEventListener("keydown",event=>{const article=event.target.closest("[data-game]");if(article&&(event.key==="Enter"||event.key===" ")){event.preventDefault();openGame(article.dataset.game);}});
+  $("wishlist-grid").addEventListener("keydown",event=>{const article=event.target.closest("[data-game]");if(article&&(event.key==="Enter"||event.key===" ")){event.preventDefault();openGame(article.dataset.game);}});
   document.querySelectorAll("[data-mood]").forEach(button=>button.addEventListener("click",()=>{
     activeMood=button.dataset.mood;
     document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item===button));
