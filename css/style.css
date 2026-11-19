@@ -850,3 +850,12 @@ html,body{background:#fff8e9;color:#1e382f;font-family:'Nunito Sans',sans-serif}
 @media(max-width:1050px){.featured-layout{grid-template-columns:1fr}.community-card{display:none}.game-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:760px){.site-header{height:auto;min-height:74px;flex-wrap:wrap}.main-nav{order:3;width:100%;overflow-x:auto;justify-content:flex-start}.reference-hero{grid-template-columns:1fr;padding:25px 18px 20px;gap:0}.reference-hero .hero-copy{padding:4px 0 12px}.reference-world{height:290px}.mascot-panda{right:25%;bottom:10%;transform:scale(.78);transform-origin:bottom right}.hero-art-sign{font-size:13px}.quick-categories{margin:0 10px;border-radius:18px}.quick-category{min-width:82px}.discover-section{padding:25px 14px 42px}.game-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.game-cover{height:135px}.community-card{display:none}}
 @media(max-width:390px){.brand-wordmark{font-size:20px}.brand-wordmark small{font-size:8px}.reference-title-lockup h1{font-size:50px}.reference-world{height:250px}.mascot-panda{right:24%;transform:scale(.66);transform-origin:bottom right}.game-cover{height:118px}}
+\n
+/* Final layering and reference-card polish */
+.reference-world:after{display:none}
+.reference-world .mascot-panda{z-index:5}
+.reference-world .hero-art-sign{z-index:6}
+.reference-world .reference-ground{z-index:3}
+.featured-layout .game-grid{margin-top:0}
+.featured-layout .game-meta>span:first-child{padding:4px 9px;border-radius:20px;background:#4d8955;color:#fff;font-size:10px;letter-spacing:0;text-transform:none}
+@media(max-width:760px){.reference-world .mascot-panda{right:25%;bottom:10%}}
