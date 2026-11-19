@@ -22,31 +22,28 @@
   <header class="site-header">
     <a class="brand" href="#" aria-label="PIXORIA home"><span class="brand-panda" aria-hidden="true"><svg viewBox="0 0 160 160" role="img" aria-label="Piko the PIXORIA panda" shape-rendering="crispEdges"><rect x="24" y="22" width="34" height="34" fill="#252b29"/><rect x="102" y="22" width="34" height="34" fill="#252b29"/><rect x="34" y="32" width="18" height="18" fill="#fffaf0"/><rect x="108" y="32" width="18" height="18" fill="#fffaf0"/><rect x="42" y="42" width="76" height="78" fill="#fffaf0"/><rect x="28" y="58" width="22" height="54" fill="#252b29"/><rect x="110" y="58" width="22" height="54" fill="#252b29"/><rect x="48" y="68" width="24" height="28" fill="#252b29"/><rect x="88" y="68" width="24" height="28" fill="#252b29"/><rect x="56" y="76" width="8" height="8" fill="#fffaf0"/><rect x="96" y="76" width="8" height="8" fill="#fffaf0"/><rect x="74" y="91" width="12" height="9" fill="#252b29"/><rect x="68" y="100" width="24" height="5" fill="#252b29"/><rect x="48" y="101" width="16" height="9" fill="#f3a7a0"/><rect x="96" y="101" width="16" height="9" fill="#f3a7a0"/><rect x="38" y="116" width="84" height="18" fill="#6fa34e"/><rect x="48" y="128" width="64" height="10" fill="#4c7f43"/><rect x="18" y="65" width="14" height="42" fill="#4d9856"/><rect x="128" y="65" width="14" height="42" fill="#4d9856"/><rect x="22" y="73" width="6" height="18" fill="#c9ed8d"/><rect x="132" y="73" width="6" height="18" fill="#c9ed8d"/></svg></span><span class="brand-wordmark">PIXORIA<span class="brand-dot">.</span><small>Discover Your Little World</small></span></a>
     <nav class="main-nav" aria-label="Main navigation">
-      <a class="active" href="#home">Home</a><a href="#discover">Discover</a><a href="#about">About</a>
+      <a class="active" href="#home">⌂ Home</a><a href="#discover">🎮 Games</a><a href="#discover">▦ Categories⌄</a><a href="#wishlist">♥ Wishlist</a><a href="#about">ⓘ About</a>
     </nav>
     <a class="wishlist-link" href="#wishlist"><span>♡</span> <span class="wishlist-label">Wishlist</span><b id="wishlist-count">0</b></a>
   </header>
   <main>
     <section class="category-page" id="category-page" hidden aria-live="polite"></section>
     <section class="game-detail-page" id="game-detail" hidden aria-live="polite"></section>
-    <section class="hero" id="home">
+    <section class="hero reference-hero" id="home">
       <div class="hero-copy">
-        <div class="eyebrow"><span class="eyebrow-line"></span> A LITTLE WORLD OF PIXEL GAMES</div>
-        <h1>Discover your<br><em>little world.</em></h1>
-        <p class="hero-description">Explore amazing pixel games, temukan petualangan kecil berikutnya, dan nikmati perjalananmu di dunia PIXORIA.</p>
-        <div class="hero-actions"><a class="button button-primary" href="#discover">Explore games <span>↗</span></a><button class="text-link surprise-button" id="surprise-me" type="button">Surprise me ✦</button></div>
-        <div class="hero-note"><span class="note-spark">✦</span><span>Curated for slow days &amp; soft hearts</span></div>
+        <div class="reference-title-lockup"><span class="reference-spark">✦</span><h1>PIXORIA</h1><span class="reference-spark">✦</span></div>
+        <div class="reference-ribbon">Discover Your Little World</div>
+        <p class="hero-description">Find amazing pixel games,<br>and enjoy the journey! ❤️</p>
+        <div class="search-wrap hero-search"><label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Search games..." autocomplete="off" aria-label="Search games" aria-controls="search-suggestions" aria-expanded="false"><button class="hero-search-submit" type="button" id="hero-search-button">Search</button></label><div class="search-suggestions" id="search-suggestions" role="listbox" hidden></div></div>
       </div>
-      <div class="hero-art" role="img" aria-label="Dunia pixel art cerah dengan maskot panda Piko">
-        <div class="moon"></div><div class="stars">✦　 ·　 ✧　　 ·　 ✦<br>　 ·　　 ✦　　·</div><div class="mascot-panda"><span class="panda-head"><svg viewBox="0 0 160 160" role="img" aria-label="Piko the PIXORIA panda" shape-rendering="crispEdges"><rect x="24" y="22" width="34" height="34" fill="#252b29"/><rect x="102" y="22" width="34" height="34" fill="#252b29"/><rect x="34" y="32" width="18" height="18" fill="#fffaf0"/><rect x="108" y="32" width="18" height="18" fill="#fffaf0"/><rect x="42" y="42" width="76" height="78" fill="#fffaf0"/><rect x="28" y="58" width="22" height="54" fill="#252b29"/><rect x="110" y="58" width="22" height="54" fill="#252b29"/><rect x="48" y="68" width="24" height="28" fill="#252b29"/><rect x="88" y="68" width="24" height="28" fill="#252b29"/><rect x="56" y="76" width="8" height="8" fill="#fffaf0"/><rect x="96" y="76" width="8" height="8" fill="#fffaf0"/><rect x="74" y="91" width="12" height="9" fill="#252b29"/><rect x="68" y="100" width="24" height="5" fill="#252b29"/><rect x="48" y="101" width="16" height="9" fill="#f3a7a0"/><rect x="96" y="101" width="16" height="9" fill="#f3a7a0"/><rect x="38" y="116" width="84" height="18" fill="#6fa34e"/><rect x="48" y="128" width="64" height="10" fill="#4c7f43"/><rect x="18" y="65" width="14" height="42" fill="#4d9856"/><rect x="128" y="65" width="14" height="42" fill="#4d9856"/><rect x="22" y="73" width="6" height="18" fill="#c9ed8d"/><rect x="132" y="73" width="6" height="18" fill="#c9ed8d"/></svg></span><span class="panda-headphones">◉</span><span class="panda-scarf"></span><span class="panda-tablet">PIXORIA</span></div><div class="hero-art-sign">PLAY<br>MORE ✦</div>
-        <div class="mountain mountain-back"></div><div class="mountain mountain-front"></div>
-        <div class="lake"></div><div class="reflection"></div><div class="island"></div>
-        <div class="cabin"><div class="roof"></div><div class="cabin-body"><i></i><b></b></div><div class="door"></div></div>
-        <div class="tree tree-a"></div><div class="tree tree-b"></div><div class="tree tree-c"></div>
-        <div class="fireflies">·　✦　 ·　　 ✧　 ·</div>
-        <div class="art-caption"><span>01 / 04</span><span>THE QUIET HOURS</span></div>
+      <div class="hero-art reference-world" role="img" aria-label="Dunia pixel-art PIXORIA dengan Piko, panda bermasker hijau">
+        <div class="reference-cloud cloud-one"></div><div class="reference-cloud cloud-two"></div>
+        <div class="reference-castle">♜</div><div class="reference-hill hill-one"></div><div class="reference-hill hill-two"></div>
+        <div class="reference-village"><span></span><span></span><span></span></div>
+        <div class="reference-tree"></div><div class="reference-ground"></div>
+        <div class="mascot-panda"><span class="panda-head"><svg viewBox="0 0 160 160" role="img" aria-label="Piko the PIXORIA panda" shape-rendering="crispEdges"><rect x="24" y="22" width="34" height="34" fill="#252b29"/><rect x="102" y="22" width="34" height="34" fill="#252b29"/><rect x="34" y="32" width="18" height="18" fill="#fffaf0"/><rect x="108" y="32" width="18" height="18" fill="#fffaf0"/><rect x="42" y="42" width="76" height="78" fill="#fffaf0"/><rect x="28" y="58" width="22" height="54" fill="#252b29"/><rect x="110" y="58" width="22" height="54" fill="#252b29"/><rect x="48" y="68" width="24" height="28" fill="#252b29"/><rect x="88" y="68" width="24" height="28" fill="#252b29"/><rect x="56" y="76" width="8" height="8" fill="#fffaf0"/><rect x="96" y="76" width="8" height="8" fill="#fffaf0"/><rect x="74" y="91" width="12" height="9" fill="#252b29"/><rect x="68" y="100" width="24" height="5" fill="#252b29"/><rect x="48" y="101" width="16" height="9" fill="#f3a7a0"/><rect x="96" y="101" width="16" height="9" fill="#f3a7a0"/><rect x="38" y="116" width="84" height="18" fill="#6fa34e"/><rect x="48" y="128" width="64" height="10" fill="#4c7f43"/></svg></span><span class="panda-headphones">◉</span><span class="panda-scarf"></span><span class="panda-tablet">PIXORIA</span></div>
+        <div class="hero-art-sign">PLAY<br>MORE ✿</div><div class="reference-flowers">✿　✦　✿　　✿</div>
       </div>
-      <div class="hero-bottom"><span>SCROLL TO WANDER</span><span class="scroll-line"></span><span>EST. FOR THE LOVE OF PIXELS</span></div>
     </section>
     <nav class="quick-categories" aria-label="Quick game categories"><button class="quick-category active" type="button" data-mood="all"><span>🎮</span>All Games</button><button class="quick-category" type="button" data-mood="adventure"><span>⚔️</span>Adventure</button><button class="quick-category" type="button" data-mood="cozy"><span>🌳</span>Cozy</button><button class="quick-category" type="button" data-mood="story"><span>💗</span>Story</button><button class="quick-category" type="button" data-mood="creative"><span>⭐</span>Creative</button><a class="quick-category" href="#discover"><span>🧩</span>Explore All</a></nav><section class="discover-section section-wrap" id="discover">
       <div class="section-heading">
@@ -69,7 +66,7 @@
         <div class="recent-grid" id="recent-grid"></div>
       </section>
       <div class="toolbar">
-        <div class="search-wrap"><label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Search games, moods, genres..." autocomplete="off" aria-label="Search games" aria-controls="search-suggestions" aria-expanded="false"></label><div class="search-suggestions" id="search-suggestions" role="listbox" hidden></div></div>
+        
         <select id="genre-filter" aria-label="Filter by genre"><option value="all">All genres</option></select>
         <select id="platform-filter" aria-label="Filter by platform"><option value="all">All platforms</option></select>
         <select id="price-filter" aria-label="Filter by price"><option value="all">Any price</option><option value="free">Free</option><option value="paid">Paid</option></select>
@@ -87,7 +84,7 @@
       <div class="category-directory"><div class="directory-heading"><span class="mood-label">THE LITTLE INDEX</span><span>Choose a world by genre ↗</span></div><div class="category-tiles" id="category-tiles"></div></div>
       <div class="collection-stats" id="collection-stats" aria-label="Collection overview"></div>
       <div class="results-line"><span id="results-count">A FEW WORLDS TO BEGIN WITH</span><span>HANDPICKED WITH CARE ✳</span></div><div class="active-filters" id="active-filters" aria-live="polite"></div>
-      <div class="game-grid" id="game-grid"><article class="loading-card">Gathering little worlds<span>✦</span></article></div>
+      <div class="featured-layout"><div class="featured-main"><div class="game-grid" id="game-grid"><article class="loading-card">Gathering little worlds<span>✦</span></article></div></div><aside class="community-card"><div class="community-panda">🐼</div><h3>Join Our<br>Cozy Community!</h3><span>❤️</span><p>Let’s explore more together!</p><a href="#about" class="community-button">Join Now →</a></aside></div>
       <div class="empty-state" id="empty-state" hidden><span>✧</span><h3>No worlds found</h3><p>Try another title or clear your filters.</p><button class="text-link" id="clear-filters">Clear filters →</button></div>
     </section>
     <section class="quote-section" id="about"><div class="quote-star">✳</div><p>“Sometimes, all you need<br>is <em>another little world.</em>”</p><span>WELCOME TO PIXORIA</span></section>
