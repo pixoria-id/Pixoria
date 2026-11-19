@@ -80,12 +80,31 @@
     $("wishlist-grid").innerHTML=selected.length?selected.map(card).join(""):'<p class="wishlist-empty">Your wishlist is waiting for its first little world. ♡</p>';
   }
   const homeSections=["home","discover","about","wishlist"];
+  const categorySlug=value=>normalize(value).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  function renderCategoryDirectory(){
+    const counts=new Map();
+    games.forEach(game=>(game.genres||[]).forEach(genre=>counts.set(genre,(counts.get(genre)||0)+1)));
+    $("category-tiles").innerHTML=[...counts.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([genre,count])=>'<button class="category-tile" type="button" data-open-category="'+escapeHtml(genre)+'"><small>PIXORIA / GENRE</small><strong>'+escapeHtml(genre)+'</strong><span>'+count+' little '+(count===1?"world":"worlds")+' <b>↗</b></span></button>').join("");
+  }
+  function openCategory(genre,updateUrl=true){
+    const selected=games.filter(game=>(game.genres||[]).some(item=>normalize(item)===normalize(genre)));
+    if(!selected.length)return;
+    if(updateUrl)history.pushState({category:categorySlug(genre)},"","#category/"+categorySlug(genre));
+    $("game-detail").hidden=true;$("category-page").hidden=false;
+    homeSections.forEach(id=>$(id).hidden=true);
+    const genres=[...new Set(games.flatMap(game=>game.genres||[]))].sort((a,b)=>a.localeCompare(b));
+    $("category-page").innerHTML='<div class="category-topline"><button class="back-link" id="category-back" type="button">← BACK TO DISCOVER</button><span>PIXORIA / THE LITTLE INDEX</span></div><div class="category-hero"><div class="eyebrow">EXPLORE A LITTLE FURTHER</div><h1>'+escapeHtml(genre)+' <em>worlds.</em></h1><p>'+selected.length+' curated '+(selected.length===1?"game":"games")+' in this corner of the collection. Find a new favorite, one little world at a time.</p></div><div class="category-switcher">'+genres.map(item=>'<button class="category-switch '+(normalize(item)===normalize(genre)?"active":"")+'" data-open-category="'+escapeHtml(item)+'" type="button">'+escapeHtml(item)+'</button>').join("")+'</div><div class="category-results-line"><span>THE '+escapeHtml(genre.toUpperCase())+' COLLECTION</span><span>'+selected.length+' WORLDS</span></div><div class="category-game-grid">'+selected.map(game=>card(game,games.indexOf(game))).join("")+'</div>';
+    $("category-back").addEventListener("click",()=>{history.pushState({home:true},"","#discover");showHome();$("discover").scrollIntoView({behavior:"smooth"});});
+    document.title=genre+" Games — PIXORIA.ID";navLinks.forEach(link=>link.classList.toggle("active",link.getAttribute("href")==="#discover"));window.scrollTo({top:0,behavior:"auto"});
+  }
   function showHome(){
     $("game-detail").hidden=true;
+    $("category-page").hidden=true;
     homeSections.forEach(id=>$(id).hidden=false);
     document.title="PIXORIA.ID — Discover Your Little World";
   }
   function openGame(id,updateUrl=true) {
+    $("category-page").hidden=true;
     const game=games.find(g=>gameId(g)===id || String(g.slug)===id);
     if(!game)return;
     const slug=String(game.slug||game.id||game.title).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -110,6 +129,8 @@
     window.scrollTo({top:0,behavior:"auto"});
   }
   function routeFromHash(){
+    const categoryMatch=location.hash.match(/^#category\/(.+)$/);
+    if(categoryMatch){const slug=decodeURIComponent(categoryMatch[1]);const genre=[...new Set(games.flatMap(item=>item.genres||[]))].find(item=>categorySlug(item)===slug);if(genre){openCategory(genre,false);return;}}
     const match=location.hash.match(/^#game\/(.+)$/);
     if(match){const slug=decodeURIComponent(match[1]);const game=games.find(item=>String(item.slug||item.id||item.title).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")===slug);if(game){openGame(gameId(game),false);return;}}
     showHome();
@@ -121,6 +142,7 @@
     renderGames();
   }
   document.addEventListener("click",event=>{
+    const category=event.target.closest("[data-open-category]");if(category){openCategory(category.dataset.openCategory);return;}
     const save=event.target.closest("[data-save]"); if(save){event.stopPropagation();toggleWishlist(save.dataset.save);return;}
     const article=event.target.closest("[data-game]"); if(article && !event.target.closest("button"))openGame(article.dataset.game);
   });
@@ -157,6 +179,7 @@
     fill("genre-filter", games.flatMap(game => game.genres || []), "All genres");
     fill("platform-filter", games.flatMap(game => game.platforms || []), "All platforms");
     renderGenreChips();
+    renderCategoryDirectory();
   }
   function renderGenreChips(){
     const genres=[...new Set(games.flatMap(game=>game.genres||[]))].sort((a,b)=>a.localeCompare(b));
