@@ -86,6 +86,23 @@
     const text=searchText(game);
     return searchTerms(query).every(term=>[term,...(searchAliases[term]||[])].some(alias=>text.includes(normalize(alias))));
   }
+  function searchRelevance(game,query) {
+    const terms=searchTerms(query);
+    if(!terms.length)return 0;
+    const title=normalize(game.title), genres=normalize((game.genres||[]).join(" ")), moods=normalize((game.mood_tags||[]).join(" "));
+    let score=0;
+    terms.forEach(term=>{
+      const aliases=[term,...(searchAliases[term]||[])].map(normalize);
+      if(aliases.some(alias=>title===alias))score+=100;
+      else if(aliases.some(alias=>title.startsWith(alias)))score+=75;
+      else if(aliases.some(alias=>title.includes(alias)))score+=55;
+      else if(aliases.some(alias=>genres.includes(alias)))score+=35;
+      else if(aliases.some(alias=>moods.includes(alias)))score+=25;
+      else score+=10;
+    });
+    if(game.is_featured)score+=2;
+    return score;
+  }
   function setActiveSuggestion(index){
     const options=[...$("search-suggestions").querySelectorAll("[data-suggest]")];
     activeSuggestionIndex=options.length?Math.max(0,Math.min(index,options.length-1)):-1;
@@ -114,7 +131,7 @@
     activeSuggestionIndex=-1;
     input.removeAttribute("aria-activedescendant");
     if(!query){panel.hidden=true;input.setAttribute("aria-expanded","false");return;}
-    const matches=games.filter(game=>matchesSearch(game,query)).slice(0,5);
+    const matches=games.filter(game=>matchesSearch(game,query)).sort((a,b)=>searchRelevance(b,query)-searchRelevance(a,query)||a.title.localeCompare(b.title)).slice(0,5);
     panel.innerHTML=matches.length?matches.map((game,index)=>'<button type="button" class="suggestion-item" role="option" aria-selected="false" id="search-option-'+index+'" data-suggest="'+escapeHtml(gameId(game))+'"><span>'+escapeHtml(game.title)+'</span><small>'+escapeHtml((game.genres||[]).slice(0,2).join(" · ")||"Pixel game")+'</small></button>').join(""):'<p class="suggestion-empty">No matching worlds yet</p>';
     panel.hidden=false;input.setAttribute("aria-expanded","true");
   }
@@ -132,7 +149,9 @@
   function renderGames() {
     const query=normalize($("search-input").value).split(/\s+/).filter(Boolean), genre=$("genre-filter").value, platform=$("platform-filter").value, price=$("price-filter").value, sort=$("sort-filter").value;
     let filtered=games.filter(g=>{const text=searchText(g);return matchesSearch(g,query)&&(genre==="all"||(g.genres||[]).some(x=>normalize(x)===normalize(genre)))&&(platform==="all"||(g.platforms||[]).some(x=>normalize(x)===normalize(platform)))&&(price==="all"||g.price_type===price)&&(activeMood==="all"||(g.mood_tags||[]).some(x=>normalize(x).includes(activeMood))||(g.genres||[]).some(x=>normalize(x).includes(activeMood)));});
-    if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title)); if(sort==="za") filtered.sort((a,b)=>b.title.localeCompare(a.title)); if(sort==="featured") filtered.sort((a,b)=>Number(b.is_featured)-Number(a.is_featured)||a.title.localeCompare(b.title));
+    if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title));
+    if(sort==="za") filtered.sort((a,b)=>b.title.localeCompare(a.title));
+    if(sort==="featured") filtered.sort((a,b)=>(query?searchRelevance(b,query)-searchRelevance(a,query):0)||Number(b.is_featured)-Number(a.is_featured)||a.title.localeCompare(b.title));
     renderCollectionStats();
     renderRecentlyViewed();
     $("results-count").textContent="SHOWING "+filtered.length+" OF "+games.length+" LITTLE WORLDS";
