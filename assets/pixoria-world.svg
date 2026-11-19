@@ -46,4 +46,22 @@
 </g>
 <!-- sign -->
 <g transform="translate(1000 495)"><rect x="0" y="0" width="150" height="90" fill="#f5bd70" stroke="#81573b" stroke-width="9"/><text x="75" y="37" text-anchor="middle" font-family="Verdana,sans-serif" font-size="22" font-weight="900" fill="#35563c">PLAY</text><text x="75" y="65" text-anchor="middle" font-family="Verdana,sans-serif" font-size="22" font-weight="900" fill="#35563c">MORE ✿</text></g>
+
+<!-- Added pixel-world details: footbridge, lanterns, flowers, stepping stones and tiny wildlife -->
+<g shape-rendering="crispEdges">
+ <path d="M365 542h310v15H365zM385 527h270v15H385zM410 512h220v15H410z" fill="#a66c45"/>
+ <path d="M380 541h280v7H380zM402 526h236v7H402zM425 511h190v7H425z" fill="#e4b77a"/>
+ <path d="M395 550h12v28h-12zm250 0h12v28h-12z" fill="#795039"/>
+ <path d="M425 554h28v8h-28zm55 0h28v8h-28zm55 0h28v8h-28zm55 0h28v8h-28z" fill="#f0d29b"/>
+ <path d="M470 495h12v35h-12zm-8-14h28v17h-28zM640 490h12v35h-12zm-8-14h28v17h-28z" fill="#80543c"/>
+ <rect x="469" y="484" width="14" height="10" fill="#ffe49b"/><rect x="639" y="480" width="14" height="10" fill="#ffe49b"/>
+ <path d="M30 520h150v8H30zm20-18h8v18h-8zm55 0h8v18h-8zm55 0h8v18h-8z" fill="#a77a50"/>
+ <path d="M25 510h160v-9H25z" fill="#e6c58a"/>
+ <g fill="#fff5cf"><rect x="220" y="560" width="12" height="12"/><rect x="240" y="545" width="12" height="12"/><rect x="260" y="565" width="12" height="12"/><rect x="1080" y="605" width="12" height="12"/><rect x="1100" y="590" width="12" height="12"/></g>
+ <g fill="#e78d88"><rect x="300" y="605" width="18" height="18"/><rect x="320" y="595" width="18" height="18"/><rect x="340" y="610" width="18" height="18"/></g>
+ <g fill="#f7d47e"><rect x="560" y="605" width="14" height="14"/><rect x="580" y="590" width="14" height="14"/><rect x="600" y="607" width="14" height="14"/></g>
+ <g fill="#fff"><path d="M480 160h18v6h-18zm18 6h18v6h-18zm18-6h18v6h-18zM760 205h12v5h-12zm12 5h12v5h-12z"/></g>
+ <g fill="#f8e9a7"><rect x="420" y="290" width="8" height="8"/><rect x="435" y="278" width="8" height="8"/><rect x="448" y="290" width="8" height="8"/><rect x="1080" y="330" width="8" height="8"/></g>
+ <path d="M0 675h1200" stroke="#d4ed9e" stroke-width="9" opacity=".65"/>
+</g>
 </svg>
