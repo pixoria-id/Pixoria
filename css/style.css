@@ -126,3 +126,31 @@ h1 em,h2 em,.quote-section em{color:#c2cba9;font-style:italic}
  .dialog-description{font-size:13px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+
+/* Second-pass interface details */
+.mood-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:0 0 22px}
+.mood-label{font-size:9px;letter-spacing:.2em;color:#8f9b8c;margin-right:5px}
+.mood-chip{border:1px solid rgba(239,231,210,.15);background:rgba(10,17,13,.42);color:#bac4b4;border-radius:99px;padding:8px 14px;font-size:11px;cursor:pointer;transition:all .2s}
+.mood-chip:hover{border-color:rgba(216,180,119,.55);color:#f3eddd}
+.mood-chip.active{background:#d8b477;border-color:#d8b477;color:#172019}
+.results-line{align-items:center}
+.game-card{position:relative}
+.game-card:focus-within{outline:1px solid var(--gold);outline-offset:3px}
+.game-cover{isolation:isolate}
+.game-cover .cover-symbol{transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.game-card:hover .cover-symbol{transform:translateY(-7px) scale(1.06)}
+.game-cover:after{content:"";position:absolute;inset:0;z-index:0;opacity:.2;pointer-events:none;background-image:linear-gradient(90deg,rgba(245,236,210,.08) 1px,transparent 1px),linear-gradient(rgba(245,236,210,.08) 1px,transparent 1px);background-size:22px 22px;mask-image:linear-gradient(135deg,#000,transparent 72%)}
+.game-card-body{position:relative}
+.game-title{transition:color .2s}
+.game-card:hover .game-title{color:#e2c28b}
+.game-meta span:last-child{color:#c5a978}
+.button-primary{box-shadow:0 8px 24px rgba(216,180,119,.12)}
+.button-primary:hover{background:#e5c58e;box-shadow:0 12px 28px rgba(216,180,119,.2)}
+.search-box:focus-within,.toolbar select:focus{border-color:rgba(216,180,119,.65);box-shadow:0 0 0 3px rgba(216,180,119,.08)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #d8b477;outline-offset:3px}
+@media(max-width:620px){
+ .mood-row{gap:7px;margin-bottom:18px}
+ .mood-label{width:100%;margin-bottom:2px}
+ .mood-chip{padding:8px 12px;font-size:10px}
+}
