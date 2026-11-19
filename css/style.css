@@ -227,3 +227,35 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .toolbar select:hover{border-color:rgba(216,180,119,.4)}
 @media(max-width:850px){.toolbar select{flex:1}}
 @media(max-width:620px){.toolbar select{min-width:0;flex-basis:calc(50% - 6px)}.price-label{font-size:7px}}
+
+
+/* Fifth pass — dedicated, shareable game detail pages */
+[hidden]{display:none!important}
+.game-detail-page{max-width:1240px;margin:0 auto;padding:54px 6% 110px;min-height:70vh}
+.detail-topline{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-bottom:20px;border-bottom:1px solid var(--line);font-size:9px;letter-spacing:.18em;color:#9eaa9b}
+.back-link{border:0;background:none;color:#e1c18b;font:600 10px var(--sans);letter-spacing:.15em;cursor:pointer;padding:8px 0}
+.back-link:hover{color:#fff0cf}
+.detail-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(230px,.7fr);gap:7%;padding-top:40px}
+.detail-main .dialog-cover{height:clamp(260px,36vw,440px);margin:0 0 32px}
+.detail-eyebrow{display:flex;align-items:center;gap:10px;color:#c4ae83;font-size:9px;letter-spacing:.2em}
+.detail-heading{font:600 clamp(54px,7vw,88px)/.92 var(--serif);letter-spacing:-.035em;color:#f1eddf;margin:22px 0 16px}
+.detail-lead{font-size:16px;line-height:1.8;color:#c3cbbb;max-width:650px}
+.detail-actions{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 34px}
+.detail-actions .button{font-size:9px;letter-spacing:.12em;padding:14px 17px}
+.detail-description{border-top:1px solid var(--line);padding-top:25px;color:#b7c1b2;font-size:14px;line-height:2;white-space:pre-line}
+.detail-sidebar{align-self:start;position:sticky;top:100px;padding:23px;background:rgba(29,43,33,.55);border:1px solid var(--line)}
+.sidebar-kicker{font-size:9px;letter-spacing:.2em;color:#d7b77e;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.detail-sidebar .detail-facts{display:flex;flex-direction:column;gap:0;margin:0}
+.detail-sidebar .detail-facts>div{display:block;padding:15px 0;background:none;border:0;border-bottom:1px solid rgba(239,231,210,.09)}
+.detail-sidebar .detail-facts span{margin:0 0 7px}
+.detail-sidebar .detail-facts strong{font-size:12px}
+.sidebar-note{font:italic 17px/1.5 var(--serif);color:#b9c2ae;margin:20px 0 0}
+.related-section{padding-top:90px;margin-top:75px;border-top:1px solid var(--line)}
+.related-section h2{font:600 clamp(38px,5vw,55px)/1 var(--serif);color:#f0ecde;margin:15px 0 28px}
+.related-section h2 em{color:#d9ba87}
+.related-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.related-grid .game-cover{height:180px}
+.related-grid .game-title{font-size:25px}
+.related-grid .game-card-body{padding:17px}
+@media(max-width:800px){.detail-layout{grid-template-columns:1fr;gap:30px}.detail-sidebar{position:static}.detail-sidebar .detail-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}.related-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.game-detail-page{padding:32px 5% 75px}.detail-topline{font-size:7px}.detail-layout{padding-top:25px}.detail-main .dialog-cover{height:230px}.detail-heading{font-size:57px}.detail-lead{font-size:14px}.detail-actions{gap:8px}.detail-actions .button{flex:1;justify-content:center;padding:13px 9px;font-size:8px}.detail-sidebar .detail-facts{grid-template-columns:1fr}.related-section{padding-top:60px;margin-top:55px}.related-grid{grid-template-columns:1fr}.related-grid .game-cover{height:210px}}
