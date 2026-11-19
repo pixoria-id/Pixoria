@@ -639,3 +639,63 @@ body{background:var(--bg);color:var(--cream)}
 .game-card:focus-within{outline:2px solid #a97736;outline-offset:3px}
 .search-box:focus-within,.toolbar select:focus-visible{outline:2px solid #9caf91;outline-offset:2px}
 @media(max-width:600px){.site-header{background:rgba(248,246,238,.98)}.hero{background:linear-gradient(160deg,#f8f5eb,#e8eee3)}.discover-section{background:#e9eee5}}
+
+
+/* PIXORIA redesign: bright, playful, clean typography */
+:root{
+ --bg:#fbfaf5;--panel:#ffffff;--panel2:#f0f5ed;--cream:#26352c;
+ --muted:#66746a;--sage:#63866a;--gold:#b77a35;--line:rgba(48,69,53,.14);
+ --serif:'Outfit','Nunito Sans',sans-serif;--sans:'Nunito Sans',Arial,sans-serif;
+}
+html,body{background:#fbfaf5;color:#26352c;font-family:'Nunito Sans',Arial,sans-serif}
+h1,h2,h3,h4,.game-title,.dialog-title,.category-hero h1,.detail-title{font-family:'Outfit','Nunito Sans',sans-serif!important;letter-spacing:-.035em;font-weight:600}
+h1{font-size:clamp(46px,6vw,76px);line-height:1.02}
+h1 em,h2 em,.quote-section em{font-style:normal;color:#719477}
+.site-header{background:rgba(255,254,250,.96);border-color:#e4e9df;box-shadow:0 4px 20px rgba(38,53,44,.045)}
+.brand{font-family:'Outfit',sans-serif;font-weight:700;letter-spacing:.1em}
+.main-nav{color:#718074}.main-nav a:hover,.main-nav a.active{color:#26352c}
+.hero{background:linear-gradient(120deg,#fffdf7 0%,#f5f8ef 62%,#edf4e9 100%)}
+.hero-description,.dialog-description{color:#657468}
+.hero-note,.hero-bottom{color:#748276}
+.hero-art{box-shadow:0 20px 55px rgba(54,76,56,.13);border-color:#d8e1d3}
+.button-primary{background:#719477;color:white;border-radius:8px}
+.text-link{color:#344b39}
+.discover-section,.site-footer{background:#f0f5ed;border-color:#e0e8dc}
+.section-heading>p,.wishlist-heading>p{color:#69796d}
+.search-box,.toolbar select{background:#fff;border-color:#dce5d9;color:#34483a;border-radius:8px}
+.search-box input{color:#26352c}.search-box input::placeholder{color:#9aa69b}
+.results-line{color:#718074;border-color:#e0e8dc}
+.game-card{background:#fff;border:1px solid #e5ebe2;border-radius:12px;overflow:hidden;box-shadow:0 5px 20px rgba(44,65,47,.055)}
+.game-card:hover{border-color:#a8c1a5;box-shadow:0 12px 28px rgba(44,65,47,.10)}
+.game-title{color:#2c4032;font-size:21px}
+.game-meta,.game-desc{color:#68786c}
+.game-card-foot{border-color:#e8ede5}
+.tag{background:#edf4e9;color:#58745b;border-radius:5px}
+.save-button{color:#a9783b}
+.quote-section{background:linear-gradient(135deg,#e9f1e5,#f7f8ef 55%,#e6efe2);border-color:#dfe8dc}
+.quote-section>span,.wishlist-empty,.site-footer>span{color:#718074}
+.site-footer p{color:#526a57}
+.game-dialog{background:#fff;color:#26352c;border:1px solid #dce6d8;border-radius:16px}
+.dialog-close{color:#405744}
+.toast{background:#dcebd7;color:#304a34;border-radius:8px}
+.eyebrow{color:#9a713b}.eyebrow-line{background:#b77a35}
+.brand-mark,.brand-dot,.wishlist-link>span:first-child{color:#b77a35}
+.wishlist-link{color:#344b39}.wishlist-link b{background:#edf4e9;color:#5c795f}
+.editors-heading h3,.recent-heading h3{color:#2c4032}
+.editor-pick,.recent-grid .game-card{background:#fff;border-color:#e5ebe2;border-radius:10px}
+.editor-pick-copy h4{color:#2c4032}.editor-pick-copy p{color:#68786c}
+.editor-pick-number,.editor-pick-link{color:#9a713b}
+.recent-clear{color:#647568}
+.category-page,.game-detail-page{background:#fbfaf5;color:#26352c}
+.category-tile{background:linear-gradient(145deg,#fff,#edf4e9);border-color:#dce6d8;color:#304535;border-radius:10px}
+.category-tile small,.category-tile span{color:#708074}
+.category-tile strong{color:#2c4032}
+.detail-genre-links button{background:#edf4e9;color:#58745b;border-color:#dce8d8}
+.detail-genre-links button:hover{background:#e0eddc;color:#304535}
+.related-reason{background:#edf4e9;color:#58745b;border-color:#dce8d8}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #719477;outline-offset:3px}
+@media(max-width:600px){
+ .hero{background:linear-gradient(160deg,#fffdf7,#edf4e9)}
+ .site-header{background:rgba(255,254,250,.98)}
+ .game-card{border-radius:10px}
+}
