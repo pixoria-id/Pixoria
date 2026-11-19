@@ -439,3 +439,9 @@ button,a,input,select{ -webkit-tap-highlight-color:transparent}
   .hero h1{font-size:3.35rem}
   .hero-actions{align-items:flex-start;flex-direction:column}
 }
+
+
+/* New catalogue worlds — distinct cover palettes */
+.scene-minami-lane{--scene-sky:#d7b7a0;--scene-mid:#9b8d75;--scene-ground:#3d5145;--scene-ridge:#75866a;--scene-light:#f3d89e;--scene-pixel:#f0d5a3}
+.scene-a-space-for-the-unbound{--scene-sky:#7f9bb0;--scene-mid:#bd997d;--scene-ground:#344b58;--scene-ridge:#657d86;--scene-light:#f1d1a0;--scene-pixel:#f1c995}
+.scene-chicory-a-colorful-tale{--scene-sky:#c5a7b8;--scene-mid:#9b9ab0;--scene-ground:#4b536c;--scene-ridge:#7b7895;--scene-light:#f0dca9;--scene-pixel:#f4dca4}
