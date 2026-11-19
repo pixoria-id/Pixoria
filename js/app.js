@@ -31,7 +31,7 @@
     return "scene-" + key;
   }
   function coverArt(game,index,large=false) {
-    if(game.cover_url) return '<div class="game-cover '+(large?"dialog-cover":"")+'"><img src="'+escapeHtml(game.cover_url)+'" alt="" loading="lazy"><span class="cover-index">PIXORIA / '+String(index+1).padStart(2,"0")+'</span><span class="cover-type">'+escapeHtml(game.price_type==="free"?"FREE TO PLAY":game.price_type==="paid"?"PAID":"DISCOVER")+'</span></div>';
+    if(game.cover_url) return '<div class="game-cover '+(large?"dialog-cover":"")+'"><img src="'+escapeHtml(game.cover_url)+'" alt="'+escapeHtml(game.title)+' cover artwork" loading="lazy"><span class="cover-index">PIXORIA / '+String(index+1).padStart(2,"0")+'</span><span class="cover-type">'+escapeHtml(game.price_type==="free"?"FREE TO PLAY":game.price_type==="paid"?"PAID":"DISCOVER")+'</span></div>';
     return '<div class="game-cover '+(large?"dialog-cover":"")+' '+sceneClass(game)+'"><span class="cover-sun"></span><span class="cover-ridge"></span><span class="cover-world"></span><span class="cover-pixels"></span><span class="cover-index">PIXORIA / '+String(index+1).padStart(2,"0")+'</span><span class="cover-type">'+escapeHtml(game.price_type==="free"?"FREE TO PLAY":game.price_type==="paid"?"PAID":"DISCOVER")+'</span></div>';
   }
   function card(game,index) {
@@ -141,6 +141,15 @@
     showToast(exists?"Removed from your wishlist":"Saved to your little collection");
     renderGames();
   }
+  document.addEventListener("error",event=>{
+    const image=event.target;
+    if(!(image instanceof HTMLImageElement)||!image.closest(".game-cover"))return;
+    const cover=image.closest(".game-cover");
+    image.remove();cover.classList.add("cover-image-failed");
+    const art=document.createElement("span");art.className="cover-fallback-art";
+    art.innerHTML='<span class="cover-sun"></span><span class="cover-ridge"></span><span class="cover-world"></span><span class="cover-pixels"></span>';
+    cover.insertBefore(art,cover.querySelector(".cover-index"));
+  },true);
   document.addEventListener("click",event=>{
     const category=event.target.closest("[data-open-category]");if(category){openCategory(category.dataset.openCategory);return;}
     const save=event.target.closest("[data-save]"); if(save){event.stopPropagation();toggleWishlist(save.dataset.save);return;}
