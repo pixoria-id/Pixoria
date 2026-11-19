@@ -544,3 +544,8 @@ button,a,input,select{ -webkit-tap-highlight-color:transparent}
 .related-reason{align-self:flex-start;max-width:100%;padding:6px 9px;border:1px solid rgba(213,169,104,.22);border-radius:30px;color:#d8bd8e;background:rgba(213,169,104,.06);font:600 7px/1.2 var(--sans);letter-spacing:.13em}
 .related-item .game-card{height:100%}
 @media(max-width:560px){.related-intro{font-size:10px;margin-top:-9px}.related-reason{font-size:7px}}
+
+
+/* Sixteenth pass — keyboard-first search suggestions */
+.suggestion-item[aria-selected="true"],.suggestion-item.is-active{background:rgba(213,169,104,.13);outline:1px solid rgba(213,169,104,.28);outline-offset:-1px}
+.suggestion-item:focus-visible{outline:2px solid #dfbd7e;outline-offset:-2px}
