@@ -601,3 +601,7 @@ button,a,input,select{ -webkit-tap-highlight-color:transparent}
   .wishlist-link b{padding:3px 5px}
   .mood-row .mood-label{font-size:8px;letter-spacing:.12em}
 }
+
+/* Detail-page platform shortcuts */
+.detail-genre-links .platform-detail-link{border-color:rgba(213,169,104,.28);color:var(--gold);background:rgba(213,169,104,.055)}
+.detail-genre-links .platform-detail-link:hover{background:rgba(213,169,104,.13);border-color:var(--gold);color:var(--cream)}
