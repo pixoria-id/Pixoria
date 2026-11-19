@@ -23,6 +23,25 @@
 <!-- trees -->
 <g><rect x="1040" y="380" width="34" height="190" fill="#8a5a3d"/><rect x="990" y="320" width="132" height="112" fill="#4f9d50"/><rect x="1014" y="285" width="90" height="80" fill="#6dbb59"/><rect x="960" y="365" width="70" height="70" fill="#79c763"/><rect x="1100" y="370" width="65" height="65" fill="#3f8d49"/></g>
 <g fill="#fff2bd"><rect x="40" y="598" width="12" height="12"/><rect x="55" y="590" width="12" height="12"/><rect x="72" y="606" width="12" height="12"/><rect x="880" y="610" width="12" height="12"/><rect x="896" y="600" width="12" height="12"/></g>
+<!-- A tiny travelling airship adds a storybook focal point to the sky -->
+<g transform="translate(535 165)" shape-rendering="crispEdges">
+ <path d="M44 0h42v12h20v18h12v48H94v18H36V84H20V66H8V30h12V12h24z" fill="#e9a66f"/>
+ <path d="M44 12h42v12h20v24H94v18H36V48H20V24h24z" fill="#f7c98c"/>
+ <path d="M44 24h16v16H44zM76 24h16v16H76z" fill="#fff0bd"/>
+ <path d="M28 82h74v10H28z" fill="#a65f4c"/>
+ <path d="M40 92h50v22H40z" fill="#8b6045"/>
+ <path d="M50 98h30v12H50z" fill="#d9a36c"/>
+ <path d="M48 114v24m34-24v24" stroke="#76513f" stroke-width="4"/>
+ <path d="M40 138h50v8H40z" fill="#76513f"/>
+ <path d="M65 146v22" stroke="#fff4cf" stroke-width="3" stroke-dasharray="5 5"/>
+ <path d="M56 168h18v12H56z" fill="#fff4cf"/>
+ <path d="M64 164h3v-7h-3z" fill="#e9a66f"/>
+</g>
+<!-- drifting pixel birds -->
+<g fill="#fff8df">
+ <path d="M420 120h12v6h12v6h-12v-6h-12zM456 142h9v5h9v5h-9v-5h-9z"/>
+ <path d="M820 175h10v5h10v5h-10v-5h-10zM850 155h8v4h8v4h-8v-4h-8z"/>
+</g>
 <!-- Piko character -->
 <g transform="translate(690 270)">
  <ellipse cx="175" cy="360" rx="150" ry="28" fill="#315f42" opacity=".28"/>
