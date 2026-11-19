@@ -1,63 +1,58 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" shape-rendering="crispEdges">
 <title>Piko, the PIXORIA panda mascot</title>
-<ellipse cx="256" cy="475" rx="142" ry="17" fill="#355b42" opacity=".18"/>
-<!-- unmistakable panda ears -->
-<circle cx="145" cy="132" r="55" fill="#202b28"/>
-<circle cx="367" cy="132" r="55" fill="#202b28"/>
-<circle cx="145" cy="132" r="27" fill="#e9a9a0"/>
-<circle cx="367" cy="132" r="27" fill="#e9a9a0"/>
-<!-- round panda body -->
-<path d="M154 355Q154 326 185 326H327Q358 326 358 355L386 449Q390 477 360 477H152Q122 477 126 449Z" fill="#202b28"/>
-<path d="M180 365Q180 348 204 348H308Q332 348 332 365L350 450H162Z" fill="#fffaf0"/>
-<!-- arms and feet -->
-<path d="M139 367h31v18h-15v59h-28v-18h-10v-40h22zM342 367h31v19h22v40h-12v18h-28v-59h-13z" fill="#202b28"/>
-<path d="M153 434h26v20h-26zM333 434h26v20h-26z" fill="#fffaf0"/>
-<path d="M177 461h60v18h-60zM275 461h60v18h-60z" fill="#202b28"/>
-<!-- large soft white panda face -->
-<circle cx="256" cy="246" r="151" fill="#202b28"/>
-<circle cx="256" cy="241" r="137" fill="#fffaf0"/>
-<path d="M154 151q-16 20-20 53l20 12 14-18zM358 151q16 20 20 53l-20 12-14-18z" fill="#f1eee3"/>
-<!-- green headset sits clearly above the face -->
-<path d="M111 230V177Q111 75 256 75T401 177V230h-20V180Q381 96 256 96T131 180v50z" fill="#347d4c"/>
-<path d="M131 177Q131 105 256 105T381 177v14Q381 119 256 119T131 191z" fill="#78b76a"/>
-<rect x="99" y="204" width="43" height="88" rx="12" fill="#2c7043"/>
-<rect x="370" y="204" width="43" height="88" rx="12" fill="#2c7043"/>
-<rect x="107" y="218" width="27" height="57" rx="7" fill="#d5ef9d"/>
-<rect x="378" y="218" width="27" height="57" rx="7" fill="#d5ef9d"/>
-<rect x="115" y="228" width="11" height="36" fill="#f3f6c8"/>
-<rect x="386" y="228" width="11" height="36" fill="#f3f6c8"/>
-<!-- separate oval black panda eye patches, not a raccoon mask -->
-<ellipse cx="198" cy="247" rx="42" ry="57" transform="rotate(24 198 247)" fill="#202b28"/>
-<ellipse cx="314" cy="247" rx="42" ry="57" transform="rotate(-24 314 247)" fill="#202b28"/>
-<ellipse cx="204" cy="246" rx="16" ry="20" fill="#fffaf0"/>
-<ellipse cx="308" cy="246" rx="16" ry="20" fill="#fffaf0"/>
-<circle cx="207" cy="250" r="9" fill="#202b28"/>
-<circle cx="305" cy="250" r="9" fill="#202b28"/>
-<rect x="202" y="239" width="6" height="6" fill="#fff"/>
-<rect x="300" y="239" width="6" height="6" fill="#fff"/>
-<!-- round panda muzzle and tiny nose -->
-<ellipse cx="231" cy="315" rx="38" ry="27" fill="#fff"/>
-<ellipse cx="281" cy="315" rx="38" ry="27" fill="#fff"/>
-<path d="M239 294h34l10 13-10 13h-34l-10-13z" fill="#202b28"/>
-<path d="M256 318v13m0 0q-17 17-31 2m31-2q17 17 31 2" fill="none" stroke="#202b28" stroke-width="7" stroke-linecap="square"/>
-<rect x="151" y="303" width="29" height="13" fill="#f3aaa0" opacity=".8"/>
-<rect x="332" y="303" width="29" height="13" fill="#f3aaa0" opacity=".8"/>
-<!-- signature sage scarf -->
-<path d="M157 354h198v30H157z" fill="#79a96a"/>
-<path d="M178 361h156v12H178z" fill="#a9ce82"/>
-<path d="M300 377h39v63h-17v-14h-22z" fill="#5f914f"/>
-<path d="M306 384h18v14h-18z" fill="#d7e7a8"/>
-<!-- tablet held in front -->
-<path d="M166 395h180v16h12v56h-12v15H166v-15h-12v-56h12z" fill="#294b3b"/>
-<rect x="174" y="405" width="164" height="57" fill="#86b9a0"/>
-<rect x="186" y="414" width="140" height="38" fill="#d5edc2"/>
-<path d="M199 423h18v17h-18zM225 423h18v17h-18zM251 423h18v17h-18z" fill="#568b66"/>
-<path d="M279 423h34v7h-34zM279 437h24v6h-24z" fill="#568b66"/>
-<rect x="238" y="468" width="36" height="5" fill="#d7e7a8"/>
-<!-- tiny explorer badge and pixel sparkles -->
-<path d="M157 356h15v7h8v15h-8v7h-15v-7h-7v-15h7z" fill="#eab34f"/>
-<path d="M164 363h4v12h-4zM160 367h12v4h-12z" fill="#fff4cf"/>
-<path d="M73 326h12v12H73zM427 326h12v12h-12zM89 350h7v7h-7zM416 350h7v7h-7z" fill="#d5ef9d"/>
-<path d="M75 326h4v4h-4zM429 326h4v4h-4z" fill="#fffaf0"/>
-<path d="M114 120h10v10h-10zM388 120h10v10h-10z" fill="#eab34f"/>
+<ellipse cx="256" cy="478" rx="143" ry="15" fill="#355b42" opacity=".16"/>
+<!-- unmistakable round panda ears -->
+<circle cx="143" cy="130" r="53" fill="#202b28"/>
+<circle cx="369" cy="130" r="53" fill="#202b28"/>
+<circle cx="143" cy="130" r="25" fill="#e9a9a0"/>
+<circle cx="369" cy="130" r="25" fill="#e9a9a0"/>
+<!-- body -->
+<path d="M145 354q0-30 31-30h160q31 0 31 30l25 98q7 27-23 27H143q-30 0-23-27z" fill="#202b28"/>
+<path d="M178 355q0-14 20-14h116q20 0 20 14l20 92H158z" fill="#fffaf0"/>
+<path d="M139 365h29v80h-29zM344 365h29v80h-29z" fill="#202b28"/>
+<path d="M158 448h68v30h-68zM286 448h68v30h-68z" fill="#202b28"/>
+<!-- large clean white panda head -->
+<circle cx="256" cy="245" r="151" fill="#202b28"/>
+<circle cx="256" cy="239" r="137" fill="#fffaf0"/>
+<!-- green headset headband; ears remain visible -->
+<path d="M116 220V181Q116 77 256 77T396 181v39h-17v-38Q379 98 256 98T133 182v38z" fill="#347d4c"/>
+<path d="M133 179Q145 105 256 105t123 74v13Q363 123 256 123t-123 69z" fill="#8fca72"/>
+<rect x="105" y="211" width="27" height="67" rx="8" fill="#347d4c"/>
+<rect x="380" y="211" width="27" height="67" rx="8" fill="#347d4c"/>
+<rect x="111" y="222" width="15" height="43" fill="#d5ef9d"/>
+<rect x="386" y="222" width="15" height="43" fill="#d5ef9d"/>
+<!-- two separate, round panda eye patches -->
+<ellipse cx="196" cy="247" rx="43" ry="54" fill="#202b28"/>
+<ellipse cx="316" cy="247" rx="43" ry="54" fill="#202b28"/>
+<!-- bright eyes -->
+<ellipse cx="204" cy="246" rx="15" ry="19" fill="#fffaf0"/>
+<ellipse cx="308" cy="246" rx="15" ry="19" fill="#fffaf0"/>
+<circle cx="208" cy="250" r="8" fill="#202b28"/>
+<circle cx="304" cy="250" r="8" fill="#202b28"/>
+<rect x="204" y="240" width="5" height="5" fill="#fff"/>
+<rect x="300" y="240" width="5" height="5" fill="#fff"/>
+<!-- classic panda white muzzle and black nose -->
+<ellipse cx="231" cy="310" rx="37" ry="29" fill="#fff"/>
+<ellipse cx="281" cy="310" rx="37" ry="29" fill="#fff"/>
+<path d="M239 292h34l10 12-10 12h-34l-10-12z" fill="#202b28"/>
+<path d="M256 316v14m0 0q-15 15-29 2m29-2q15 15 29 2" fill="none" stroke="#202b28" stroke-width="6" stroke-linecap="square"/>
+<rect x="151" y="297" width="28" height="12" fill="#f1aaa0"/>
+<rect x="333" y="297" width="28" height="12" fill="#f1aaa0"/>
+<!-- sage scarf -->
+<path d="M156 351h200v29H156z" fill="#79a96a"/>
+<path d="M176 357h160v11H176z" fill="#b2d58a"/>
+<path d="M302 374h34v61h-15v-13h-19z" fill="#5f914f"/>
+<rect x="309" y="382" width="17" height="12" fill="#d7e7a8"/>
+<!-- tablet -->
+<path d="M163 397h186v76H163z" fill="#294b3b"/>
+<rect x="173" y="405" width="166" height="58" fill="#86b9a0"/>
+<rect x="184" y="414" width="144" height="40" fill="#d5edc2"/>
+<path d="M197 423h18v18h-18zM224 423h18v18h-18zM251 423h18v18h-18z" fill="#568b66"/>
+<path d="M279 423h36v7h-36zM279 438h26v6h-26z" fill="#568b66"/>
+<rect x="239" y="467" width="34" height="5" fill="#d7e7a8"/>
+<!-- explorer badge and pixel sparkles -->
+<path d="M151 350h15v7h8v15h-8v7h-15v-7h-7v-15h7z" fill="#eab34f"/>
+<path d="M159 357h4v12h-4zM155 361h12v4h-12z" fill="#fff4cf"/>
+<path d="M70 324h13v13H70zM429 324h13v13h-13zM91 350h7v7h-7zM414 350h7v7h-7z" fill="#d5ef9d"/>
+<path d="M113 112h10v10h-10zM389 112h10v10h-10z" fill="#eab34f"/>
 </svg>
