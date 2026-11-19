@@ -30,6 +30,9 @@
   }
   const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const wishlistKey = "pixoria-wishlist-v1";
+  const recentKey = "pixoria-recent-v1";
+  const getRecent = () => { try { const value=JSON.parse(localStorage.getItem(recentKey)||"[]"); return Array.isArray(value)?value:[]; } catch { return []; } };
+  const saveRecent = id => { try { localStorage.setItem(recentKey,JSON.stringify([id,...getRecent().filter(item=>item!==id)].slice(0,5))); } catch {} };
   const getWishlist = () => { try { return JSON.parse(localStorage.getItem(wishlistKey) || "[]"); } catch { return []; } };
   const setWishlist = list => { localStorage.setItem(wishlistKey, JSON.stringify(list)); updateWishlistCount(); };
   const updateWishlistCount = () => $("wishlist-count").textContent = getWishlist().length;
@@ -52,6 +55,12 @@
     const featured=games.filter(game=>game.is_featured);
     const picks=[...featured,...games.filter(game=>!game.is_featured)].slice(0,3);
     $("editors-picks").innerHTML=picks.map((game,index)=>'<article class="editor-pick" data-game="'+escapeHtml(gameId(game))+'" tabindex="0" aria-label="Discover '+escapeHtml(game.title)+'"><div class="editor-pick-art">'+coverArt(game,index)+'</div><div class="editor-pick-copy"><span class="editor-pick-number">0'+(index+1)+' / CURATOR\'S PICK</span><h4>'+escapeHtml(game.title)+'</h4><p>'+escapeHtml(game.short_description||"A little world waiting to be discovered.")+'</p><span class="editor-pick-link">STEP INSIDE ↗</span></div></article>').join("");
+  }
+  function renderRecentlyViewed() {
+    const recent=getRecent().map(id=>games.find(game=>gameId(game)===id)).filter(Boolean).slice(0,3);
+    const section=$("recent-shelf");
+    section.hidden=!recent.length;
+    $("recent-grid").innerHTML=recent.map(game=>card(game,games.indexOf(game))).join("");
   }
   function renderCollectionStats() {
     const genreCount=new Set(games.flatMap(game=>game.genres||[])).size;
@@ -111,6 +120,7 @@
     let filtered=games.filter(g=>{const text=searchText(g);return query.every(term=>text.includes(term))&&(genre==="all"||(g.genres||[]).some(x=>normalize(x)===normalize(genre)))&&(platform==="all"||(g.platforms||[]).some(x=>normalize(x)===normalize(platform)))&&(price==="all"||g.price_type===price)&&(activeMood==="all"||(g.mood_tags||[]).some(x=>normalize(x).includes(activeMood))||(g.genres||[]).some(x=>normalize(x).includes(activeMood)));});
     if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title)); if(sort==="za") filtered.sort((a,b)=>b.title.localeCompare(a.title)); if(sort==="featured") filtered.sort((a,b)=>Number(b.is_featured)-Number(a.is_featured)||a.title.localeCompare(b.title));
     renderCollectionStats();
+    renderRecentlyViewed();
     $("results-count").textContent="SHOWING "+filtered.length+" OF "+games.length+" LITTLE WORLDS";
     $("game-grid").innerHTML=filtered.map(card).join(""); $("empty-state").hidden=filtered.length>0;
     renderActiveFilters();renderWishlist();
@@ -151,6 +161,7 @@
     if(updateUrl && location.hash!=="#game/"+slug) history.pushState({game:slug},"","#game/"+slug);
     homeSections.forEach(section=>$(section).hidden=true);
     const saved=getWishlist().includes(gameId(game));
+    saveRecent(gameId(game));
     const sharedValues=(a,b)=>[...(a||[])].filter(value=>(b||[]).some(other=>String(value).toLowerCase()===String(other).toLowerCase()));
     const similarity=(a,b)=>{
       const left=new Set((a||[]).map(value=>String(value).toLowerCase()));
@@ -182,6 +193,7 @@
     $("game-detail").innerHTML='<div class="detail-topline"><button class="back-link" type="button" id="detail-back">← BACK TO DISCOVER</button><span>PIXORIA / GAME JOURNAL</span></div><div class="detail-layout"><div class="detail-main">'+coverArt(game,Math.max(0,games.indexOf(game)),true)+'<div class="detail-eyebrow"><span class="eyebrow-line"></span> '+escapeHtml((game.genres||["PIXEL GAME"]).join(" · ").toUpperCase())+'</div><div class="detail-genre-links" aria-label="Explore game genres">'+(game.genres||[]).map(genre=>'<button type="button" data-open-category="'+escapeHtml(genre)+'">'+escapeHtml(genre)+' ↗</button>').join("")+'</div><h1 class="detail-heading">'+escapeHtml(game.title)+'</h1><p class="detail-lead">'+escapeHtml(game.short_description||"A little world waiting to be discovered.")+'</p>'+(moodTags.length?'<div class="detail-mood-tags" aria-label="Game moods">'+moodTags.map(tag=>'<span>'+escapeHtml(tag)+'</span>').join("")+'</div>':"")+'<div class="detail-actions"><button class="button button-primary" type="button" id="detail-save">'+(saved?"♥ SAVED TO WISHLIST":"♡ ADD TO WISHLIST")+'</button><button class="button button-secondary" type="button" id="detail-share">SHARE GAME ↗</button>'+(game.official_url?'<a class="button button-secondary" target="_blank" rel="noopener" href="'+escapeHtml(game.official_url)+'">OFFICIAL WEBSITE ↗</a>':"")+'</div><div class="detail-description">'+escapeHtml(game.description||game.short_description||"Discover a new little world.")+'</div></div><aside class="detail-sidebar"><div class="sidebar-kicker">THE GAME NOTES</div><div class="detail-facts"><div><span>DEVELOPER</span><strong>'+escapeHtml(developer)+'</strong></div><div><span>PUBLISHER</span><strong>'+escapeHtml(game.publisher||"Independent")+'</strong></div><div><span>PLATFORMS</span><strong>'+escapeHtml((game.platforms||[]).join(" · ")||"Not listed")+'</strong></div><div><span>GENRE</span><strong>'+escapeHtml((game.genres||[]).join(" · ")||"Pixel game")+'</strong></div><div><span>PRICE</span><strong>'+escapeHtml(game.price_type==="free"?"Free to play":game.price_type==="paid"?"Paid":"Not listed")+'</strong></div><div><span>RELEASE</span><strong>'+escapeHtml(String(release))+'</strong></div></div><p class="sidebar-note">A small discovery, selected for your next little escape.</p></aside></div>'+(related.length?'<section class="related-section"><div class="eyebrow"><span class="eyebrow-line"></span> KEEP WANDERING</div><h2>More little <em>worlds.</em></h2><p class="related-intro">Picked by shared moods, genres, and places you can play.</p><div class="related-grid">'+related.map(entry=>'<div class="related-item"><span class="related-reason">'+escapeHtml(entry.reason)+'</span>'+card(entry.item,games.indexOf(entry.item))+'</div>').join("")+'</div></section>':"");
     $("game-detail").hidden=false;
     updatePageMeta(game.title+" — PIXORIA.ID",game.short_description||"Discover "+game.title+" in the PIXORIA collection of little pixel-art worlds.");
+    renderRecentlyViewed();
     $("detail-back").addEventListener("click",()=>{history.pushState({home:true},"","#discover");showHome();$("discover").scrollIntoView({behavior:"smooth"});});
     $("detail-save").addEventListener("click",()=>{toggleWishlist(gameId(game));openGame(gameId(game),false);});
     $("detail-share").addEventListener("click",async()=>{
@@ -250,6 +262,7 @@
   }));
   function resetDiscovery(){$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("price-filter").value="all";$("sort-filter").value="featured";renderGenreChips();activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");$("search-input").removeAttribute("aria-activedescendant");activeSuggestionIndex=-1;renderGames();}
   $("clear-filters").addEventListener("click",resetDiscovery);
+  $("clear-recent").addEventListener("click",()=>{try{localStorage.removeItem(recentKey);}catch{}renderRecentlyViewed();showToast("Recently explored list cleared");});
   $("dialog-close").addEventListener("click",()=>$("game-dialog").close());
   $("game-dialog").addEventListener("click",e=>{if(e.target===$("game-dialog"))$("game-dialog").close();});
   function populateFilters() {
