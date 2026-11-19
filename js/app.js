@@ -16,6 +16,7 @@
   const symbols = ["🌾","🌿","⛏️","🍱","🐈","🌙","🍄","🏡"];
   let games = [];
   let activeMood = "all";
+  let activeSuggestionIndex = -1;
   let toastTimer;
   const $ = id => document.getElementById(id);
   function updatePageMeta(title,description) {
@@ -62,11 +63,36 @@
   function searchText(game) {
     return normalize([game.title,game.short_description,game.description,game.developer,game.publisher,...(game.genres||[]),...(game.platforms||[]),...(game.mood_tags||[])].join(" "));
   }
+  function setActiveSuggestion(index){
+    const options=[...$("search-suggestions").querySelectorAll("[data-suggest]")];
+    activeSuggestionIndex=options.length?Math.max(0,Math.min(index,options.length-1)):-1;
+    options.forEach((option,i)=>{
+      const active=i===activeSuggestionIndex;
+      option.setAttribute("aria-selected",String(active));
+      option.classList.toggle("is-active",active);
+    });
+    const active=options[activeSuggestionIndex];
+    if(active){$("search-input").setAttribute("aria-activedescendant",active.id);active.scrollIntoView({block:"nearest"});}
+    else $("search-input").removeAttribute("aria-activedescendant");
+  }
+  function selectSuggestion(id){
+    const game=games.find(entry=>gameId(entry)===id);
+    if(!game)return;
+    $("search-input").value=game.title;
+    $("search-suggestions").hidden=true;
+    $("search-input").setAttribute("aria-expanded","false");
+    $("search-input").removeAttribute("aria-activedescendant");
+    activeSuggestionIndex=-1;
+    renderGames();
+    openGame(gameId(game));
+  }
   function renderSearchSuggestions() {
     const input=$("search-input"), panel=$("search-suggestions"), query=normalize(input.value);
+    activeSuggestionIndex=-1;
+    input.removeAttribute("aria-activedescendant");
     if(!query){panel.hidden=true;input.setAttribute("aria-expanded","false");return;}
     const matches=games.filter(game=>searchText(game).includes(query)).slice(0,5);
-    panel.innerHTML=matches.length?matches.map(game=>'<button type="button" class="suggestion-item" role="option" data-suggest="'+escapeHtml(gameId(game))+'"><span>'+escapeHtml(game.title)+'</span><small>'+escapeHtml((game.genres||[]).slice(0,2).join(" · ")||"Pixel game")+'</small></button>').join(""):'<p class="suggestion-empty">No matching worlds yet</p>';
+    panel.innerHTML=matches.length?matches.map((game,index)=>'<button type="button" class="suggestion-item" role="option" aria-selected="false" id="search-option-'+index+'" data-suggest="'+escapeHtml(gameId(game))+'"><span>'+escapeHtml(game.title)+'</span><small>'+escapeHtml((game.genres||[]).slice(0,2).join(" · ")||"Pixel game")+'</small></button>').join(""):'<p class="suggestion-empty">No matching worlds yet</p>';
     panel.hidden=false;input.setAttribute("aria-expanded","true");
   }
   function renderActiveFilters() {
@@ -198,10 +224,17 @@
   });
   $("search-input").addEventListener("input",()=>{renderSearchSuggestions();renderGames();});
   ["genre-filter","platform-filter","price-filter","sort-filter"].forEach(id=>$(id).addEventListener("change",renderGames));
-  $("search-suggestions").addEventListener("click",event=>{const item=event.target.closest("[data-suggest]");if(!item)return;const game=games.find(entry=>gameId(entry)===item.dataset.suggest);if(!game)return;$("search-input").value=game.title;$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");renderGames();openGame(gameId(game));});
+  $("search-suggestions").addEventListener("click",event=>{const item=event.target.closest("[data-suggest]");if(item)selectSuggestion(item.dataset.suggest);});
+  $("search-input").addEventListener("keydown",event=>{
+    const panel=$("search-suggestions"),options=panel.querySelectorAll("[data-suggest]");
+    if(panel.hidden||!options.length)return;
+    if(event.key==="ArrowDown"){event.preventDefault();setActiveSuggestion(activeSuggestionIndex+1);}
+    else if(event.key==="ArrowUp"){event.preventDefault();setActiveSuggestion(activeSuggestionIndex<0?options.length-1:activeSuggestionIndex-1);}
+    else if(event.key==="Enter"&&activeSuggestionIndex>=0){event.preventDefault();selectSuggestion(options[activeSuggestionIndex].dataset.suggest);}
+  });
   $("active-filters").addEventListener("click",event=>{const button=event.target.closest("[data-clear-filter]");if(!button)return;const key=button.dataset.clearFilter;if(key==="all"){resetDiscovery();return;}if(key==="search")$("search-input").value="";if(key==="genre")$("genre-filter").value="all";if(key==="platform")$("platform-filter").value="all";if(key==="price")$("price-filter").value="all";if(key==="mood"){activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));}renderGenreChips();renderSearchSuggestions();renderGames();});
   document.addEventListener("click",event=>{if(!event.target.closest(".search-wrap")){$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");}});
-  document.addEventListener("keydown",event=>{if(event.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){event.preventDefault();$("search-input").focus();}if(event.key==="Escape"){$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");}});
+  document.addEventListener("keydown",event=>{if(event.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){event.preventDefault();$("search-input").focus();}if(event.key==="Escape"){$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");$("search-input").removeAttribute("aria-activedescendant");activeSuggestionIndex=-1;}});
   $("genre-filter").addEventListener("change",renderGenreChips);
   $("genre-chips").addEventListener("click",event=>{const chip=event.target.closest("[data-genre]");if(!chip)return;$("genre-filter").value=chip.dataset.genre;renderGenreChips();renderGames();$("game-grid").scrollIntoView({behavior:"smooth",block:"start"});});
   $("surprise-me").addEventListener("click",()=>{const visible=[...$("game-grid").querySelectorAll("[data-game]")].map(card=>games.find(game=>gameId(game)===card.dataset.game)).filter(Boolean);if(!visible.length){showToast("No little worlds match these filters yet");return;}const pick=visible[Math.floor(Math.random()*visible.length)];openGame(gameId(pick));});
@@ -215,7 +248,7 @@
     renderGames();
     if(button.classList.contains("atelier-card")) $("game-grid").scrollIntoView({behavior:"smooth",block:"start"});
   }));
-  function resetDiscovery(){$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("price-filter").value="all";$("sort-filter").value="featured";renderGenreChips();activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));$("search-suggestions").hidden=true;renderGames();}
+  function resetDiscovery(){$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("price-filter").value="all";$("sort-filter").value="featured";renderGenreChips();activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");$("search-input").removeAttribute("aria-activedescendant");activeSuggestionIndex=-1;renderGames();}
   $("clear-filters").addEventListener("click",resetDiscovery);
   $("dialog-close").addEventListener("click",()=>$("game-dialog").close());
   $("game-dialog").addEventListener("click",e=>{if(e.target===$("game-dialog"))$("game-dialog").close();});
