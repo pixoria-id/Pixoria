@@ -699,3 +699,102 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
  .site-header{background:rgba(255,254,250,.98)}
  .game-card{border-radius:10px}
 }
+
+
+/* PIXORIA Piko 32-bit identity */
+:root{--bg:#fffaf0;--panel:#fffdf7;--panel2:#edf4e7;--cream:#26382e;--muted:#6e7c70;--sage:#719b70;--gold:#e6a33c;--line:#e7e5d4}
+body{background:#fffaf0;color:#26382e;font-family:'Nunito Sans',sans-serif}
+.site-header{height:86px;padding:0 clamp(20px,5vw,76px);background:rgba(255,251,241,.97);border-bottom:2px solid #e8e7d7}
+.brand{gap:11px;letter-spacing:0;color:#20372c}
+.brand-panda{display:grid;place-items:center;width:58px;height:58px;border:3px solid #719b70;border-radius:18px;background:#eaf3df;font-size:37px;line-height:1;box-shadow:0 3px 0 #c5d8b9}
+.brand-wordmark{display:flex;flex-direction:column;font:800 26px/.92 'Outfit',sans-serif;letter-spacing:.015em}
+.brand-wordmark small{font:700 10px/1.5 'Nunito Sans',sans-serif;letter-spacing:.01em;color:#5d6d60}
+.main-nav{gap:clamp(16px,2.8vw,38px);font-size:13px;font-weight:800;color:#48584d}
+.main-nav a{padding:12px 15px;border-radius:22px}
+.main-nav a.active{background:#dcecc8;color:#274a34}
+.wishlist-link{font-weight:800}
+.hero{min-height:530px;padding:44px clamp(22px,5vw,76px) 56px;grid-template-columns:.92fr 1.08fr;gap:4%;background:linear-gradient(120deg,#fff9e9 0%,#eff8e9 58%,#dff0df 100%)}
+.hero-copy{padding:10px 0 28px}
+h1{font:800 clamp(42px,5.3vw,70px)/.99 'Outfit',sans-serif;letter-spacing:-.045em;margin:18px 0 17px;color:#243a2e}
+h1 em{font-style:normal;color:#719b70}
+.hero-description{max-width:410px;font-size:15px;line-height:1.65;color:#56695b}
+.hero-actions{gap:18px;margin-top:25px}
+.button{font-size:13px;font-weight:900;padding:14px 20px;border-radius:12px}
+.button-primary{background:#4e8a59;color:white;box-shadow:0 4px 0 #367345}
+.text-link{font-size:13px;font-weight:800}
+.hero-note{margin-top:30px;color:#718276;font-size:11px;font-weight:700}
+.hero-art{height:390px;border:4px solid #fffdf4;border-radius:25px;background:linear-gradient(180deg,#68c5f6 0%,#b8e7f8 48%,#d7efc4 49%,#86bd62 100%);box-shadow:0 12px 0 rgba(105,145,91,.15),0 22px 50px rgba(57,94,62,.14);image-rendering:pixelated}
+.hero-art:after{content:"";position:absolute;left:0;right:0;bottom:0;height:24%;background:repeating-linear-gradient(90deg,#8b5c39 0 18px,#a86f43 18px 36px);border-top:8px solid #6ba94e;opacity:.96}
+.moon{width:60px;height:60px;background:#fff3b8;right:13%;top:12%;box-shadow:0 0 30px #fff8c5}
+.stars{color:#fff9df;z-index:1}
+.mountain-back{border-bottom-color:#86c77e}.mountain-front{border-bottom-color:#63aa66}
+.lake{background:linear-gradient(180deg,#78c9df,#54a8b7)}
+.reflection{background:#fff0ae;box-shadow:0 10px 0 #fff0ae88,0 22px 0 #fff0ae55,0 34px 0 #fff0ae33}
+.island{background:#4f9b52}
+.cabin-body{background:#d88c52;border-color:#8a5738}.roof{border-bottom-color:#b85d3f}
+.tree{border-bottom-color:#39834b}.tree:after{background:#805535}
+.mascot-panda{position:absolute;z-index:4;right:17%;bottom:18%;width:210px;height:225px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 8px 0 rgba(42,75,42,.18))}
+.panda-head{font-size:166px;line-height:1;filter:drop-shadow(3px 4px 0 #27362d);transform:translateY(-12px)}
+.panda-headphones{position:absolute;right:0;top:28px;width:49px;height:57px;border:9px solid #438c55;border-left-width:7px;border-radius:18px;background:#b9e46f;color:#fff;display:grid;place-items:center;font-size:18px;box-shadow:inset 0 0 0 3px #d8f2a4}
+.panda-scarf{position:absolute;bottom:52px;left:23px;width:165px;height:24px;border-radius:50% 50% 8px 8px;background:#70aa53;border:4px solid #477b43;transform:rotate(-5deg);box-shadow:0 6px 0 #477b43}
+.panda-tablet{position:absolute;bottom:3px;left:54px;padding:12px 16px;background:#657d8a;border:5px solid #263a37;border-radius:9px;color:#fff6d9;font:900 10px 'Outfit',sans-serif;letter-spacing:.08em;box-shadow:0 5px 0 #263a37}
+.hero-art-sign{position:absolute;z-index:5;right:2%;bottom:12%;padding:12px 16px;background:#f5b35d;border:4px solid #895735;border-radius:8px;color:#633e29;font:900 17px/1.05 'Outfit',sans-serif;text-align:center;box-shadow:0 5px 0 #895735}
+.hero-bottom{bottom:16px;color:#69816a;font-weight:800}
+.quick-categories{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:13px clamp(16px,5vw,76px);background:#fffdf4;border-bottom:5px solid #dceacb;box-shadow:0 7px 20px rgba(54,83,54,.07);overflow-x:auto;scrollbar-width:none}
+.quick-categories::-webkit-scrollbar{display:none}
+.quick-category{display:flex;flex:1 0 auto;align-items:center;justify-content:center;flex-direction:column;gap:4px;min-width:94px;padding:8px 12px;border:0;border-right:1px solid #e7e4d4;background:transparent;color:#344a39;font:800 12px 'Nunito Sans',sans-serif;cursor:pointer;text-decoration:none}
+.quick-category span{font-size:25px;line-height:1.1}
+.quick-category.active,.quick-category:hover{background:#e3f0d1;border-radius:18px;color:#2f653b}
+.discover-section{padding:54px clamp(22px,5vw,76px) 75px;background:#f1f6e9}
+.section-heading{align-items:end;margin-bottom:20px}
+.section-heading h2,.wishlist-heading h2{font:800 clamp(32px,4vw,48px)/1.08 'Outfit',sans-serif;color:#293c30}
+.section-heading h2 em,.wishlist-heading h2 em{font-style:normal;color:#719b70}
+.section-heading>p,.wishlist-heading>p{font-size:13px;color:#65786a}
+.mood-atelier{margin:24px 0 28px}
+.editors-shelf{margin:24px 0 10px;padding:22px 0 24px;border-color:#dfe8d8}
+.editors-heading h3{font:800 clamp(25px,3vw,34px)/1.1 'Outfit',sans-serif}
+.editors-heading h3 em{font-style:normal;color:#719b70}
+.editors-heading>p{color:#66786a;font-size:12px}
+.editor-pick{background:#fff;border:1px solid #e3eadf;border-radius:14px;box-shadow:0 5px 16px rgba(54,80,54,.06)}
+.editor-pick-copy h4{font:800 17px 'Outfit',sans-serif}.editor-pick-copy p{color:#66786a}
+.toolbar{gap:9px;margin:30px 0 18px}
+.search-box{background:#fff;border:2px solid #dce8d6;border-radius:15px;min-height:50px}
+.search-box input{font-size:13px}
+.toolbar select{background:#fff;border:1px solid #dce5d7;border-radius:12px;font-size:12px;min-height:48px}
+.mood-chip,.genre-chip{border-radius:30px}
+.results-line{font-size:9px;font-weight:900;color:#728274}
+.game-grid,.wishlist-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:15px}
+.game-card{border-radius:15px;background:#fff;border:2px solid #e4eadf;box-shadow:0 5px 16px rgba(46,72,47,.07)}
+.game-cover{height:170px}.game-card-body{padding:13px}
+.game-title{font:800 18px/1.12 'Outfit',sans-serif}
+.game-desc{font-size:11px;line-height:1.5;min-height:48px;color:#66776a}
+.game-meta{font-size:9px;font-weight:800}.tag{font-size:9px;border-radius:20px}
+.save-button{font-size:22px}
+.quote-section{padding:65px 20px}.quote-section>p{font:800 clamp(28px,4vw,44px)/1.15 'Outfit',sans-serif}
+.wishlist-section{padding:65px clamp(22px,5vw,76px)}.site-footer{padding:35px clamp(22px,5vw,76px);background:#eaf2e5}
+@media(max-width:1100px){.game-grid,.wishlist-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{min-height:500px}.hero-art{height:350px}.mascot-panda{right:13%;transform:scale(.86);transform-origin:bottom right}}
+@media(max-width:760px){
+ .site-header{padding:9px 16px;gap:8px;height:auto;min-height:72px;flex-wrap:wrap}
+ .brand-panda{width:44px;height:44px;font-size:29px;border-radius:14px}
+ .brand-wordmark{font-size:21px}.brand-wordmark small{font-size:8px}
+ .main-nav{order:3;width:100%;justify-content:center;gap:7px}
+ .main-nav a{padding:8px 11px;font-size:11px}
+ .wishlist-link{margin-left:auto}
+ .hero{grid-template-columns:1fr;padding:32px 20px 50px;gap:20px}
+ .hero-copy{padding:0}h1{font-size:clamp(42px,12vw,60px)}
+ .hero-art{height:300px}
+ .mascot-panda{right:17%;bottom:13%;transform:scale(.76);transform-origin:bottom right}
+ .hero-art-sign{right:2%;bottom:8%;font-size:13px}
+ .hero-bottom{left:20px;right:20px}
+ .quick-categories{justify-content:flex-start;padding:10px 14px}
+ .quick-category{min-width:85px;font-size:11px}
+ .discover-section{padding:38px 18px 55px}
+ .section-heading,.wishlist-heading{align-items:flex-start;flex-direction:column;gap:10px}
+ .game-grid,.wishlist-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+ .game-cover{height:140px}.game-card-body{padding:10px}
+ .game-title{font-size:16px}.game-desc{font-size:10px;min-height:52px}
+ .toolbar{flex-wrap:wrap}.search-wrap{flex:1 1 100%}
+ .toolbar select{flex:1 1 42%;max-width:none}
+ .editors-picks{grid-template-columns:1fr}
+}
+@media(max-width:390px){.game-grid,.wishlist-grid{grid-template-columns:1fr}.hero-art{height:260px}.mascot-panda{right:13%;transform:scale(.65);transform-origin:bottom right}.quick-category{min-width:78px}}
