@@ -53,6 +53,14 @@
         <select id="platform-filter" aria-label="Filter by platform"><option value="all">All platforms</option></select>
         <select id="sort-filter" aria-label="Sort games"><option value="featured">Featured</option><option value="az">A — Z</option><option value="za">Z — A</option></select>
       </div>
+      <div class="mood-row" aria-label="Quick mood filters">
+        <span class="mood-label">I FEEL LIKE</span>
+        <button class="mood-chip active" type="button" data-mood="all">Anything</button>
+        <button class="mood-chip" type="button" data-mood="cozy">Cozy &amp; calm</button>
+        <button class="mood-chip" type="button" data-mood="adventure">Adventure</button>
+        <button class="mood-chip" type="button" data-mood="story">Good stories</button>
+        <button class="mood-chip" type="button" data-mood="creative">Creative</button>
+      </div>
       <div class="results-line"><span id="results-count">A FEW WORLDS TO BEGIN WITH</span><span>HANDPICKED WITH CARE ✳</span></div>
       <div class="game-grid" id="game-grid"><article class="loading-card">Gathering little worlds<span>✦</span></article></div>
       <div class="empty-state" id="empty-state" hidden><span>✧</span><h3>No worlds found</h3><p>Try another title or clear your filters.</p><button class="text-link" id="clear-filters">Clear filters →</button></div>
