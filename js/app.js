@@ -70,7 +70,21 @@
   }
   const normalize = value => String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
   function searchText(game) {
-    return normalize([game.title,game.short_description,game.description,game.developer,game.publisher,...(game.genres||[]),...(game.platforms||[]),...(game.mood_tags||[])].join(" "));
+    return normalize([game.title,game.short_description,game.description,game.developer,game.publisher,...(game.genres||[]),...(game.platforms||[]),...(game.mood_tags||[]),game.price_type==="free"?"free gratis":"",game.price_type==="paid"?"paid berbayar":"", "game pixel pixel-art"].join(" "));
+  }
+  const searchAliases = {
+    santai:["cozy","relaxing","calm","slow"],tenang:["cozy","relaxing","calm"],nyaman:["cozy","relaxing"],
+    petualangan:["adventure","exploration"],jelajah:["exploration","adventure"],eksplorasi:["exploration"],
+    cerita:["story","narrative","emotional"],kisah:["story","narrative"],narasi:["narrative","story"],
+    berkebun:["farming","life sim"],kebun:["farming"],bertani:["farming"],simulasi:["simulation","management"],
+    membangun:["building","management","creative"],bangun:["building","creative"],teka:["puzzle"],teki:["puzzle"],puzzle:["puzzle"],
+    kreatif:["creative"],mewarnai:["creative","coloring"],aksi:["action"],gratis:["free"],berbayar:["paid"],
+    hp:["android","ios"],ponsel:["android","ios"],mobile:["android","ios"],komputer:["pc"],switch:["nintendo switch"]
+  };
+  const searchTerms = query => normalize(query).split(/\\s+/).filter(term=>term&&!["game","games","pixel","pixel-art","yang","untuk","dan","di","the","a"].includes(term));
+  function matchesSearch(game,query) {
+    const text=searchText(game);
+    return searchTerms(query).every(term=>[term,...(searchAliases[term]||[])].some(alias=>text.includes(normalize(alias))));
   }
   function setActiveSuggestion(index){
     const options=[...$("search-suggestions").querySelectorAll("[data-suggest]")];
@@ -100,7 +114,7 @@
     activeSuggestionIndex=-1;
     input.removeAttribute("aria-activedescendant");
     if(!query){panel.hidden=true;input.setAttribute("aria-expanded","false");return;}
-    const matches=games.filter(game=>searchText(game).includes(query)).slice(0,5);
+    const matches=games.filter(game=>matchesSearch(game,query)).slice(0,5);
     panel.innerHTML=matches.length?matches.map((game,index)=>'<button type="button" class="suggestion-item" role="option" aria-selected="false" id="search-option-'+index+'" data-suggest="'+escapeHtml(gameId(game))+'"><span>'+escapeHtml(game.title)+'</span><small>'+escapeHtml((game.genres||[]).slice(0,2).join(" · ")||"Pixel game")+'</small></button>').join(""):'<p class="suggestion-empty">No matching worlds yet</p>';
     panel.hidden=false;input.setAttribute("aria-expanded","true");
   }
@@ -117,7 +131,7 @@
   }
   function renderGames() {
     const query=normalize($("search-input").value).split(/\s+/).filter(Boolean), genre=$("genre-filter").value, platform=$("platform-filter").value, price=$("price-filter").value, sort=$("sort-filter").value;
-    let filtered=games.filter(g=>{const text=searchText(g);return query.every(term=>text.includes(term))&&(genre==="all"||(g.genres||[]).some(x=>normalize(x)===normalize(genre)))&&(platform==="all"||(g.platforms||[]).some(x=>normalize(x)===normalize(platform)))&&(price==="all"||g.price_type===price)&&(activeMood==="all"||(g.mood_tags||[]).some(x=>normalize(x).includes(activeMood))||(g.genres||[]).some(x=>normalize(x).includes(activeMood)));});
+    let filtered=games.filter(g=>{const text=searchText(g);return matchesSearch(g,query)&&(genre==="all"||(g.genres||[]).some(x=>normalize(x)===normalize(genre)))&&(platform==="all"||(g.platforms||[]).some(x=>normalize(x)===normalize(platform)))&&(price==="all"||g.price_type===price)&&(activeMood==="all"||(g.mood_tags||[]).some(x=>normalize(x).includes(activeMood))||(g.genres||[]).some(x=>normalize(x).includes(activeMood)));});
     if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title)); if(sort==="za") filtered.sort((a,b)=>b.title.localeCompare(a.title)); if(sort==="featured") filtered.sort((a,b)=>Number(b.is_featured)-Number(a.is_featured)||a.title.localeCompare(b.title));
     renderCollectionStats();
     renderRecentlyViewed();
