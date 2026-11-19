@@ -270,7 +270,10 @@
     const save=event.target.closest("[data-save]"); if(save){event.stopPropagation();toggleWishlist(save.dataset.save);return;}
     const article=event.target.closest("[data-game]"); if(article && !event.target.closest("button"))openGame(article.dataset.game);
   });
-  $("search-input").addEventListener("input",()=>{renderSearchSuggestions();renderGames();});
+
+  const heroSearchButton=$("hero-search-button");
+  if(heroSearchButton)heroSearchButton.addEventListener("click",()=>{$("search-input").focus();$("discover").scrollIntoView({behavior:"smooth",block:"start"});});
+\n  $("search-input").addEventListener("input",()=>{renderSearchSuggestions();renderGames();});
   ["genre-filter","platform-filter","price-filter","sort-filter"].forEach(id=>$(id).addEventListener("change",renderGames));
   $("search-suggestions").addEventListener("click",event=>{const item=event.target.closest("[data-suggest]");if(item)selectSuggestion(item.dataset.suggest);});
   $("search-input").addEventListener("keydown",event=>{
