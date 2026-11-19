@@ -154,3 +154,51 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
  .mood-label{width:100%;margin-bottom:2px}
  .mood-chip{padding:8px 12px;font-size:10px}
 }
+
+
+/* Third pass — illustrated game worlds and richer details */
+.game-grid{align-items:stretch}
+.game-card{display:flex;flex-direction:column;cursor:pointer;outline:none}
+.game-card:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.game-cover{height:245px;flex:none;position:relative;overflow:hidden;isolation:isolate;background:#263a31}
+.game-cover>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.game-card:hover .game-cover>img{transform:scale(1.055)}
+.game-cover .cover-index,.game-cover .cover-type{z-index:5}
+.game-cover:before{content:"";position:absolute;inset:0;z-index:1;opacity:.95;background:
+ radial-gradient(ellipse at 72% 25%,var(--scene-light,#f0d29a) 0 5%,transparent 5.5%),
+ linear-gradient(180deg,transparent 38%,rgba(7,16,12,.13) 55%,rgba(7,16,12,.5) 100%),
+ linear-gradient(155deg,var(--scene-sky,#334c42),var(--scene-mid,#61775a) 57%,var(--scene-ground,#263e31))}
+.game-cover:after{content:"";position:absolute;inset:0;z-index:3;opacity:.28;pointer-events:none;background-image:linear-gradient(90deg,rgba(248,239,210,.16) 1px,transparent 1px),linear-gradient(rgba(248,239,210,.16) 1px,transparent 1px);background-size:13px 13px;mask-image:linear-gradient(135deg,#000 0%,transparent 78%)}
+.cover-sun{position:absolute;z-index:2;width:54px;height:54px;right:17%;top:17%;border-radius:50%;background:var(--scene-light,#e9ce91);box-shadow:0 0 55px color-mix(in srgb,var(--scene-light,#e9ce91) 45%,transparent)}
+.cover-ridge{position:absolute;z-index:2;left:-8%;right:-8%;bottom:17%;height:48%;background:var(--scene-ridge,#354c3d);clip-path:polygon(0 75%,18% 25%,33% 61%,52% 5%,70% 54%,85% 22%,100% 65%,100% 100%,0 100%);filter:drop-shadow(0 -5px 0 rgba(210,205,155,.12))}
+.cover-world{position:absolute;z-index:2;left:-5%;right:-5%;bottom:-4%;height:38%;background:var(--scene-ground,#1c3328);clip-path:polygon(0 22%,22% 0,43% 25%,65% 5%,100% 20%,100% 100%,0 100%)}
+.cover-pixels{position:absolute;z-index:4;left:12%;bottom:20%;width:11px;height:11px;background:var(--scene-pixel,#e6c17c);box-shadow:18px -10px 0 var(--scene-pixel,#e6c17c),36px 3px 0 var(--scene-pixel,#e6c17c),54px -15px 0 rgba(230,193,124,.7),180px -22px 0 rgba(230,193,124,.7),196px -8px 0 var(--scene-pixel,#e6c17c),212px -24px 0 rgba(230,193,124,.65);opacity:.7;image-rendering:pixelated}
+.scene-stardew-valley{--scene-sky:#b7a77c;--scene-mid:#71875b;--scene-ground:#263e2c;--scene-ridge:#536a45;--scene-light:#f5d68d;--scene-pixel:#f2d89b}
+.scene-terraria{--scene-sky:#527d91;--scene-mid:#477d61;--scene-ground:#1b453b;--scene-ridge:#35664e;--scene-light:#e6d49b;--scene-pixel:#b7d8aa}
+.scene-minecraft{--scene-sky:#7396a2;--scene-mid:#668d5a;--scene-ground:#304d35;--scene-ridge:#4e7048;--scene-light:#f0d38c;--scene-pixel:#d4d39c}
+.scene-inbento{--scene-sky:#d6a77f;--scene-mid:#bd795d;--scene-ground:#613f3b;--scene-ridge:#98604f;--scene-light:#f5d4a0;--scene-pixel:#f4d8b0}
+.scene-soul-knight{--scene-sky:#4d536b;--scene-mid:#5b536c;--scene-ground:#25283b;--scene-ridge:#39394e;--scene-light:#d9b67d;--scene-pixel:#d5c09a}
+.scene-nameless-cat{--scene-sky:#53627e;--scene-mid:#65718c;--scene-ground:#252e45;--scene-ridge:#394760;--scene-light:#e6d8c4;--scene-pixel:#d7c8e5}
+.game-card-body{flex:1;display:flex;flex-direction:column}
+.game-card-foot{margin-top:auto}
+.card-discover{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:12px;border-top:1px solid rgba(239,231,210,.09);font-size:9px;letter-spacing:.17em;color:#9eaa9b;opacity:.75;transition:color .2s,opacity .2s}
+.card-discover span{font-size:15px;color:var(--gold)}
+.game-card:hover .card-discover{color:#e5c58e;opacity:1}
+.dialog-cover{height:255px;margin:0 0 27px;position:relative;overflow:hidden}
+.dialog-cover>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dialog-cover .cover-index{font-size:9px}
+.detail-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:25px 0 8px}
+.detail-facts>div{padding:14px;background:rgba(8,15,11,.34);border:1px solid var(--line);min-width:0}
+.detail-facts span{display:block;font-size:8px;letter-spacing:.16em;color:#a6b19f;margin-bottom:7px}
+.detail-facts strong{display:block;font-size:11px;line-height:1.5;color:#e8e7d9;font-weight:500;overflow-wrap:anywhere}
+.button-secondary{border:1px solid rgba(216,180,119,.55);color:var(--cream);background:transparent}
+.button-secondary:hover{background:rgba(216,180,119,.1)}
+.dialog-actions{flex-wrap:wrap}
+@media(max-width:850px){.game-cover{height:210px}}
+@media(max-width:620px){
+ .game-cover{height:235px}
+ .detail-facts{grid-template-columns:1fr;gap:8px}
+ .detail-facts>div{display:flex;justify-content:space-between;align-items:center;gap:12px}
+ .detail-facts span{margin:0}
+ .dialog-cover{height:190px}
+}
