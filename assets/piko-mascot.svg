@@ -1,14 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" shape-rendering="crispEdges">
-<ellipse cx="120" cy="218" rx="82" ry="12" fill="#385e43" opacity=".2"/>
-<rect x="38" y="30" width="64" height="64" fill="#252d2a"/><rect x="138" y="30" width="64" height="64" fill="#252d2a"/>
-<rect x="54" y="46" width="32" height="32" fill="#fffaf0"/><rect x="154" y="46" width="32" height="32" fill="#fffaf0"/>
-<rect x="48" y="62" width="144" height="130" fill="#fffaf0"/><rect x="34" y="88" width="42" height="84" fill="#252d2a"/><rect x="164" y="88" width="42" height="84" fill="#252d2a"/>
-<rect x="70" y="100" width="44" height="48" fill="#252d2a"/><rect x="126" y="100" width="44" height="48" fill="#252d2a"/>
-<rect x="82" y="110" width="12" height="12" fill="#fff"/><rect x="138" y="110" width="12" height="12" fill="#fff"/>
-<rect x="110" y="148" width="20" height="14" fill="#252d2a"/><rect x="100" y="162" width="40" height="8" fill="#252d2a"/>
-<rect x="70" y="158" width="22" height="12" fill="#f2a4a0"/><rect x="148" y="158" width="22" height="12" fill="#f2a4a0"/>
-<path d="M30 120V85q0-70 90-70t90 70v35" fill="none" stroke="#438d4d" stroke-width="16"/><rect x="20" y="105" width="25" height="48" fill="#438d4d"/><rect x="195" y="105" width="25" height="48" fill="#438d4d"/>
-<rect x="26" y="116" width="13" height="24" fill="#d5f29b"/><rect x="201" y="116" width="13" height="24" fill="#d5f29b"/>
-<rect x="54" y="185" width="132" height="22" fill="#6ca85b"/><rect x="75" y="202" width="90" height="13" fill="#4c8147"/>
-<rect x="84" y="178" width="72" height="8" fill="#d5f29b"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" shape-rendering="crispEdges">
+<title>Piko, the PIXORIA panda mascot</title>
+<ellipse cx="256" cy="466" rx="154" ry="22" fill="#355b42" opacity=".18"/>
+<path d="M82 166h16v16H82zM90 158h8v8h-8zM414 142h16v16h-16zM422 134h8v8h-8zM414 326h12v12h-12zM106 270h10v10h-10zM398 240h10v10h-10z" fill="#f0bd58"/>
+<!-- ears -->
+<path d="M116 98h48v16h16v48h-16v16h-48v-16h-16v-48h16zM332 98h48v16h16v48h-16v16h-48v-16h-16v-48h16z" fill="#202b28"/>
+<path d="M132 114h32v32h-32zM348 114h32v32h-32z" fill="#f3b2a5"/>
+<path d="M140 122h16v16h-16zM356 122h16v16h-16z" fill="#f8c9b9"/>
+<!-- green headset -->
+<path d="M100 218v-72h16v-32h16V98h32V82h136v16h32v16h16v32h16v72h-20v-72h-16v-32h-32V98H164v16h-32v32h-12v72z" fill="#347d4c"/>
+<path d="M116 162v-32h16v-16h32v-16h152v16h32v16h16v32h-12v-24h-16v-12h-32v-12H164v12h-32v16h-8v20z" fill="#72ad68"/>
+<path d="M78 204h34v-16h20v112h-20v-16H78zM380 188h20v16h34v80h-34v16h-20z" fill="#2c7043"/>
+<path d="M88 214h28v60H88zM396 214h28v60h-28z" fill="#d5ef9d"/>
+<path d="M96 222h12v44H96zM404 222h12v44h-12z" fill="#f3f6c8"/>
+<!-- head -->
+<path d="M128 174h32v-16h192v16h32v32h16v112h-16v48h-32v32H160v-32h-32v-48h-16V206h16z" fill="#202b28"/>
+<path d="M144 190h32v-16h160v16h32v32h16v80h-16v48h-32v32H176v-32h-32v-48h-16v-80h16z" fill="#fffaf0"/>
+<path d="M160 190h32v-8h32v8h-16v16h-32v16h-16zM320 190h32v16h16v32h-16v-16h-32z" fill="#ffffff"/>
+<path d="M144 286h16v32h16v16h-16v-16h-16zM352 286h16v32h-16v16h-16v-16h16z" fill="#e9e4d4"/>
+<!-- eye patches -->
+<path d="M158 230h48v16h16v48h-16v16h-48v-16h-16v-48h16zM306 230h48v16h16v48h-16v16h-48v-16h-16v-48h16z" fill="#26302d"/>
+<path d="M174 246h24v16h-24zM322 246h24v16h-24zM190 246h16v32h-16zM322 246h16v32h-16z" fill="#fffaf0"/>
+<path d="M194 254h12v20h-12zM326 254h12v20h-12z" fill="#24302b"/>
+<path d="M198 254h6v8h-6zM330 254h6v8h-6z" fill="#ffffff"/>
+<!-- cheeks, nose and smile -->
+<path d="M146 310h32v16h-32zM334 310h32v16h-32z" fill="#f3aaa0" opacity=".85"/>
+<path d="M238 306h36v20h-36zM246 326h20v12h-20z" fill="#202b28"/>
+<path d="M222 344h24v8h-24zM266 344h24v8h-24zM238 352h36v8h-36z" fill="#202b28"/>
+<path d="M230 346h12v6h-12zM270 346h12v6h-12z" fill="#fffaf0"/>
+<!-- body silhouette and belly -->
+<path d="M160 374h48v-16h96v16h48v32h16v64h-16v16H144v-16h-16v-64h16v-32z" fill="#202b28"/>
+<path d="M176 390h32v-16h96v16h32v32h16v48H160v-48h16z" fill="#fffaf0"/>
+<path d="M208 394h96v58h-96z" fill="#f1eee3"/>
+<!-- arms and paws -->
+<path d="M128 398h32v16h16v48h-16v16h-32v-16h-16v-48h16zM352 398h32v16h16v48h-16v16h-32v-16h-16v-48h16z" fill="#202b28"/>
+<path d="M128 430h32v32h-32zM352 430h32v32h-32z" fill="#fffaf0"/>
+<!-- signature sage scarf -->
+<path d="M160 368h32v16h128v-16h32v32h-16v16H176v-16h-16z" fill="#79a96a"/>
+<path d="M192 384h128v16H192z" fill="#a9ce82"/>
+<path d="M292 400h32v16h-16v32h-16v-16h-16v-16h16z" fill="#5f914f"/>
+<path d="M300 408h16v16h-16z" fill="#d7e7a8"/>
+<!-- tablet held in front -->
+<path d="M180 414h152v16h16v48h-16v16H180v-16h-16v-48h16z" fill="#294b3b"/>
+<path d="M190 424h132v40H190z" fill="#86b9a0"/>
+<path d="M202 434h108v20H202z" fill="#d5edc2"/>
+<path d="M214 440h12v8h-12zM238 440h12v8h-12zM262 440h12v8h-12z" fill="#568b66"/>
+<path d="M244 470h24v4h-24z" fill="#d7e7a8"/>
+<path d="M136 450h8v8h-8zM152 450h8v8h-8zM360 450h8v8h-8zM376 450h8v8h-8z" fill="#f3aaa0"/>
+<!-- little PIXORIA pixel sparkles -->
+<path d="M354 370h16v16h-16zM370 354h16v16h-16zM136 350h16v16h-16zM152 334h16v16h-16z" fill="#d5ef9d"/>
+<path d="M72 448h16v8H72zM424 420h16v8h-16zM90 392h8v8h-8zM410 378h8v8h-8z" fill="#e9b957"/>
 </svg>
