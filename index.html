@@ -3,83 +3,151 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#fbfaf5">
+  <meta name="theme-color" content="#fff7e3">
   <meta name="description" content="PIXORIA.ID — Discover Your Little World. Temukan game pixel-art cozy untuk menemani waktumu.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="PIXORIA.ID — Discover Your Little World">
   <meta property="og:description" content="Temukan game pixel-art cozy untuk petualangan kecil, hari yang tenang, dan cerita yang tinggal lebih lama.">
   <meta name="twitter:card" content="summary">
   <title>PIXORIA.ID — Discover Your Little World</title>
+  <link rel="icon" type="image/png" href="assets/favicon-64.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/reference.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="js/app.js"></script>
 </head>
 <body>
-  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
-  <header class="site-header">
-    <a class="brand" href="#" aria-label="PIXORIA home"><span class="brand-panda" aria-hidden="true"><img src="assets/piko-mascot.svg" alt=""></span><span class="brand-wordmark">PIXORIA<span class="brand-dot">.</span><small>Discover Your Little World</small></span></a>
-    <nav class="main-nav" aria-label="Main navigation">
-      <a class="active" href="#home">⌂ Home</a><a href="#discover">🎮 Games</a><a href="#discover">▦ Categories⌄</a><a href="#wishlist">♥ Wishlist</a><a href="#about">ⓘ About</a>
+  <div class="ref-splash" id="splash" role="status" aria-live="polite"><img src="assets/piko/piko-explore.png" alt="" width="150" height="150"><p>Loading little worlds…</p><div class="ref-splash-bar" aria-hidden="true"><i></i></div></div>
+  <header class="ref-header">
+    <a class="ref-brand" href="#home" aria-label="PIXORIA home">
+      <img class="ref-brand-piko" src="assets/piko-head.png" alt="" width="96" height="96">
+      <span class="ref-brand-text">
+        <img class="ref-wordmark" src="assets/pixoria-wordmark.png" alt="PIXORIA" width="188" height="46">
+        <small>Discover Your Little World</small>
+      </span>
+    </a>
+    <nav class="ref-nav" aria-label="Main navigation">
+      <a class="active" href="#home"><i class="ref-ico ref-ico-home" aria-hidden="true"></i><span>Home</span></a>
+      <a href="#discover"><i class="ref-ico ref-ico-games" aria-hidden="true"></i><span>Games</span></a>
+      <a href="#categories-bar"><i class="ref-ico ref-ico-grid" aria-hidden="true"></i><span>Categories</span><em class="ref-caret" aria-hidden="true"></em></a>
+      <a href="#wishlist"><i class="ref-ico ref-ico-heart" aria-hidden="true"></i><span>Wishlist</span><b id="wishlist-count" aria-label="Saved games">0</b></a>
+      <a href="#about"><i class="ref-ico ref-ico-info" aria-hidden="true"></i><span>About</span></a>
     </nav>
-    <a class="wishlist-link" href="#wishlist"><span>♡</span> <span class="wishlist-label">Wishlist</span><b id="wishlist-count">0</b></a>
+    <div class="ref-actions">
+      <button class="ref-round" id="header-search" type="button" aria-label="Search games">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>
+      </button>
+      <a class="ref-round ref-avatar" href="#wishlist" aria-label="Your little collection">
+        <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><circle cx="12" cy="8" r="4.6" fill="currentColor"/><path d="M3.5 21c0-5 3.8-7.4 8.5-7.4s8.5 2.4 8.5 7.4z" fill="currentColor"/></svg>
+        <i aria-hidden="true"></i>
+      </a>
+    </div>
   </header>
   <main>
     <section class="category-page" id="category-page" hidden aria-live="polite"></section>
     <section class="game-detail-page" id="game-detail" hidden aria-live="polite"></section>
-    <section class="hero reference-hero" id="home">
-      <div class="hero-copy">
-        <div class="reference-title-lockup"><span class="reference-spark">✦</span><h1>PIXORIA</h1><span class="reference-spark">✦</span></div>
-        <div class="reference-ribbon">Discover Your Little World</div>
-        <p class="hero-description">Find amazing pixel games,<br>and enjoy the journey! ❤️</p>
-        <div class="search-wrap hero-search"><label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Search games..." autocomplete="off" aria-label="Search games" aria-controls="search-suggestions" aria-expanded="false"><button class="hero-search-submit" type="button" id="hero-search-button">Search</button></label><div class="search-suggestions" id="search-suggestions" role="listbox" hidden></div></div>
+
+    <section class="ref-hero" id="home">
+      <div class="ref-scene" role="img" aria-label="Dunia pixel-art PIXORIA: kastil di atas bukit, desa di tepi danau, hutan, dan Piko si panda yang duduk memegang tablet">
+        <img class="ref-piko" src="assets/piko-full.png" alt="" width="512" height="512">
       </div>
-      <div class="hero-art reference-world" role="img" aria-label="Ilustrasi dunia pixel-art PIXORIA dengan Piko si panda menjelajah desa, kastil, sungai, dan pepohonan"><img class="hero-world-illustration" src="assets/pixoria-world.svg" alt=""></div>
+      <div class="ref-copy">
+        <h1 class="ref-title"><img src="assets/pixoria-title.png" alt="PIXORIA" width="564" height="144"></h1>
+        <div class="ref-ribbon"><span>Discover Your Little World</span></div>
+        <p class="ref-lead">Find amazing pixel games,<br>and enjoy the journey! ❤️</p>
+        <div class="ref-search">
+          <label class="ref-search-box">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.8"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+            <input id="search-input" type="search" placeholder="Search games..." autocomplete="off" aria-label="Search games" aria-controls="search-suggestions" aria-expanded="false">
+            <button class="ref-search-go" type="button" id="hero-search-button">Search</button>
+          </label>
+          <div class="search-suggestions" id="search-suggestions" role="listbox" hidden></div>
+        </div>
+      </div>
     </section>
-    <nav class="quick-categories" aria-label="Quick game categories"><button class="quick-category active" type="button" data-mood="all"><span>🎮</span>All Games</button><button class="quick-category" type="button" data-mood="adventure"><span>⚔️</span>Adventure</button><button class="quick-category" type="button" data-mood="cozy"><span>🌳</span>Cozy</button><button class="quick-category" type="button" data-mood="story"><span>💗</span>Story</button><button class="quick-category" type="button" data-mood="creative"><span>⭐</span>Creative</button><a class="quick-category" href="#discover"><span>🧩</span>Explore All</a></nav><section class="discover-section section-wrap" id="discover">
-      <div class="section-heading">
-        <div><div class="eyebrow"><span class="eyebrow-line"></span> THE COLLECTION</div><h2>Featured <em>Games.</em></h2></div>
-        <p>Handpicked pixel worlds for your next little adventure.</p>
+
+    <nav class="ref-cats" id="categories-bar" aria-label="Game categories">
+      <button class="ref-cat active" type="button" data-bucket="all" aria-pressed="true"><img src="assets/icons/all.png" alt="" width="44" height="44"><span>All Games</span></button>
+      <button class="ref-cat" type="button" data-bucket="rpg" aria-pressed="false"><img src="assets/icons/rpg.png" alt="" width="44" height="44"><span>RPG</span></button>
+      <button class="ref-cat" type="button" data-bucket="adventure" aria-pressed="false"><img src="assets/icons/adventure.png" alt="" width="44" height="44"><span>Adventure</span></button>
+      <button class="ref-cat" type="button" data-bucket="simulation" aria-pressed="false"><img src="assets/icons/simulation.png" alt="" width="44" height="44"><span>Simulation</span></button>
+      <button class="ref-cat" type="button" data-bucket="strategy" aria-pressed="false"><img src="assets/icons/strategy.png" alt="" width="44" height="44"><span>Strategy</span></button>
+      <button class="ref-cat" type="button" data-bucket="casual" aria-pressed="false"><img src="assets/icons/casual.png" alt="" width="44" height="44"><span>Casual</span></button>
+      <button class="ref-cat" type="button" data-bucket="puzzle" aria-pressed="false"><img src="assets/icons/puzzle.png" alt="" width="44" height="44"><span>Puzzle</span></button>
+      <button class="ref-cat" type="button" data-bucket="action" aria-pressed="false"><img src="assets/icons/action.png" alt="" width="44" height="44"><span>Action</span></button>
+      <button class="ref-cat" type="button" data-bucket="others" aria-pressed="false"><img src="assets/icons/others.png" alt="" width="44" height="44"><span>Others</span></button>
+    </nav>
+
+    <section class="ref-featured" id="discover">
+      <div class="ref-feat-head">
+        <img class="ref-sprout" src="assets/icons/sprout.png" alt="" width="52" height="52">
+        <div class="ref-feat-title">
+          <h2>Featured Games</h2>
+          <p>Handpicked cozy games for you <span aria-hidden="true">❤️</span></p>
+        </div>
+        <button class="ref-viewall" id="view-all" type="button">View All <span aria-hidden="true">→</span></button>
       </div>
-      <div class="mood-atelier" aria-label="Explore by atmosphere">
-        <div class="atelier-intro"><span class="mood-label">A WORLD FOR EVERY MOOD</span><p>What kind of little escape<br><em>are you looking for?</em></p></div>
-        <button class="atelier-card atelier-cozy" type="button" data-mood="cozy"><span class="atelier-icon">☾</span><span class="atelier-title">Slow &amp; cozy</span><span class="atelier-caption">A softer kind of day</span><span class="atelier-arrow">↗</span></button>
-        <button class="atelier-card atelier-adventure" type="button" data-mood="adventure"><span class="atelier-icon">✧</span><span class="atelier-title">Somewhere new</span><span class="atelier-caption">A little adventure awaits</span><span class="atelier-arrow">↗</span></button>
-        <button class="atelier-card atelier-story" type="button" data-mood="story"><span class="atelier-icon">▤</span><span class="atelier-title">A good story</span><span class="atelier-caption">Stay for the memories</span><span class="atelier-arrow">↗</span></button>
-        <button class="atelier-card atelier-creative" type="button" data-mood="creative"><span class="atelier-icon">✳</span><span class="atelier-title">Make &amp; imagine</span><span class="atelier-caption">Create your own little world</span><span class="atelier-arrow">↗</span></button>
+
+      <div class="ref-results"><span id="results-count">A FEW WORLDS TO BEGIN WITH</span><span>HANDPICKED WITH CARE ✳</span></div>
+      <div class="active-filters" id="active-filters" aria-live="polite"></div>
+
+      <div class="ref-feat-layout">
+        <div class="ref-grid" id="game-grid"><article class="ref-loading">Gathering little worlds<span>✦</span></article></div>
+        <aside class="ref-community">
+          <img class="ref-community-piko" src="assets/piko/piko-welcome.png" alt="Piko the PIXORIA panda waving hello" width="190" height="156" loading="lazy">
+          <div class="ref-sign"><strong>Join Our<br>Cozy Community!</strong><span aria-hidden="true">❤️</span></div>
+          <p>Let’s explore more together!</p>
+          <a href="#about" class="ref-join">Join Now <span aria-hidden="true">→</span></a>
+        </aside>
       </div>
-      <section class="editors-shelf" aria-labelledby="editors-title">
-        <div class="editors-heading"><div><span class="mood-label">A NOTE FROM THE CURATOR</span><h3 id="editors-title">A few worlds to <em>begin with.</em></h3></div><p>Three handpicked places to wander into when you don't know where to start.</p></div>
-        <div class="editors-picks" id="editors-picks"></div>
-      </section>
+
+      <div class="empty-state" id="empty-state" hidden><span>✧</span><h3>No worlds found</h3><p>Try another title or clear your filters.</p><button class="text-link" id="clear-filters">Clear filters →</button></div>
+
       <section class="recent-shelf" id="recent-shelf" aria-labelledby="recent-title" hidden>
         <div class="recent-heading"><div><span class="mood-label">PICK UP WHERE YOU LEFT OFF</span><h3 id="recent-title">Recently <em>explored.</em></h3></div><button class="recent-clear" id="clear-recent" type="button">Clear history ×</button></div>
         <div class="recent-grid" id="recent-grid"></div>
       </section>
-      <div class="toolbar">
-        
-        <select id="genre-filter" aria-label="Filter by genre"><option value="all">All genres</option></select>
-        <select id="platform-filter" aria-label="Filter by platform"><option value="all">All platforms</option></select>
-        <select id="price-filter" aria-label="Filter by price"><option value="all">Any price</option><option value="free">Free</option><option value="paid">Paid</option></select>
-        <select id="sort-filter" aria-label="Sort games"><option value="featured">Featured</option><option value="az">A — Z</option><option value="za">Z — A</option><option value="newest">Newest releases</option><option value="oldest">Oldest releases</option></select>
-      </div>
-      <div class="mood-row" aria-label="Quick mood filters">
-        <span class="mood-label">I FEEL LIKE</span>
-        <button class="mood-chip active" type="button" data-mood="all">Anything</button>
-        <button class="mood-chip" type="button" data-mood="cozy">Cozy &amp; calm</button>
-        <button class="mood-chip" type="button" data-mood="adventure">Adventure</button>
-        <button class="mood-chip" type="button" data-mood="story">Good stories</button>
-        <button class="mood-chip" type="button" data-mood="creative">Creative</button>
-      </div>
-      <div class="genre-explorer"><span class="mood-label">WANDER BY GENRE</span><div class="genre-chips" id="genre-chips"><button type="button" class="genre-chip active" data-genre="all">All worlds</button></div></div>
-      <div class="category-directory"><div class="directory-heading"><span class="mood-label">THE LITTLE INDEX</span><span>Choose a world by genre ↗</span></div><div class="category-tiles" id="category-tiles"></div></div>
-      <div class="collection-stats" id="collection-stats" aria-label="Collection overview"></div>
-      <div class="results-line"><span id="results-count">A FEW WORLDS TO BEGIN WITH</span><span>HANDPICKED WITH CARE ✳</span></div><div class="active-filters" id="active-filters" aria-live="polite"></div>
-      <div class="featured-layout"><div class="featured-main"><div class="game-grid" id="game-grid"><article class="loading-card">Gathering little worlds<span>✦</span></article></div></div><aside class="community-card"><div class="community-panda"><img src="assets/piko-mascot.svg" alt="Piko the PIXORIA panda" loading="lazy"></div><h3>Join Our<br>Cozy Community!</h3><span>❤️</span><p>Let’s explore more together!</p><a href="#about" class="community-button">Join Now →</a></aside></div>
-      <div class="empty-state" id="empty-state" hidden><span>✧</span><h3>No worlds found</h3><p>Try another title or clear your filters.</p><button class="text-link" id="clear-filters">Clear filters →</button></div>
+
+      <details class="ref-more">
+        <summary><span>✦ Explore more ways to discover</span></summary>
+        <div class="discover-section section-wrap ref-more-body">
+          <div class="mood-atelier" aria-label="Explore by atmosphere">
+            <div class="atelier-intro"><span class="mood-label">A WORLD FOR EVERY MOOD</span><p>What kind of little escape<br><em>are you looking for?</em></p></div>
+            <button class="atelier-card atelier-cozy" type="button" data-mood="cozy"><span class="atelier-icon">☾</span><span class="atelier-title">Slow &amp; cozy</span><span class="atelier-caption">A softer kind of day</span><span class="atelier-arrow">↗</span></button>
+            <button class="atelier-card atelier-adventure" type="button" data-mood="adventure"><span class="atelier-icon">✧</span><span class="atelier-title">Somewhere new</span><span class="atelier-caption">A little adventure awaits</span><span class="atelier-arrow">↗</span></button>
+            <button class="atelier-card atelier-story" type="button" data-mood="story"><span class="atelier-icon">▤</span><span class="atelier-title">A good story</span><span class="atelier-caption">Stay for the memories</span><span class="atelier-arrow">↗</span></button>
+            <button class="atelier-card atelier-creative" type="button" data-mood="creative"><span class="atelier-icon">✳</span><span class="atelier-title">Make &amp; imagine</span><span class="atelier-caption">Create your own little world</span><span class="atelier-arrow">↗</span></button>
+          </div>
+          <section class="editors-shelf" aria-labelledby="editors-title">
+            <div class="editors-heading"><div><span class="mood-label">A NOTE FROM THE CURATOR</span><h3 id="editors-title">A few worlds to <em>begin with.</em></h3></div><p>Three handpicked places to wander into when you don't know where to start.</p></div>
+            <div class="editors-picks" id="editors-picks"></div>
+          </section>
+          <div class="toolbar">
+            <button class="ref-surprise" id="surprise-me" type="button">✦ Surprise me</button>
+            <select id="genre-filter" aria-label="Filter by genre"><option value="all">All genres</option></select>
+            <select id="platform-filter" aria-label="Filter by platform"><option value="all">All platforms</option></select>
+            <select id="price-filter" aria-label="Filter by price"><option value="all">Any price</option><option value="free">Free</option><option value="paid">Paid</option></select>
+            <select id="sort-filter" aria-label="Sort games"><option value="featured">Featured</option><option value="az">A — Z</option><option value="za">Z — A</option><option value="newest">Newest releases</option><option value="oldest">Oldest releases</option></select>
+          </div>
+          <div class="mood-row" aria-label="Quick mood filters">
+            <span class="mood-label">I FEEL LIKE</span>
+            <button class="mood-chip active" type="button" data-mood="all">Anything</button>
+            <button class="mood-chip" type="button" data-mood="cozy">Cozy &amp; calm</button>
+            <button class="mood-chip" type="button" data-mood="adventure">Adventure</button>
+            <button class="mood-chip" type="button" data-mood="story">Good stories</button>
+            <button class="mood-chip" type="button" data-mood="creative">Creative</button>
+          </div>
+          <div class="genre-explorer"><span class="mood-label">WANDER BY GENRE</span><div class="genre-chips" id="genre-chips"><button type="button" class="genre-chip active" data-genre="all">All worlds</button></div></div>
+          <div class="category-directory"><div class="directory-heading"><span class="mood-label">THE LITTLE INDEX</span><span>Choose a world by genre ↗</span></div><div class="category-tiles" id="category-tiles"></div></div>
+          <div class="collection-stats" id="collection-stats" aria-label="Collection overview"></div>
+        </div>
+      </details>
     </section>
+
     <section class="quote-section" id="about"><div class="quote-star">✳</div><p>“Sometimes, all you need<br>is <em>another little world.</em>”</p><span>WELCOME TO PIXORIA</span></section>
     <section class="wishlist-section section-wrap" id="wishlist">
       <div class="wishlist-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> SAVED FOR LATER</div><h2>Your little <em>collection.</em></h2></div><p>Keep the worlds you want to visit close.</p></div>

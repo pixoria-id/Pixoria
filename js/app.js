@@ -14,7 +14,12 @@
     {id:"chicory-a-colorful-tale",slug:"chicory-a-colorful-tale",title:"Chicory: A Colorful Tale",developer:"Greg Lobanov and team",publisher:"Finji",release_date:"2021-06-10",short_description:"Explore a coloring-book world and bring it to life with your paintbrush.",genres:["Adventure","Puzzle","RPG"],platforms:["PC","Mac","PlayStation","Nintendo Switch"],mood_tags:["Creative","Cozy","Story rich","Exploration"],price_type:"paid",is_featured:false,cover_url:"",official_url:"https://www.chicorygame.com/"}
   ];
   const symbols = ["🌾","🌿","⛏️","🍱","🐈","🌙","🍄","🏡"];
+  const bucketDefs = [["all","All Games"],["rpg","RPG"],["adventure","Adventure"],["simulation","Simulation"],["strategy","Strategy"],["casual","Casual"],["puzzle","Puzzle"],["action","Action"],["others","Others"]];
+  const bucketPatterns = {rpg:/rpg/,adventure:/adventure|exploration|narrative|story/,simulation:/simulation|farming|management|building|life sim/,strategy:/strategy|tactic|tower defense|4x/,casual:/casual|cozy|relaxing/,puzzle:/puzzle/,action:/action|platformer|roguelite|shooter|fighting/};
+  const featuredLimit = 5;
   let games = [];
+  let activeBucket = "all";
+  let showAll = false;
   let activeMood = "all";
   let activeSuggestionIndex = -1;
   let toastTimer;
@@ -51,6 +56,28 @@
   function card(game,index) {
     const saved=getWishlist().includes(gameId(game));
     return '<article class="game-card" data-game="'+escapeHtml(gameId(game))+'" tabindex="0" aria-label="View '+escapeHtml(game.title)+' details">'+coverArt(game,index)+'<div class="game-card-body"><div class="game-meta"><span>'+escapeHtml((game.genres||["Pixel game"])[0])+'</span><span class="price-label '+escapeHtml(game.price_type||"unknown")+'">'+escapeHtml(game.price_type==="free"?"FREE":game.price_type==="paid"?"PAID":"PRICE N/A")+'</span></div><h3 class="game-title">'+escapeHtml(game.title)+'</h3><p class="game-desc">'+escapeHtml(game.short_description || game.description || "A little world waiting to be discovered.")+'</p>'+((game.developer||game.release_date)?'<div class="game-credit">'+(game.developer?'<span>'+escapeHtml(game.developer)+'</span>':'<span>Independent game</span>')+(game.release_date?'<span>'+escapeHtml(String(game.release_date).slice(0,4))+'</span>':'')+'</div>':'')+'<div class="game-card-foot"><div class="tag-list">'+tags(game).map(t=>'<span class="tag">'+escapeHtml(t)+'</span>').join("")+'</div><button class="save-button '+(saved?"saved":"")+'" data-save="'+escapeHtml(gameId(game))+'" aria-label="'+(saved?"Remove from":"Add to")+' wishlist">'+(saved?"♥":"♡")+'</button></div><span class="card-discover">DISCOVER WORLD <span>↗</span></span></div></article>';
+  }
+  function gameBuckets(game) {
+    const text=normalize([...(game.genres||[]),...(game.mood_tags||[])].join(" "));
+    const hit=Object.keys(bucketPatterns).filter(key=>bucketPatterns[key].test(text));
+    return hit.length?hit:["others"];
+  }
+  function setBucket(key) {
+    activeBucket=key;
+    document.querySelectorAll("[data-bucket]").forEach(button=>{
+      const on=button.dataset.bucket===key;
+      button.classList.toggle("active",on);
+      button.setAttribute("aria-pressed",String(on));
+    });
+  }
+  function featCard(game) {
+    const id=gameId(game), saved=getWishlist().includes(id);
+    const slug=String(game.slug||game.id||game.title).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+    const src=game.cover_url||"assets/covers/"+slug+".svg";
+    const badge=(game.genres||["Pixel game"])[0];
+    const mood=(game.mood_tags||[])[0]||(game.price_type==="free"?"Free":game.price_type==="paid"?"Paid":"Discover");
+    const year=game.release_date?String(game.release_date).slice(0,4):"";
+    return '<article class="ref-card" data-game="'+escapeHtml(id)+'" tabindex="0" aria-label="View '+escapeHtml(game.title)+' details"><div class="ref-card-art"><img src="'+escapeHtml(src)+'" alt="'+escapeHtml(game.title)+' pixel-art scene" loading="lazy"><span class="ref-badge">'+escapeHtml(badge)+'</span></div><div class="ref-card-body"><h3>'+escapeHtml(game.title)+'</h3><div class="ref-card-foot"><span class="ref-card-meta"><button class="ref-save '+(saved?"saved":"")+'" type="button" data-save="'+escapeHtml(id)+'" aria-label="'+(saved?"Remove from":"Add to")+' wishlist">'+(saved?"♥":"♡")+'</button>'+(year?'<span>'+escapeHtml(year)+'</span>':'')+'</span><span class="ref-pill">'+escapeHtml(mood)+'</span></div></div></article>';
   }
   function renderEditorsPicks() {
     const featured=games.filter(game=>game.is_featured);
@@ -144,12 +171,13 @@
     if($("platform-filter").value!=="all") add("platform",$("platform-filter").value);
     if($("price-filter").value!=="all") add("price",$("price-filter").value==="free"?"Free":"Paid");
     if(activeMood!=="all") add("mood",activeMood.charAt(0).toUpperCase()+activeMood.slice(1));
+    if(activeBucket!=="all") add("bucket",(bucketDefs.find(item=>item[0]===activeBucket)||[0,activeBucket])[1]);
     $("active-filters").innerHTML=chips.length?'<span class="active-filter-label">FILTERING BY</span>'+chips.join("")+'<button type="button" class="clear-all-filters" data-clear-filter="all">Clear all</button>':"";
     $("active-filters").hidden=!chips.length;
   }
   function renderGames() {
     const query=$("search-input").value, genre=$("genre-filter").value, platform=$("platform-filter").value, price=$("price-filter").value, sort=$("sort-filter").value;
-    let filtered=games.filter(g=>{const text=searchText(g);return matchesSearch(g,query)&&(genre==="all"||(g.genres||[]).some(x=>normalize(x)===normalize(genre)))&&(platform==="all"||(g.platforms||[]).some(x=>normalize(x)===normalize(platform)))&&(price==="all"||g.price_type===price)&&(activeMood==="all"||(g.mood_tags||[]).some(x=>normalize(x).includes(activeMood))||(g.genres||[]).some(x=>normalize(x).includes(activeMood)));});
+    let filtered=games.filter(g=>{const text=searchText(g);return matchesSearch(g,query)&&(genre==="all"||(g.genres||[]).some(x=>normalize(x)===normalize(genre)))&&(platform==="all"||(g.platforms||[]).some(x=>normalize(x)===normalize(platform)))&&(price==="all"||g.price_type===price)&&(activeMood==="all"||(g.mood_tags||[]).some(x=>normalize(x).includes(activeMood))||(g.genres||[]).some(x=>normalize(x).includes(activeMood)))&&(activeBucket==="all"||gameBuckets(g).includes(activeBucket));});
     if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title));
     if(sort==="za") filtered.sort((a,b)=>b.title.localeCompare(a.title));
     if(sort==="newest") filtered.sort((a,b)=>(Date.parse(b.release_date||"")||0)-(Date.parse(a.release_date||"")||0)||a.title.localeCompare(b.title));
@@ -157,15 +185,21 @@
     if(sort==="featured") filtered.sort((a,b)=>(query?searchRelevance(b,query)-searchRelevance(a,query):0)||Number(b.is_featured)-Number(a.is_featured)||a.title.localeCompare(b.title));
     renderCollectionStats();
     renderRecentlyViewed();
-    $("results-count").textContent="SHOWING "+filtered.length+" OF "+games.length+" LITTLE WORLDS";
-    $("game-grid").innerHTML=filtered.map(card).join(""); $("empty-state").hidden=filtered.length>0;
+    const filtering=Boolean(query.trim())||genre!=="all"||platform!=="all"||price!=="all"||activeMood!=="all"||activeBucket!=="all"||sort!=="featured";
+    const shown=(filtering||showAll)?filtered:filtered.slice(0,featuredLimit);
+    $("results-count").textContent=(filtering||showAll)?"SHOWING "+filtered.length+" OF "+games.length+" LITTLE WORLDS":"A FEW WORLDS TO BEGIN WITH";
+    const viewAll=$("view-all");
+    viewAll.hidden=filtering||filtered.length<=featuredLimit;
+    viewAll.innerHTML=showAll?'Show less <span aria-hidden="true">↑</span>':'View All <span aria-hidden="true">→</span>';
+    viewAll.setAttribute("aria-expanded",String(showAll));
+    $("game-grid").innerHTML=shown.map(game=>featCard(game)).join(""); $("empty-state").hidden=filtered.length>0;
     renderActiveFilters();renderWishlist();
   }
   function renderWishlist() {
     const saved=getWishlist(), selected=saved.map(id=>games.find(g=>gameId(g)===id)).filter(Boolean);
     $("wishlist-grid").innerHTML=selected.length?selected.map(card).join(""):'<p class="wishlist-empty">Your wishlist is waiting for its first little world. ♡</p>';
   }
-  const homeSections=["home","discover","about","wishlist"];
+  const homeSections=["home","categories-bar","discover","about","wishlist"];
   const categorySlug=value=>normalize(value).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
   function renderCategoryDirectory(){
     const counts=new Map();
@@ -258,9 +292,10 @@
   }
   document.addEventListener("error",event=>{
     const image=event.target;
-    if(!(image instanceof HTMLImageElement)||!image.closest(".game-cover"))return;
-    const cover=image.closest(".game-cover");
+    if(!(image instanceof HTMLImageElement)||!image.closest(".game-cover, .ref-card-art"))return;
+    const cover=image.closest(".game-cover, .ref-card-art");
     image.remove();cover.classList.add("cover-image-failed");
+    if(cover.classList.contains("ref-card-art"))return;
     const art=document.createElement("span");art.className="cover-fallback-art";
     art.innerHTML='<span class="cover-sun"></span><span class="cover-ridge"></span><span class="cover-world"></span><span class="cover-pixels"></span>';
     cover.insertBefore(art,cover.querySelector(".cover-index"));
@@ -274,7 +309,7 @@
 
   const heroSearchButton=$("hero-search-button");
   if(heroSearchButton)heroSearchButton.addEventListener("click",()=>{$("search-input").focus();$("discover").scrollIntoView({behavior:"smooth",block:"start"});});
-\n  $("search-input").addEventListener("input",()=>{renderSearchSuggestions();renderGames();});
+  $("search-input").addEventListener("input",()=>{renderSearchSuggestions();renderGames();});
   ["genre-filter","platform-filter","price-filter","sort-filter"].forEach(id=>$(id).addEventListener("change",renderGames));
   $("search-suggestions").addEventListener("click",event=>{const item=event.target.closest("[data-suggest]");if(item)selectSuggestion(item.dataset.suggest);});
   $("search-input").addEventListener("keydown",event=>{
@@ -284,8 +319,8 @@
     else if(event.key==="ArrowUp"){event.preventDefault();setActiveSuggestion(activeSuggestionIndex<0?options.length-1:activeSuggestionIndex-1);}
     else if(event.key==="Enter"&&activeSuggestionIndex>=0){event.preventDefault();selectSuggestion(options[activeSuggestionIndex].dataset.suggest);}
   });
-  $("active-filters").addEventListener("click",event=>{const button=event.target.closest("[data-clear-filter]");if(!button)return;const key=button.dataset.clearFilter;if(key==="all"){resetDiscovery();return;}if(key==="search")$("search-input").value="";if(key==="genre")$("genre-filter").value="all";if(key==="platform")$("platform-filter").value="all";if(key==="price")$("price-filter").value="all";if(key==="mood"){activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));}renderGenreChips();renderSearchSuggestions();renderGames();});
-  document.addEventListener("click",event=>{if(!event.target.closest(".search-wrap")){$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");}});
+  $("active-filters").addEventListener("click",event=>{const button=event.target.closest("[data-clear-filter]");if(!button)return;const key=button.dataset.clearFilter;if(key==="all"){resetDiscovery();return;}if(key==="search")$("search-input").value="";if(key==="genre")$("genre-filter").value="all";if(key==="platform")$("platform-filter").value="all";if(key==="price")$("price-filter").value="all";if(key==="bucket")setBucket("all");if(key==="mood"){activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));}renderGenreChips();renderSearchSuggestions();renderGames();});
+  document.addEventListener("click",event=>{if(!event.target.closest(".ref-search")){$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");}});
   document.addEventListener("keydown",event=>{if(event.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){event.preventDefault();$("search-input").focus();}if(event.key==="Escape"){$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");$("search-input").removeAttribute("aria-activedescendant");activeSuggestionIndex=-1;}});
   $("genre-filter").addEventListener("change",renderGenreChips);
   $("genre-chips").addEventListener("click",event=>{const chip=event.target.closest("[data-genre]");if(!chip)return;$("genre-filter").value=chip.dataset.genre;renderGenreChips();renderGames();$("game-grid").scrollIntoView({behavior:"smooth",block:"start"});});
@@ -301,7 +336,10 @@
     renderGames();
     if(button.classList.contains("atelier-card")) $("game-grid").scrollIntoView({behavior:"smooth",block:"start"});
   }));
-  function resetDiscovery(){$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("price-filter").value="all";$("sort-filter").value="featured";renderGenreChips();activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");$("search-input").removeAttribute("aria-activedescendant");activeSuggestionIndex=-1;renderGames();}
+  document.querySelectorAll("[data-bucket]").forEach(button=>button.addEventListener("click",()=>{setBucket(button.dataset.bucket);showAll=false;renderGames();}));
+  $("view-all").addEventListener("click",()=>{showAll=!showAll;renderGames();});
+  $("header-search").addEventListener("click",()=>{showHome();$("home").scrollIntoView({behavior:"smooth",block:"start"});$("search-input").focus({preventScroll:true});});
+  function resetDiscovery(){setBucket("all");showAll=false;$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("price-filter").value="all";$("sort-filter").value="featured";renderGenreChips();activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");$("search-input").removeAttribute("aria-activedescendant");activeSuggestionIndex=-1;renderGames();}
   $("clear-filters").addEventListener("click",resetDiscovery);
   $("clear-recent").addEventListener("click",()=>{try{localStorage.removeItem(recentKey);}catch{}renderRecentlyViewed();showToast("Recently explored list cleared");});
   $("dialog-close").addEventListener("click",()=>$("game-dialog").close());
@@ -332,14 +370,14 @@
     games=fallbackGames; populateFilters(); renderGames();
   }
 
-  const navLinks=[...document.querySelectorAll(".main-nav a")];
+  const navLinks=[...document.querySelectorAll(".ref-nav a")];
   if("IntersectionObserver" in window){
     const sectionObserver=new IntersectionObserver(entries=>{
       entries.forEach(entry=>{if(entry.isIntersecting){navLinks.forEach(link=>link.classList.toggle("active",link.getAttribute("href")==="#"+entry.target.id));}});
     },{rootMargin:"-35% 0px -55% 0px"});
     ["home","discover","about"].forEach(id=>{const section=$(id);if(section)sectionObserver.observe(section);});
   }
-  document.querySelectorAll(".main-nav a, .wishlist-link, .site-header .brand").forEach(link=>link.addEventListener("click",event=>{
+  document.querySelectorAll(".ref-nav a, .ref-avatar, .ref-brand").forEach(link=>link.addEventListener("click",event=>{
     event.preventDefault();
     const href=link.getAttribute("href")||"#home";
     const target=href==="#"?"home":href.slice(1);
@@ -352,5 +390,5 @@
   window.addEventListener("hashchange",routeFromHash);
   window.addEventListener("popstate",routeFromHash);
   updateWishlistCount();
-  loadGames().then(routeFromHash);
+  loadGames().then(routeFromHash).finally(()=>{const splash=$("splash");if(splash)splash.classList.add("done");});
 })();
