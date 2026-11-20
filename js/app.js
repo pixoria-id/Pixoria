@@ -61,7 +61,10 @@
     });
     return found;
   };
-  const updateWishlistCount = () => $("wishlist-count").textContent = games.length ? wishlistGames().length : getWishlist().length;
+  const updateWishlistCount = () => {
+    const count = games.length ? wishlistGames().length : getWishlist().length;
+    document.querySelectorAll(".js-wishlist-count").forEach(badge => { badge.textContent = count; badge.hidden = count === 0; });
+  };
   const showToast = message => { const el=$("toast"); el.textContent=message; el.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove("show"),2100); };
   const gameId = game => String(game.id || game.slug || game.title);
   const tags = game => [...(game.genres || []).slice(0,2), ...(game.platforms || []).slice(0,1)];
@@ -361,7 +364,7 @@
   }));
   document.querySelectorAll("[data-bucket]").forEach(button=>button.addEventListener("click",()=>{setBucket(button.dataset.bucket);showAll=false;renderGames();}));
   $("view-all").addEventListener("click",()=>{showAll=!showAll;renderGames();});
-  $("header-search").addEventListener("click",()=>{showHome();$("home").scrollIntoView({behavior:"smooth",block:"start"});$("search-input").focus({preventScroll:true});});
+  document.querySelectorAll(".js-open-search").forEach(button=>button.addEventListener("click",()=>{showHome();$("home").scrollIntoView({behavior:"smooth",block:"start"});$("search-input").focus({preventScroll:true});}));
   function resetDiscovery(){setBucket("all");showAll=false;$("search-input").value="";$("genre-filter").value="all";$("platform-filter").value="all";$("price-filter").value="all";$("sort-filter").value="featured";renderGenreChips();activeMood="all";document.querySelectorAll("[data-mood]").forEach(item=>item.classList.toggle("active",item.dataset.mood==="all"));$("search-suggestions").hidden=true;$("search-input").setAttribute("aria-expanded","false");$("search-input").removeAttribute("aria-activedescendant");activeSuggestionIndex=-1;renderGames();}
   $("clear-filters").addEventListener("click",resetDiscovery);
   $("clear-recent").addEventListener("click",()=>{try{localStorage.removeItem(recentKey);}catch{}renderRecentlyViewed();showToast("Recently explored list cleared");});
