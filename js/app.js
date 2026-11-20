@@ -38,9 +38,30 @@
   const recentKey = "pixoria-recent-v1";
   const getRecent = () => { try { const value=JSON.parse(localStorage.getItem(recentKey)||"[]"); return Array.isArray(value)?value:[]; } catch { return []; } };
   const saveRecent = id => { try { localStorage.setItem(recentKey,JSON.stringify([id,...getRecent().filter(item=>item!==id)].slice(0,5))); } catch {} };
-  const getWishlist = () => { try { return JSON.parse(localStorage.getItem(wishlistKey) || "[]"); } catch { return []; } };
-  const setWishlist = list => { localStorage.setItem(wishlistKey, JSON.stringify(list)); updateWishlistCount(); };
-  const updateWishlistCount = () => $("wishlist-count").textContent = getWishlist().length;
+  let wishlistMemory = null; // used only when localStorage cannot be written (private mode, blocked storage)
+  const getWishlist = () => {
+    if (wishlistMemory) return wishlistMemory;
+    try {
+      const value = JSON.parse(localStorage.getItem(wishlistKey) || "[]");
+      return Array.isArray(value) ? value.filter(item => typeof item === "string") : [];
+    } catch { return []; }
+  };
+  const setWishlist = list => {
+    try { localStorage.setItem(wishlistKey, JSON.stringify(list)); wishlistMemory = null; }
+    catch { wishlistMemory = list; }
+    updateWishlistCount();
+  };
+  // A saved entry may be a database id or a slug (starter catalogue ids are slugs), so match on both.
+  const wishlistHas = (list, game) => list.includes(gameId(game)) || (game.slug ? list.includes(String(game.slug)) : false);
+  const wishlistGames = () => {
+    const found = [];
+    getWishlist().forEach(id => {
+      const game = games.find(item => gameId(item) === id || String(item.slug) === id);
+      if (game && !found.includes(game)) found.push(game);
+    });
+    return found;
+  };
+  const updateWishlistCount = () => $("wishlist-count").textContent = games.length ? wishlistGames().length : getWishlist().length;
   const showToast = message => { const el=$("toast"); el.textContent=message; el.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove("show"),2100); };
   const gameId = game => String(game.id || game.slug || game.title);
   const tags = game => [...(game.genres || []).slice(0,2), ...(game.platforms || []).slice(0,1)];
@@ -54,7 +75,7 @@
     return '<div class="game-cover '+(large?"dialog-cover":"")+' '+sceneClass(game)+'"><img class="pixoria-original-cover" src="assets/covers/'+escapeHtml(slug)+'.svg" alt="Original PIXORIA pixel-art scene for '+escapeHtml(game.title)+'" loading="lazy" onerror="this.remove();this.parentElement.classList.add(\'cover-image-failed\')"><span class="cover-index">PIXORIA / '+String(index+1).padStart(2,"0")+'</span><span class="cover-type">PIXORIA ART</span></div>';
   }
   function card(game,index) {
-    const saved=getWishlist().includes(gameId(game));
+    const saved=wishlistHas(getWishlist(),game);
     return '<article class="game-card" data-game="'+escapeHtml(gameId(game))+'" tabindex="0" aria-label="View '+escapeHtml(game.title)+' details">'+coverArt(game,index)+'<div class="game-card-body"><div class="game-meta"><span>'+escapeHtml((game.genres||["Pixel game"])[0])+'</span><span class="price-label '+escapeHtml(game.price_type||"unknown")+'">'+escapeHtml(game.price_type==="free"?"FREE":game.price_type==="paid"?"PAID":"PRICE N/A")+'</span></div><h3 class="game-title">'+escapeHtml(game.title)+'</h3><p class="game-desc">'+escapeHtml(game.short_description || game.description || "A little world waiting to be discovered.")+'</p>'+((game.developer||game.release_date)?'<div class="game-credit">'+(game.developer?'<span>'+escapeHtml(game.developer)+'</span>':'<span>Independent game</span>')+(game.release_date?'<span>'+escapeHtml(String(game.release_date).slice(0,4))+'</span>':'')+'</div>':'')+'<div class="game-card-foot"><div class="tag-list">'+tags(game).map(t=>'<span class="tag">'+escapeHtml(t)+'</span>').join("")+'</div><button class="save-button '+(saved?"saved":"")+'" data-save="'+escapeHtml(gameId(game))+'" aria-label="'+(saved?"Remove from":"Add to")+' wishlist">'+(saved?"♥":"♡")+'</button></div><span class="card-discover">DISCOVER WORLD <span>↗</span></span></div></article>';
   }
   function gameBuckets(game) {
@@ -71,7 +92,7 @@
     });
   }
   function featCard(game) {
-    const id=gameId(game), saved=getWishlist().includes(id);
+    const id=gameId(game), saved=wishlistHas(getWishlist(),game);
     const slug=String(game.slug||game.id||game.title).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
     const src=game.cover_url||"assets/covers/"+slug+".svg";
     const badge=(game.genres||["Pixel game"])[0];
@@ -196,8 +217,9 @@
     renderActiveFilters();renderWishlist();
   }
   function renderWishlist() {
-    const saved=getWishlist(), selected=saved.map(id=>games.find(g=>gameId(g)===id)).filter(Boolean);
+    const selected=wishlistGames();
     $("wishlist-grid").innerHTML=selected.length?selected.map(card).join(""):'<p class="wishlist-empty">Your wishlist is waiting for its first little world. ♡</p>';
+    updateWishlistCount();
   }
   const homeSections=["home","categories-bar","discover","about","wishlist"];
   const categorySlug=value=>normalize(value).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -230,7 +252,7 @@
     const slug=String(game.slug||game.id||game.title).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
     if(updateUrl && location.hash!=="#game/"+slug) history.pushState({game:slug},"","#game/"+slug);
     homeSections.forEach(section=>$(section).hidden=true);
-    const saved=getWishlist().includes(gameId(game));
+    const saved=wishlistHas(getWishlist(),game);
     saveRecent(gameId(game));
     const sharedValues=(a,b)=>[...(a||[])].filter(value=>(b||[]).some(other=>String(value).toLowerCase()===String(other).toLowerCase()));
     const similarity=(a,b)=>{
@@ -285,8 +307,9 @@
     if(homeSections.includes(target)){const section=$(target);if(section)section.scrollIntoView({behavior:"auto",block:"start"});}
   }
   function toggleWishlist(id) {
-    const list=getWishlist(), exists=list.includes(id);
-    setWishlist(exists?list.filter(x=>x!==id):[...list,id]);
+    const list=getWishlist(), game=games.find(g=>gameId(g)===id||String(g.slug)===id), exists=game?wishlistHas(list,game):list.includes(id);
+    const matches=x=>x===id||(game&&(x===gameId(game)||x===String(game.slug)));
+    setWishlist(exists?list.filter(x=>!matches(x)):[...list,id]);
     showToast(exists?"Removed from your wishlist":"Saved to your little collection");
     renderGames();
   }
